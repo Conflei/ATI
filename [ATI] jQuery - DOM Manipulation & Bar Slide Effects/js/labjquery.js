@@ -1,5 +1,7 @@
+var settings = {};
+
 var myObj = {
-    duration:"5000",
+    duration:"50000",
     easing:"swing",
     css_class:"cualquierCosa",
     links: [
@@ -68,7 +70,7 @@ function test()
 
 $(document).ready(function(){
 
-		$.fn.ati_noseque(myObj);
+		$.fn.generate_jquery_ati_menu(myObj);
 						
 });
 
@@ -76,21 +78,22 @@ $(document).ready(function(){
 
 		$('.dropdown').hover(
 				function(){
-					$(this).children('.sub-menu').slideDown(200);
+					console.log(settings.duration);
+					$(this).children('.sub-menu').slideDown(settings.duration, settings.easing);
 				},
 
 				function(){
-					$(this).children('.sub-menu').slideUp(200);
+					$(this).children('.sub-menu').slideUp(settings.duration, settings.easing);
 				}
 
 			);
 
 });
 
-$.fn.ati_noseque = function(att){
+$.fn.generate_jquery_ati_menu = function(att){
 		var list = $("ul");
 
-		var settings = $.extend({
+		settings = $.extend({
 			duration:4000,
 			easing:"swing",
 			css_class:"myClass",
