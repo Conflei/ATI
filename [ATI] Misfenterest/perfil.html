@@ -4,17 +4,16 @@
   <title>Pinterest | Perfil</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="http://lineadecodigo.com/js/jquery/jquery.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <script src="js/jquery-2.1.4.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" media="screen" href="css/perfil.css"/>
   <link rel="shortcut icon" href="img/pinterest.ico">
   <script src="js/cargarDatos.js"></script>
   <script src="js/datos.js"></script>
   <script src="js/eventosPerfil.js"></script>
   <script>
-    var cant = 1;
+    var cant = 0;
     var active = null;
     $(document).ready(function()
     {   
@@ -68,7 +67,7 @@
                                   <li>
                                     <div class="form-group">
                                       
-                                          <label for="email">Nombre:</label>
+                                          <label for="name">Nombre:</label>
                                           <input type="text" value="Misael" class="form-control" id="email" placeholder="First name" required>
                                         
 
@@ -86,7 +85,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button class="btn changePhoto hasText rounded" type="button" style="background-color: black; color:white">
+                                        <input class="btn changePhoto hasText rounded" style="background-color: black; color:white" accepted="image/*" type="">
                                            <span class="buttonText">Cambiar imagen</span>
                                         </button>
                                     </div> 
@@ -123,9 +122,9 @@
                                   
                 </div>
                 <div class = "container" style = " margin-top:1%; margin-left:22%; padding: 1%; background-color:white; width: 60%; display:none; position:fixed;  border-style: solid; border-width: 1px; border-radius:8px; border-color:grey;" id="mensajeExito">
-                      <h3>Los cambios se efectuaron exitosamente</h3>
+                      <h3 style="margin-left:13%;">Los cambios se efectuaron exitosamente</h3>
                       <a href="#" id="aceptarMensaje">
-                        <span style="margin-left:45%;" class="glyphicon glyphicon-ok"></span>
+                        <span style="margin-left:48%;" class="glyphicon glyphicon-ok"></span>
                       </a>
                 </div>
         <!--FIN CAMBIAR PERFIL -->
@@ -172,8 +171,8 @@
     <div class="row" id="columnas">
 
       <ul class="nav nav-tabs" style = "margin-left:10%;border-color:white;">
-        <li id="misGalerias" sytle="color:red;"><a href="#">Mis Galerias</a></li>
-        <li id="meGusta" ><a href="#"><span sytle="background-color:red;">Pin</spang></a></li>
+        <li id="misGalerias"><a href="#"><spang>Mis Galerias</spang></a></li>
+        <li id="meGusta" ><a href="#">Pin</a></li>
       </ul>
       <div class="container " id = "general" style = "background-color : #D8D8D8; width:98%; display:none; border-radius:6px;">
          <div class="" style = "width: auto">
@@ -203,6 +202,36 @@
     <!--FIN CONTENIDO: IMAGENES CUATRO COLUMNAS-->
 
   </div>
+
+
+    <!-- Mostrando imagen selecionada-->
+
+          <div class="contenidoSelecto" id="contenido">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="imageShower"><img src="assets/img0.jpg" alt="" id="imgContent"></div>   
+              </div>
+              <div class="col-sm-6">
+                <div class="pinSection">
+                    <img src="assets/profile.jpg" alt="" width="20px" height="20px">
+                    <h4></h4>
+                    <a href="#" id="cerrar"><span class="glyphicon glyphicon-remove"></span></a>  
+                  <hr>  
+                  <p id="parContent"> 
+                  </p>
+                  <hr>
+                  <div class="PinButton">
+                    <a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">Pinear!</strong>
+                                  <img  class = "img-circle logoSesion" src="img/logo.png">             
+                                </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    <!-- Fin imagen seleccionada -->
+
 
    <!--PIE DE PAGINA-->
     <footer>

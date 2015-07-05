@@ -166,3 +166,79 @@ button:hover {
     width: 135px;
     height: 100px
 }
+
+.contenidoSelecto
+{
+  position: fixed;
+  display: none;
+  left: 25%;
+  top: 70px;
+  width: 600px;
+  height: 500px;
+  background-color: rgb(200,200,210);
+  border-radius: 15px;
+}
+
+.contenidoSelecto .row
+{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(200,200,200);
+  border-radius: 15px;
+}
+
+
+.imageShower{
+  
+  height: 100%;
+  background-color: rgb(200,200,200);
+}
+
+.pinSection
+{
+  height: 500px;
+  background-color: rgb(255,255,255);
+}
+
+.imageShower img
+{
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+  border-radius: 15px;
+}
+
+.PinButton .botonPerfil
+{
+  float:left;
+  margin-left: 25px;
+}
+
+h4
+{
+  display: inline;
+}
+
+.pinSection h4, .pinSection img
+{
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+h4
+{
+  top: 20px;
+}
+
+.pinSection p
+{
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: justify;
+}
+
+.pinSection a
+{
+  float: right;
+}

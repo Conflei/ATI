@@ -69,4 +69,26 @@ $(document).ready(function()
 			$("#mensajeExito").slideUp();	
 		}
 	);
+	$("#cerrar").bind("click",
+		function(){
+			$("#contenido").slideUp();
+			$("#barra").removeClass("opacar");
+			$("#perfil").removeClass("opacar");
+			$("#columnas").removeClass("opacar");		
+		}
+	);
 });
+
+function mostrarImagen(id){
+	$("h4").text(title(id));
+	$("#parContent").text(description(id));
+	$("#imgContent").attr("src",urlImg(id));
+	
+	$("#barra").addClass("opacar");
+	$("#perfil").addClass("opacar");
+	$("#columnas").addClass("opacar");
+	
+	$("#contenido").slideDown();
+}
+
+

@@ -19,7 +19,7 @@ function generation() {
 			n = 150+Math.floor((Math.random() * 130) + 1);
 
 		  	cont = '<div class ="row sombraImagen" style = "background-color: white; margin-left:1px; margin-top:5%; border-radius: 4px;">';
-		    cont +=      '<a href="#" style ="border-radius: 4px">';
+		    cont +=      '<a href="#" style ="border-radius: 4px" onclick = "mostrarImagen('+cant+')">';
 		    cont +=          '<img  width="100%" height="'+n+'px" src="'+ urlImg(cant) +'" class="img-rounded"/>'
 		    cont +=      '</a>'
 		    cont +=    '<div class="caption">'
