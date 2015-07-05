@@ -3,17 +3,18 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
-	<title>	</title>
+	<title>Pinterest | Register</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<link rel="stylesheet" href="css/stylereg.css">
+	<link rel="shortcut icon" href="img/pinterest.ico">
 
 </head>
 <body>
 	<div class="container">
 		<div class="jumbotron">
-				<h1>Welcome to Misfenterest</h1>
+				<h1 style="color:#F78181">Welcome to Misfenterest</h1>
 				<p>The most popular Pinterest clone in ATI</p>
 		</div>
 
@@ -25,21 +26,21 @@
 			<div class="well">
 				<div class="form-group">
 						<label for="id">Username: </label>
-						<input type="text" class="form-control" name="accout_id">
+						<input type="text" class="form-control" name="accout_id" required>
 				</div>
 				<div class="form-group">
 						<label for="email">Email: </label>
-						<input type="text" class="form-control" name="email">
+						<input type="email" class="form-control" name="email" required>
 				</div>
 				<div class="form-group">	
 						<label for="password">Password: </label>
-						<input type="psw" class="form-control" name="repassword">
+						<input type="password" class="form-control" name="repassword" required>
 				</div>
 				<div class="form-group">	
 						<label for="repassword">Re-type Password: </label>
-						<input type="psw" class="form-control" name="repassword">
+						<input type="password" class="form-control" name="repassword" required>
 				</div>
-						<button type="submit" class="btn btn-default"><a href="lobby.html">Create Account</a></button>
+						<button type="submit" class="btn btn-danger"><a href="lobby.html" style="text-decoration:none;color:white">Create</a></button>
 			</div>
 		</form>
 		

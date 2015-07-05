@@ -54,11 +54,23 @@ $(document).ready(function()
 	$("#guardarPerfil").bind("click",
 		function(){
 			//validar entrada
+			if($("#nombreUsr").attr("value") != null && $("#nombreUsr").attr("value") != "")
+			{
+				var name = document.getElementById('nombreUsr').value;
+				var lastname = document.getElementById('apellidoUsr').value;
+				var usr = document.getElementById('Usr').value;
+			    if(name!= null && name != "" && lastname != null && lastname != "" && usr != null && usr != "")
+			    {
+					$("#editar").addClass("opacar");
+					$("#mensajeExito").slideDown();
+				}	
+			}
 
-			$("#editar").addClass("opacar");
-			$("#mensajeExito").slideDown();	
+
 		}
 	);
+
+
 	$("#aceptarMensaje").bind("click",
 		function(){
 			$("#editar").css("display","none");
@@ -91,4 +103,7 @@ function mostrarImagen(id){
 	$("#contenido").slideDown();
 }
 
+$("#cargarImagen").change(function(){
+	alert("holaaa ");
+});
 

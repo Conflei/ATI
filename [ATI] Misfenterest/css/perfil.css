@@ -103,7 +103,7 @@
 
 @font-face {
    font-family: myFirstFont;
-   src: url(font/RoundedElegance.ttf);
+   src: url(../font/RoundedElegance.ttf);
 }
 
 div p span{

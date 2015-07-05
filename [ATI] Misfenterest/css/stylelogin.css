@@ -5,10 +5,6 @@ body
 	color: white;
 }
 
-*
-{
-	color: white;
-}
 .jumbotron
 {
 	color: white;
@@ -17,6 +13,6 @@ body
 
 .well
 {
-	color: white;
+	color: black;
 	background-color: rgba(100,100,120,0.7);
 }
