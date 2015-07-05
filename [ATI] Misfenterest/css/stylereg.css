@@ -1,0 +1,21 @@
+body
+{
+	background-image: url("../assets/fondo3.jpg");
+	background-size: 1200px,800px;
+	color: white;
+}
+
+.jumbotron
+{
+	color: white;
+	background-color: rgba(100,100,120,0.7);
+	box-shadow: 5px 5px 5px #888888;
+}
+
+.well
+{
+	color: white;
+	background-color: rgba(100,100,120,0.7);
+	box-shadow: 5px 5px 5px #888888;
+}
+
