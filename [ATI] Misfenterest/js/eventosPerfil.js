@@ -1,18 +1,5 @@
 $(document).ready(function()
 {	
-	$("#todasImagenes").bind("click",
-		function(){
-			if(active != null){
-				$("#"+active).removeClass("active");
-			}
-			else{
-				$("#generall").slideDown();
-			}
-			$(this).addClass("active");
-			active = $(this).attr("id");
-
-		}
-	);
 	$("#misGalerias").bind("click",
 		function(){
 			if(active != null){
@@ -61,6 +48,25 @@ $(document).ready(function()
 			$("#barra").removeClass("opacar");
 			$("#perfil").removeClass("opacar");
 			$("#columnas").removeClass("opacar");
+		}
+	);
+	$("#verMiPerfil").attr("href","perfil.html");
+	$("#guardarPerfil").bind("click",
+		function(){
+			//validar entrada
+
+			$("#editar").addClass("opacar");
+			$("#mensajeExito").slideDown();	
+		}
+	);
+	$("#aceptarMensaje").bind("click",
+		function(){
+			$("#editar").css("display","none");
+			$("#editar").removeClass("opacar");
+			$("#barra").removeClass("opacar");
+			$("#perfil").removeClass("opacar");
+			$("#columnas").removeClass("opacar");
+			$("#mensajeExito").slideUp();	
 		}
 	);
 });

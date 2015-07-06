@@ -160,3 +160,9 @@ button:hover {
 .opacar{
     opacity: 0.3;
 }
+
+.imgCambio{
+    vertical-align: middle;
+    width: 135px;
+    height: 100px
+}
