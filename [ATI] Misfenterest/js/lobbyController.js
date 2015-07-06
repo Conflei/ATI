@@ -89,6 +89,16 @@ $(document).ready(function(){
 
 });
 
+function UploadContent(){
+	$("#myModal").modal();
+}
+
+$(document).ready(function(){
+    $("#myBtn").click(function(){
+        $("#myModal").modal();
+    });
+});
+
 
 function showImage(index)
 {
@@ -113,6 +123,8 @@ $(document).ready( function(){
 		hideSeleccion();
 	});
 })
+
+
 
 function fill()
 {
