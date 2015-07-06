@@ -5,15 +5,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	<title>	</title>
 	<script src="js/jquery-2.1.4.min.js"></script>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<script src="js/bootstrap.min.js"></script>
-	<link rel="stylesheet" href="css/styles1.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="css/perfil.css"/>
+	<link rel="stylesheet" href="css/styles1.css">
 	<script src="js/isotope.js"></script>
 	<script src="js/lobbyController.js">	</script>
 	
 </head>
 <body>
+
+<div class="allContent"></div>
 <div class="container-fluid" >
 	<div class="row sombra" id="header">
         <!-- barra de buscqueda -->
@@ -46,28 +48,33 @@
          </div>		
 	</div>
 
-	<!--<div class="seleccion">
-		<div class="contenidoSelecto">
+		<div class="contenidoSelecto" id="contenido">
 			<div class="row">
 				<div class="col-sm-6">
-					<div class="imageShower"><img src="assets/img0.jpg" alt=""></div>		
+					<div class="imageShower"><img src="assets/img0.jpg" alt="" id="imgContent"></div>		
 				</div>
 				<div class="col-sm-6">
 					<div class="pinSection">
-								<div class="row">
-									<div class="col-sm-2">
-										<div>	</div>
-									</div>
-									<div class="col-sm-10">
-										<div class="username">Felix Izarra</div>
-									</div>
-								</div>
+							<img src="assets/profile.jpg" alt="" width="20px" height="20px">
+							<h4>Felix Izarra</h4>
+							<a href="#" id="cerrar"><span class="glyphicon glyphicon-remove"></span></a>	
+						<hr>	
+						<p id="parContent">	Esta es la descripcion de esta foto esta es la descripcion de la foto esta es
+						la descripcion de la foto esta es la descripcion de la foto esta es 
+						la descripcion de la foto esta es la descripcion de la foto esta es 
+						la descripcion de la foto esta es la descripcion de l
+						la descripcion de la foto esta es la 
+						</p>
+						<hr>
+						<div class="PinButton">
+							<a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">Pinear!</strong>
+                            <img  class = "img-circle logoSesion" src="img/logo.png">             
+                          </a>
+						</div>
 					</div>
 				</div>
 			</div>
-			
 		</div>
-	</div>-->
 
 </body>
 </html>
