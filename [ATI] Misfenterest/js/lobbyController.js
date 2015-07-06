@@ -42,6 +42,7 @@ var grid;
 var gridSizer;
 var $isoGrid;
 var firstFill = false;
+var showingIMG = false;
 
 var isoOptions = {
 	itemSelector: '.grid-item',
@@ -55,7 +56,7 @@ var isoOptions = {
 
 $(document).ready(function(){
 
-	body = $("body");
+	body = $(".allContent");
 
 	mainContainer = $("<div>");
 	mainContainer.attr("class", "mainContent");
@@ -74,6 +75,7 @@ $(document).ready(function(){
 
 	fill();
 	firstFill = true;
+	showingIMG = false;
 })
 
 $(document).ready(function(){
@@ -88,6 +90,29 @@ $(document).ready(function(){
 });
 
 
+function showImage(index)
+{
+			$('.contenidoSelecto').slideDown('fast');
+			$('.allContent').css("opacity", "0.4");
+			$('#imgContent').attr("src", misObjetos[index]["url"]);
+			$('h4').html(misObjetos[index]["creator_id"]);
+			$('#parContent').html(misObjetos[index]["description"]);
+			showingIMG = true;
+};
+
+function hideSeleccion(){
+		$('.contenidoSelecto').slideUp('slow');
+		$('.allContent').attr("onclick", "showImage()");
+		$('.allContent').css("opacity", "1");
+	
+	
+};
+
+$(document).ready( function(){
+	$('#cerrar').bind('click', function(){
+		hideSeleccion();
+	});
+})
 
 function fill()
 {
@@ -106,6 +131,7 @@ function fill()
 			var randObject = Math.floor(Math.random()*10) % 5;
 			var imagen = $("<img>");
 			imagen.attr("src",misObjetos[randObject]["url"]);
+			imagen.attr("onclick", "showImage("+randObject+")");
 			elemento.append(imagen);
 			elemento.append("<hr>");
 			elemento.append("<p>"+misObjetos[randObject]["description"]);
