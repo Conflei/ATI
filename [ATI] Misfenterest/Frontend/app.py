@@ -1,7 +1,6 @@
 from flask import *
 
-app = Flask (__name__)
-#, template_folder = 'views', static_folder = 'statics')
+app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 
 # Routes goes here
 
