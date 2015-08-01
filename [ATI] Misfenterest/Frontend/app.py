@@ -16,8 +16,7 @@ def pedro():
 
 @app.route('/mylogin')
 def mylogin():
-	name = request.args.get('name')
-	return render_template('../../Frontend/index.html', name = name)
+	return render_template('index.html')
 
 @app.route('/form')
 def xs():
