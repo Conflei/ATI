@@ -1,7 +1,6 @@
 from flask import *
 
-app = Flask (__name__)
-#, template_folder = 'views', static_folder = 'statics'
+app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 
 # Routes goes here
 
@@ -13,6 +12,11 @@ def index():
 def pedro():
 	name = request.args.get('name')
 	return render_template('say.html', name = name)
+
+@app.route('/login')
+def pedro():
+	name = request.args.get('name')
+	return render_template('../../Frontend/index.html', name = name)
 
 @app.route('/form')
 def xs():
