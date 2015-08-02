@@ -33,7 +33,7 @@ def  obtenerDatosUsuario (name):
 	cursor = dbConnection.cursor()
 
 	datos = {}
-	cursor.execute('select fullname from usuario where name=%s',(name))
+	cursor.execute('select fullname from users where name=%s',(name))
 
 	tmp = cursor.fetchone()
 	datos['fullname'] = tmp[0]
