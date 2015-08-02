@@ -4,7 +4,7 @@ import psycopg2
 
 def obtenerCodUsuario (name, password):
 
-	print("obtenerCodUsuarioooo"):
+	print("obtenerCodUsuarioooo")
 
 	dbConnection = psycopg2.connect('dbname=atidatabase user=ati password=123 host=localhost')
 	cursor = dbConnection.cursor()
