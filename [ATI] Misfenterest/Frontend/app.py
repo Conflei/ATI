@@ -130,7 +130,7 @@ def login():
 		usuario = datos['fullname']
 		print("usuario: "+usuario)
 		listPin = searchPin(pageP,name)
-		return render_template('lobby.html',error = error, usuario = usuario, listPin = listPin)
+		return render_template('lobby.html',error = error, usuario = usuario, listPin = json.dumps(listPin))
 	else:
 		print("el usuario no existe en la BD")
 		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
