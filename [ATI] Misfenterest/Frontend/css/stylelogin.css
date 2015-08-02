@@ -1,6 +1,6 @@
 body
 {
-	background-image: url("../assets/fondo1.jpg");
+	background-image: url("/assets/fondo1.jpg");
 	background-size: 1400px,`000px;
 	color: white;
 }
