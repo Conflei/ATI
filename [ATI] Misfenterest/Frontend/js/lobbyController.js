@@ -7,22 +7,22 @@ var misObjetos = [
   {
   	"creator_id" : "Misa",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "../assets/img1.jpg"
+	"url" : "/assets/img1.png"
   },
   {
   	"creator_id" : "Shortman",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img2.jpg"
+	"url" : "/assets/img2.png"
   },
   {
   	"creator_id" : "Cebin",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img3.jpg"
+	"url" : "/assets/img3.png"
   },
   {
   	"creator_id" : "Yldemaro (Divino)",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "mesfinterest.conflei.koding.io:5000/assets/img4.JPG"
+	"url" : "/assets/img4.png"
   }
 ];
 
@@ -128,7 +128,6 @@ $(document).ready( function(){
 
 function fill()
 {
-	alert("<div>");
 		for(i = 0; i<7; i++)
 		{
 			var gridElement = $("<div>");
