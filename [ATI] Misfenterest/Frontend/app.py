@@ -17,13 +17,13 @@ def pedro():
 def mylogin():
 	return render_template('index.html')
 
-@app.route('/css/bootstrap.min.css')
-def bootstrapcss():
-	return url_for('static', filename='css/bootstrap.min.css')
+@app.route('/css/<path:path>')
+def send_css(path):
+	return send_from_directory('css', path)
 
-@app.route('/css/stylelogin.css')
-def stylelogin():
-	return ('/css/styleloginsty.css')
+@app.route('/js/<path:path>')
+def send_js(path):
+	return send_from_directory('js', path)
 
 
 @app.route('/form')
