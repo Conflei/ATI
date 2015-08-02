@@ -74,6 +74,7 @@ def crearCuenta (newName, newPassword, newEmail, newFullname):
 		cursor.execute('insert into users (name, password, email, fullname) values (%s, %s, %s, %s)',
 			(newName, newPassword, newEmail, newFullname))
 
+		dbConnection.commit();
 		cursor.close()
 		dbConnection.close()
 		return True
@@ -146,7 +147,7 @@ def login():
 		print("el usuario no existe en la BD")
 		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
 		return render_template('index.html', error = error, usuario = name)
-		
+
 
 @app.route('/registeraction', methods = ['POST'])
 def registerAction():
