@@ -13,19 +13,20 @@ pageP = 1;
 
 def existUser (name,password):
 
-	#print("obtenerCodUsuarioooo")
+	print("obtenerCodUsuarioooo")
 
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 
 	cursor.execute('select name from users where name=%s and password=%s',(name,password))
-
+	print("executed")
 	if cursor.rowcount == 0:
+		print("not founded")
 		return False
 
 	cursor.close()
 	dbConnection.close()
-
+	print("founded")
 	return True
 
 def  obtenerDatosUsuario (name):
