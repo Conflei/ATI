@@ -1,14 +1,14 @@
-from flask import*
-from models.modelo import**
+from flask import *
+#from models.modelo import *
 
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 
 # Routes goes here
 
-@app.route('/sayhello')
-def pedro():
-	name = request.args.get('name')
-	return render_template('say.html', name = name)
+#@app.route('/sayhello')
+#def pedro():
+#	name = request.args.get('name')
+#	return render_template('say.html', name = name)
 
 @app.route('/')
 def index():
@@ -44,13 +44,13 @@ def login():
 	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
 	name = request.form['Name']
 	password = request.form['Password']
-	codUsuario = obtenerCodigoUsuario(name=name,password=password)
-	if codUsuario:
-		datos = obtenerDatosUsuario(codUsuario)
-		usuario = datos['name']
-		print("usuario: "+usuario)
-	else:
-		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
+	#codUsuario = obtenerCodigoUsuario(name=name,password=password)
+	#if codUsuario:
+	#	datos = obtenerDatosUsuario(codUsuario)
+#		usuario = datos['name']
+#		print("usuario: "+usuario)
+#	else:
+#		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
 	#listaPasties = leerPasties(pastieP,False,codUsuario)
 	#return render_template('Inicio.html',error = error, estado = estado, usuario = usuario, listaPasties = listaPasties)
 	return render_template('lobby.html')
