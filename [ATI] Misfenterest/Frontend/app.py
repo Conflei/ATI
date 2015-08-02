@@ -38,7 +38,7 @@ def  obtenerDatosUsuario (name):
 
 	datos = {}
 	print("ENTREEEEEE "+name)
-	cursor.execute('select * from users where name=%s',name) #esta dando error
+	cursor.execute('select * from users where name=%s',[name]) #esta dando error
 	print("ENTREEEEEE 33")
 	tmp = cursor.fetchone()
 	datos['fullname'] = tmp[0]
