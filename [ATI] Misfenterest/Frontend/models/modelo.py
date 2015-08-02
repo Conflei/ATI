@@ -1,9 +1,6 @@
 import psycopg2
 
-try:
-    connection = psycopg2.connect('dbname=pastie_db user=pastie_usr password=12345 host=localhost')
-except:
-    print ("I am unable to connect to the database")
+
 
 def obtenerCodUsuario (email, password):
 
