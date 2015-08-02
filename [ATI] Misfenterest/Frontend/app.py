@@ -1,4 +1,5 @@
 from flask import *
+from models.modelo.import *
 
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 
@@ -43,9 +44,16 @@ def login():
 	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
 	name = request.form['Name']
 	password = request.form['Password']
-	if(name == 'misaelsebin'and password == '1'):
-		return render_template('say.html', name = email)
-	return render_template('lobby.html')
+	codUsuario = obtenerCodigoUsuario(name=name,password=password)
+	if codUsuario:
+		datos = obtenerDatosUsuario(codUsuario)
+		usuario = datos['name']:
+		print("usuario: "+usuario);
+	else:
+		error = 'ERROR: Correo electronico o Contraseña son invalidos.'
+	#listaPasties = leerPasties(pastieP,False,codUsuario)
+	#return render_template('Inicio.html',error = error, estado = estado, usuario = usuario, listaPasties = listaPasties)
+	return render_template('lobby.html'):
 
 # Routes end here
 
