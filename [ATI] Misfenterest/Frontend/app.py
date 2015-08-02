@@ -72,7 +72,7 @@ def crearCuenta (newName, newPassword, newEmail, newFullname):
 	cursor = dbConnection.cursor()
 
 	if(not existUser(newName, newPassword)):
-		cursor.execute('insert into users (name, passord, email, fullname) values (%s, %s, %s, %s)',
+		cursor.execute('insert into users (name, password, email, fullname) values (%s, %s, %s, %s)',
 			(newName, newPassword, newEmail, newFullname))
 
 		cursor.close()
