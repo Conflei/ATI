@@ -26,7 +26,7 @@ def send_js(path):
 def send_img(path):
 	return send_from_directory('img', path)
 
-@app.route('/assets/<path:path>')
+@app.route('/statics/assets/<path:path>')
 def send_assets(path):
 	return send_from_directory('assets', path)
 
