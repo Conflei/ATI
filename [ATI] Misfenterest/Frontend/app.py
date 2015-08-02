@@ -19,7 +19,11 @@ def mylogin():
 
 @app.route('/css/bootstrap.min.css')
 def bootstrapcss():
-	return ('/css/bootstrap.min.css')
+	return url_for('static', filename='css/bootstrap.min.css')
+
+@app.route('/css/stylelogin.css')
+def stylelogin():
+	return url_for('static', filename='css/stylelogin.css')
 
 
 @app.route('/form')
