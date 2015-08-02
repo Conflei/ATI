@@ -128,6 +128,7 @@ $(document).ready( function(){
 
 function fill()
 {
+	alert("ad");
 		for(i = 0; i<7; i++)
 		{
 			var gridElement = $("<div>");
