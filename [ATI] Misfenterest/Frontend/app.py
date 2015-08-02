@@ -48,7 +48,7 @@ def obtenerCodUsuario (name,password):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 
-	cursor.execute('select name from users where name=%s and password=%s',(name,password))
+	cursor.execute('select fullname from users where name=%s and password=%s',(name,password))
 
 	if cursor.rowcount == 0:
 		return False
