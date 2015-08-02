@@ -71,7 +71,7 @@ def crearCuenta (newName, newPassword, newEmail, newFullname):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 
-	if(not existUser(name, passord)):
+	if(not existUser(newName, newPassord)):
 		cursor.execute('insert into users (name, passord, email, fullname) values (%s, %s, %s, %s)',
 			(newName, newPassword, newEmail, newFullname))
 
