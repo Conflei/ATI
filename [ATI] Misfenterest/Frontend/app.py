@@ -11,6 +11,7 @@ def pedro():
 
 @app.route('/')
 def index():
+	print('funciona')
 	return render_template('index.html')
 
 @app.route('/css/<path:path>')
