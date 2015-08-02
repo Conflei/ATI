@@ -1,5 +1,5 @@
 from flask import *
-#from models.modelo import *
+from models import modelo
 
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 
