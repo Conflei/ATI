@@ -12,9 +12,6 @@ pageP = 1;
 #modeloo################################################
 
 def existUser (name,password):
-
-	print("obtenerCodUsuarioooo")
-
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 
@@ -37,9 +34,7 @@ def  obtenerDatosUsuario (name):
 	cursor = dbConnection.cursor()
 
 	datos = {}
-	print("ENTREEEEEE "+name)
 	cursor.execute('select * from users where name=%s',[name]) 
-	print("ENTREEEEEE 33")
 	tmp = cursor.fetchone()
 	datos['fullname'] = tmp[0]
 
@@ -89,11 +84,6 @@ def crearCuenta (newName, newPassword, newEmail, newFullname):
 
 # Routes goes here
 
-#@app.route('/sayhello')
-#def pedro():
-#	name = request.args.get('name')
-#	return render_template('say.html', name = name)
-
 @app.route('/')
 def index():
 	print('funciona')
@@ -123,10 +113,6 @@ def send_assets(path):
 @app.route('/fonts/<path:path>')
 def send_fonts(path):
 	return send_from_directory('fonts', path)
-
-@app.route('/form')
-def xs():
-	return render_template('form.html')
 
 
 @app.route('/login', methods = ['POST'])
@@ -161,6 +147,11 @@ def registerAction():
 
 	return render_template('register.html',usuario = name, listPin = listPin)
 
+@app.route('/loadimage', methods = ['POST'])
+def loadImage():
+	title 		= request.form['title']
+	description = request.form['description']
+	imageData 	= request.data;
 
 	
 

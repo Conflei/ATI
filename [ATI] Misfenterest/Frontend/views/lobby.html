@@ -11,9 +11,10 @@
 	<link rel="stylesheet" href="css/styles1.css">
 	<script src="js/isotope.js"></script>
 	<script>
+    var misObjetos;
     $(document).ready(function()
     {   
-      var misObjetos = {{listPin}};
+      misObjetos = {{listPin}};
       alert(misObjetos);
     });
   </script>
@@ -98,18 +99,18 @@
           <h3><span class="glyphicon glyphicon-upload"></span> Upload your Pin</h3>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-          <form role="form">
+          <form role="form" enctype="multipart/form-data">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-tint"></span> Title</label>
-              <input type="text" class="form-control" id="usrname" placeholder="Enter email">
+              <input type="text" class="form-control" id="usrname" placeholder="Title" name="title">
             </div>
             <div class="form-group">
               <label for="descrip"><span class="glyphicon glyphicon-pencil"></span> Description</label>
-              <input type="text" class="form-control" id="desc" placeholder="Enter description">
+              <input type="text" class="form-control" id="desc" placeholder="Enter description" name="description">
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-picture"></span> Select the Content</label>
-              <input type="file" class="form-control" id="psw" placeholder="Select Content" accept="image/*">
+              <input type="file" class="form-control" id="psw" placeholder="Select Content" accept="image/*" name="image">
             </div>
               <button type="submit" class="btn btn-fail btn-block"><span class="glyphicon glyphicon-off"></span>Upload</button>
           </form>
