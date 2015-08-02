@@ -1,6 +1,6 @@
 from flask import *
 
-app = Flask (__name__, template_folder = 'views', static_folder = 'static')
+app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 
 # Routes goes here
 
@@ -26,7 +26,7 @@ def send_js(path):
 def send_img(path):
 	return send_from_directory('img', path)
 
-@app.route('/<path:path>')
+@app.route('/assets/<path:path>')
 def send_assets(path):
 	return send_from_directory('assets', path)
 
@@ -51,6 +51,6 @@ def login():
 
 if __name__ == '__main__':
   app.debug = True
-  app.run( host = '0.0.0.0', port = 5001 )
+  app.run( host = '0.0.0.0', port = 5000 )
 
 
