@@ -14,11 +14,11 @@ def index():
 	print('funciona')
 	return render_template('index.html')
 
-@app.route('/css/<path:path>')
+@app.route('statics/css/<path:path>')
 def send_css(path):
 	return send_from_directory('css', path)
 
-@app.route('/js/<path:path>')
+@app.route('statics/js/<path:path>')
 def send_js(path):
 	return send_from_directory('js', path)
 
