@@ -6,6 +6,67 @@ app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 
 pageP = 1;
 
+
+
+#####################################################################################################################
+#modeloo################################################
+
+def existUser (name,password):
+
+	#print("obtenerCodUsuarioooo")
+
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+
+	cursor.execute('select name from users where name=%s and password=%s',(name,password))
+
+	if cursor.rowcount == 0:
+		return False
+
+	cursor.close()
+	dbConnection.close()
+
+	return True
+
+def  obtenerDatosUsuario (codUsuario):
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+
+	datos = {}
+	cursor.execute('select name,email from usuario where name=%s',(codUsuario))
+
+	tmp = cursor.fetchone()
+	datos['name'] = tmp[0]
+	datos['email'] = tmp[1]
+
+	cursor.close()
+	dbConnection.close()
+
+	return datos
+
+def searchPin(pageP,name):
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+
+	listPin = []
+	cursor.execute('select picdir from pictures offset %s limit 5',((pageP-1)*7))
+	
+	dataPin = cursor.fetchall();
+
+	for dPin in dataPin:
+		Pin = {}
+		Pin['url'] = dPin[0]
+		listPin.append(Pin)
+
+	cursor.close()
+	dbConnection.close()
+
+	return listPin
+
+
+
+
+
 # Routes goes here
 
 #@app.route('/sayhello')
@@ -65,57 +126,3 @@ if __name__ == '__main__':
   app.debug = True
   app.run( host = '0.0.0.0', port = 5000 )
 
-#####################################################################################################################
-#modeloo################################################
-
-def existUser (name,password):
-
-	#print("obtenerCodUsuarioooo")
-
-	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
-	cursor = dbConnection.cursor()
-
-	cursor.execute('select name from users where name=%s and password=%s',(name,password))
-
-	if cursor.rowcount == 0:
-		return False
-
-	cursor.close()
-	dbConnection.close()
-
-	return True
-
-def  obtenerDatosUsuario (codUsuario):
-	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
-	cursor = dbConnection.cursor()
-
-	datos = {}
-	cursor.execute('select name,email from usuario where name=%s',(codUsuario))
-
-	tmp = cursor.fetchone()
-	datos['name'] = tmp[0]
-	datos['email'] = tmp[1]
-
-	cursor.close()
-	dbConnection.close()
-
-	return datos
-
-def searchPin(pageP,name):
-	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
-	cursor = dbConnection.cursor()
-
-	listPin = []
-	cursor.execute('select picdir from pictures offset %s limit 5',((pageP-1)*7))
-	
-	dataPin = cursor.fetchall();
-
-	for dPin in dataPin:
-		Pin = {}
-		Pin['url'] = dPin[0]
-		listPin.append(Pin)
-
-	cursor.close()
-	dbConnection.close()
-
-	return listPin
