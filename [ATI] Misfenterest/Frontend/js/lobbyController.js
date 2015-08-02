@@ -2,27 +2,27 @@ var misObjetos = [
   {
   	"creator_id" : "Evo",
   	"description" : "Quiero compartir esta foto con ustedes",
-    "url" : "assets/img0.jpg"
+    "url" : "../assets/img0.jpg"
   },
   {
   	"creator_id" : "Misa",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "assets/img1.jpg"
+	"url" : "../assets/img1.jpg"
   },
   {
   	"creator_id" : "Shortman",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "assets/img2.jpg"
+	"url" : "/assets/img2.jpg"
   },
   {
   	"creator_id" : "Cebin",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "assets/img3.jpg"
+	"url" : "/assets/img3.jpg"
   },
   {
   	"creator_id" : "Yldemaro (Divino)",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "assets/img4.jpg"
+	"url" : "/assets/img4.jpg"
   }
 ];
 
