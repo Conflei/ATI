@@ -11,7 +11,7 @@ def obtenerCodUsuario (name,password):
 
 	print("obtenerCodUsuarioooo")
 
-	dbConnection = psycopg2.connect('dbname=atidatabase user=ati password=123 host=localhost')
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 
 	cursor.execute('select name from users where name=%s and password=%s',(name,password))
@@ -27,7 +27,7 @@ def obtenerCodUsuario (name,password):
 	return codUsuario
 	
 def  obtenerDatosUsuario (codUsuario):
-	dbConnection = psycopg2.connect('dbname=atidatabase user=ati password=123 host=localhost')
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 
 	datos = {}
