@@ -22,7 +22,7 @@ var misObjetos = [
   {
   	"creator_id" : "Yldemaro (Divino)",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "assets/img4.jpg"
+	"url" : "mesfinterest.conflei.kodin.io:5000/assets/img4.JPG"
   }
 ];
 
@@ -143,7 +143,7 @@ function fill()
 
 			var randObject = Math.floor(Math.random()*10) % 5;
 			var imagen = $("<img>");
-			imagen.attr("src",'{{misObjetos[randObject]["url"]}}');
+			imagen.attr("src",misObjetos[randObject]["url"]);
 			imagen.attr("onclick", "showImage("+randObject+")");
 			elemento.append(imagen);
 			elemento.append("<hr>");
