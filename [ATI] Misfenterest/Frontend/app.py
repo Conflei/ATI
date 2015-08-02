@@ -49,7 +49,7 @@ def login():
 	name = request.form['Name']
 	password = request.form['Password']
 	exist = existUser(name=name,password=password)
-	error = "":
+	error = ""
 	if exist:
 		datos = obtenerDatosUsuario(name)
 		usuario = datos['fullname']
