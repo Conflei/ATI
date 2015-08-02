@@ -23,7 +23,7 @@ def bootstrapcss():
 
 @app.route('/css/stylelogin.css')
 def stylelogin():
-	return url_for('static', filename='css/stylelogin.css')
+	return url_for('static', filename='stylelogin.css')
 
 
 @app.route('/form')
