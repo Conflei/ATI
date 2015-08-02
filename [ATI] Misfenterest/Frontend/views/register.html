@@ -22,11 +22,15 @@
 			<label for="title"><p class="text-center">Register</p></label>
 		</div>
 
-		<form action="#" role="form">
+		<form action="http://mesfinterest.conflei.koding.io:5000/registeraction" role="form">
 			<div class="well">
 				<div class="form-group">
 						<label for="id">Username: </label>
-						<input type="text" class="form-control" name="accout_id" required>
+						<input type="text" class="form-control" name="name" required>
+				</div>
+				<div class="form-group">
+						<label for="id">Fullname: </label>
+						<input type="text" class="form-control" name="fullname" required>
 				</div>
 				<div class="form-group">
 						<label for="email">Email: </label>
@@ -34,7 +38,7 @@
 				</div>
 				<div class="form-group">	
 						<label for="password">Password: </label>
-						<input type="password" class="form-control" name="repassword" required>
+						<input type="password" class="form-control" name="password" required>
 				</div>
 				<div class="form-group">	
 						<label for="repassword">Re-type Password: </label>

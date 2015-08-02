@@ -67,6 +67,22 @@ def searchPin(pageP,name):
 
 	return listPin
 
+def crearCuenta (newName, newPassword, newEmail, newFullname):
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+
+	if(not existUser(name, passord)):
+		cursor.execute('insert into users (name, passord, email, fullname) values (%s, %s, %s, %s)',
+			(newName, newPassword, newEmail, newFullname))
+
+		cursor.close()
+		dbConnection.close()
+		return true
+
+	return false
+
+
+
 
 
 
@@ -131,6 +147,23 @@ def login():
 		print("el usuario no existe en la BD")
 		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
 		return render_template('index.html', error = error, usuario = name)
+
+@app.route('/registeraction', methods = ['POST'])
+def registerAction():
+	name	 = request.form['name']
+	password = request.form['password']
+	email	 = request.form['email']
+	fullname = request.form['fullname']
+	print("Los datos que llegaron al server son "+name+" "+password+" "+email+" "+fullname)
+	if(crearCuenta(name, password, email, fullname)):
+		listPin = searchPin(pageP,name)
+		print('El usuario no existia en la BD, se creo')
+		return render_template('lobby.html',usuario = name, listPin = listPin)
+
+	print ('El usuario ya existe %s en la BD', name)
+	return render_template('register.html',usuario = name, listPin = listPin)
+
+
 	
 
 # Routes end here
