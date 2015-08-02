@@ -46,16 +46,17 @@ def  obtenerDatosUsuario (name):
 def searchPin(pageP,name):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
+	print("estoy en search pin")
 
 	listPin = []
 	cursor.execute('select picdir from pictures offset %s limit 5',[((pageP-1)*7)])
 	
 	dataPin = cursor.fetchall();
-
+	print("fetcall"+cursor.fetchall())
 	for dPin in dataPin:
 		
 		Pin = {}
-		Pin['url'] = dPin[0]
+		Pin['url'] = dPin
 		print (Pin['url'])
 		listPin.append(Pin)
 
