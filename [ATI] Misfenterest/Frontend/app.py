@@ -22,8 +22,8 @@ def bootstrapcss():
 	return url_for('static', filename='css/bootstrap.min.css')
 
 @app.route('/css/stylelogin.css')
-def stylelogin():
-	url_for('static', filename='stylelogin.css')
+def bootstrapcss():
+	return ('/css/styleloginsty.css')
 
 
 @app.route('/form')
