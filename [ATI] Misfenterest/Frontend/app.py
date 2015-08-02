@@ -44,11 +44,12 @@ def login():
 	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
 	name = request.form['Name']
 	password = request.form['Password']
-	#codUsuario = obtenerCodigoUsuario(name=name,password=password)
-	#if codUsuario:
+	codUsuario = obtenerCodigoUsuario(name=name,password=password)
+
+	if codUsuario:
 	#	datos = obtenerDatosUsuario(codUsuario)
 #		usuario = datos['name']
-#		print("usuario: "+usuario)
+		print("usuario: "+codUsuario)
 #	else:
 #		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
 	#listaPasties = leerPasties(pastieP,False,codUsuario)
