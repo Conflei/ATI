@@ -18,7 +18,7 @@ def index():
 def send_css(path):
 	return send_from_directory('css', path)
 
-@app.route('statics/js/<path:path>')
+@app.route('/statics/js/<path:path>')
 def send_js(path):
 	return send_from_directory('js', path)
 
