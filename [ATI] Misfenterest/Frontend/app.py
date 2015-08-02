@@ -21,6 +21,8 @@ def existUser (name,password):
 	cursor.execute('select name from users where name=%s and password=%s',(name,password))
 	print("executed")
 	if cursor.rowcount == 0:
+		cursor.close()
+		dbConnection.close()
 		print("not founded")
 		return False
 
@@ -114,10 +116,12 @@ def login():
 	exist = existUser(name=name,password=password)
 	error = ""
 	if exist:
+		print("el usuario existe en la BD")
 		datos = obtenerDatosUsuario(name)
 		usuario = datos['fullname']
 		print("usuario: "+usuario)
 	else:
+		print("el usuario no existe en la BD")
 		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
 	listPin = searchPin(pageP,name)
 	return render_template('lobby.html',error = error, usuario = usuario, listPin = listPin)
