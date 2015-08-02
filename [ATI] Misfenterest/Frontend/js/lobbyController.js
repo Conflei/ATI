@@ -22,7 +22,7 @@ var misObjetos = [
   {
   	"creator_id" : "Yldemaro (Divino)",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img4.jpg"
+	"url" : "assets/img4.jpg"
   }
 ];
 
