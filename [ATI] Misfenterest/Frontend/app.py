@@ -53,7 +53,7 @@ def searchPin(pageP,name):
 	cursor = dbConnection.cursor()
 
 	listPin = []
-	cursor.execute('select picdir from pictures offset %s limit 5',((pageP-1)*7))
+	cursor.execute('select picdir from pictures offset %s limit 5',[((pageP-1)*7)])
 	
 	dataPin = cursor.fetchall();
 
