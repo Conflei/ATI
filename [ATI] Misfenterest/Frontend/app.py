@@ -50,7 +50,7 @@ def login():
 		usuario = datos['name']
 		print("usuario: "+usuario)
 	else:
-		error = 'ERROR: Correo electronico o Contraseña son invalidos.'
+		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
 	#listaPasties = leerPasties(pastieP,False,codUsuario)
 	#return render_template('Inicio.html',error = error, estado = estado, usuario = usuario, listaPasties = listaPasties)
 	return render_template('lobby.html'):\
