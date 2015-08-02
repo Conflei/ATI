@@ -1,8 +1,12 @@
 import psycopg2
 
+try:
+    dbConnection = psycopg2.connect('dbname=atidatabase user=ati password=123 host=localhost')
+except:
+    print ("I am unable to connect to the database")
 
 
-def obtenerCodUsuario (name, password):
+def obtenerCodUsuario (name,password):
 
 	print("obtenerCodUsuarioooo")
 
