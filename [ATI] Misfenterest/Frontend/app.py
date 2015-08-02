@@ -38,7 +38,7 @@ def  obtenerDatosUsuario (name):
 
 	datos = {}
 	print("ENTREEEEEE "+name)
-	cursor.execute('select name from users where name=%s',name) #esta dando error
+	cursor.execute('select * from users where name=%s',name) #esta dando error
 	print("ENTREEEEEE 33")
 	tmp = cursor.fetchone()
 	datos['fullname'] = tmp[0]
@@ -125,7 +125,7 @@ def login():
 	else:
 		print("el usuario no existe en la BD")
 		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
-		return render_template('login.html', error = error, usuario = name)
+		return render_template('index.html', error = error, usuario = name)
 	
 
 # Routes end here
