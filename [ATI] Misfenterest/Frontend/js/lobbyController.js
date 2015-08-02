@@ -140,7 +140,7 @@ function fill()
 			var elemento = $("<div>");
 			elemento.attr("class", "miElemento");
 
-			var randObject = Math.floor(Math.random()*10) % 5;
+			var randObject = Math.floor(Math.random()*10) % 6;
 			var imagen = $("<img>");
 			imagen.attr("src",misObjetos[randObject]["url"]);
 			imagen.attr("onclick", "showImage("+randObject+")");
