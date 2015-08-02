@@ -29,13 +29,14 @@ def existUser (name,password):
 	return True
 
 def  obtenerDatosUsuario (name):
-	print("ENTREEEEEE")
+
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 
 	datos = {}
+	print("ENTREEEEEE 22")
 	cursor.execute('select fullname from users where name=%s',(name))
-
+	print("ENTREEEEEE 33")
 	tmp = cursor.fetchone()
 	datos['fullname'] = tmp[0]
 
