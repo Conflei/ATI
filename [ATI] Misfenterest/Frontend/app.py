@@ -38,7 +38,7 @@ def  obtenerDatosUsuario (name):
 
 	datos = {}
 	print("ENTREEEEEE "+name)
-	cursor.execute('select * from users where name=%s',[name]) #esta dando error
+	cursor.execute('select * from users where name=%s',[name]) 
 	print("ENTREEEEEE 33")
 	tmp = cursor.fetchone()
 	datos['fullname'] = tmp[0]
@@ -82,6 +82,11 @@ def searchPin(pageP,name):
 def index():
 	print('funciona')
 	return render_template('index.html')
+
+@app.route('/register')
+def registrar():
+	print('funciona')
+	return render_template('register.html')
 
 @app.route('/css/<path:path>')
 def send_css(path):
