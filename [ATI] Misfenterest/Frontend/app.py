@@ -13,8 +13,8 @@ def pedro():
 	name = request.args.get('name')
 	return render_template('say.html', name = name)
 
-@app.route('/mylogin')
-def mylogin():
+@app.route('/index')
+def index():
 	return render_template('index.html')
 
 @app.route('/css/<path:path>')
@@ -41,22 +41,14 @@ def send_fonts(path):
 def xs():
 	return render_template('form.html')
 
-@app.route('/login', methods = ['POST'])
+@app.route('/loin', methods = ['POST'])
 def login():
-	email = request.form['Email']
-	password = request.form['Password']
-	if(email == 'pedro@gmail.com'and password == '1'):
-		return render_template('say.html', name = email)
-	return render_template('form.html')
-
-@app.route('/mylogin/go', methods = ['POST'])
-def myLoginGo():
 	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
 	name = request.form['Name']
 	password = request.form['Password']
 	if(name == 'misaelsebin'and password == '1'):
 		return render_template('say.html', name = email)
-	return render_template('form.html')
+	return render_template('lobby.html')
 
 # Routes end here
 
