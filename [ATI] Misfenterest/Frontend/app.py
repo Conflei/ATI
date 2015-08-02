@@ -52,11 +52,10 @@ def searchPin(pageP,name):
 	cursor.execute('select picdir from pictures offset %s limit 5',[((pageP-1)*7)])
 	
 	dataPin = cursor.fetchall();
-	print("fetcall"+cursor.fetchall())
 	for dPin in dataPin:
 		
 		Pin = {}
-		Pin['url'] = dPin[0]
+		Pin['url'] = dPin
 		print (Pin['url'])
 		listPin.append(Pin)
 
