@@ -35,7 +35,7 @@ def  obtenerDatosUsuario (name):
 
 	datos = {}
 	print("ENTREEEEEE "+name)
-	cursor.execute('select fullname from users where name=Misael27')
+	cursor.execute('select fullname from users where name=misael27')
 	print("ENTREEEEEE 33")
 	tmp = cursor.fetchone()
 	datos['fullname'] = tmp[0]
