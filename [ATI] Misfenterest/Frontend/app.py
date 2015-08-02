@@ -15,7 +15,7 @@ def pedro():
 
 @app.route('/mylogin')
 def mylogin():
-	return render_template('login.html')
+	return render_template('index.html')
 
 @app.route('/css/<path:path>')
 def send_css(path):
