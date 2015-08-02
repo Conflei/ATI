@@ -22,7 +22,7 @@ var misObjetos = [
   {
   	"creator_id" : "Yldemaro (Divino)",
 	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "mesfinterest.conflei.kodin.io:5000/assets/img4.JPG"
+	"url" : "mesfinterest.conflei.koding.io:5000/assets/img4.JPG"
   }
 ];
 
@@ -128,7 +128,7 @@ $(document).ready( function(){
 
 function fill()
 {
-	
+	alert("<div>");
 		for(i = 0; i<7; i++)
 		{
 			var gridElement = $("<div>");
