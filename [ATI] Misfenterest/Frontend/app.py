@@ -53,8 +53,10 @@ def searchPin(pageP,name):
 	dataPin = cursor.fetchall();
 
 	for dPin in dataPin:
+		
 		Pin = {}
 		Pin['url'] = dPin[0]
+		print (Pin['url'])
 		listPin.append(Pin)
 
 	cursor.close()
