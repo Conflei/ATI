@@ -2,12 +2,14 @@ import psycopg2
 
 
 
-def obtenerCodUsuario (email, password):
+def obtenerCodUsuario (name, password):
+
+	print("obtenerCodUsuarioooo"):
 
 	dbConnection = psycopg2.connect('dbname=atidatabase user=ati password=123 host=localhost')
 	cursor = dbConnection.cursor()
 
-	cursor.execute('select name from users where email=%s and password=%s',(email,password))
+	cursor.execute('select name from users where name=%s and password=%s',(name,password))
 
 	if cursor.rowcount == 0:
 		return False

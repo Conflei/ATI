@@ -44,7 +44,7 @@ def login():
 	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
 	name = request.form['Name']
 	password = request.form['Password']
-	codUsuario = obtenerCodigoUsuario(name=name,password=password)
+	codUsuario = obtenerCodUsuario(name=name,password=password)
 
 	if codUsuario:
 	#	datos = obtenerDatosUsuario(codUsuario)
