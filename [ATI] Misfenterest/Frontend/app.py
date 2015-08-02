@@ -1,5 +1,6 @@
 from flask import *
 import modelo
+import psycopg2
 
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 
