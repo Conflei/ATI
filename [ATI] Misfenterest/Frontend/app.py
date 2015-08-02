@@ -14,7 +14,7 @@ def index():
 	print('funciona')
 	return render_template('index.html')
 
-@app.route('statics/css/<path:path>')
+@app.route('/css/<path:path>')
 def send_css(path):
 	return send_from_directory('css', path)
 
