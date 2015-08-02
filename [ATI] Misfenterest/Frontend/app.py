@@ -4,16 +4,12 @@ app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 
 # Routes goes here
 
-@app.route('/')
-def index():
-	return 'Hello Flask'
-
 @app.route('/sayhello')
 def pedro():
 	name = request.args.get('name')
 	return render_template('say.html', name = name)
 
-@app.route('/index')
+@app.route('/')
 def index():
 	return render_template('index.html')
 
@@ -41,7 +37,7 @@ def send_fonts(path):
 def xs():
 	return render_template('form.html')
 
-@app.route('/loin', methods = ['POST'])
+@app.route('/login', methods = ['POST'])
 def login():
 	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
 	name = request.form['Name']
