@@ -1,7 +1,8 @@
 import psycopg2
 
 try:
-    dbConnection = psycopg2.connect('dbname=atidatabase user=ati password=123 host=localhost')
+    dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+    print("puedo accederrrr")
 except:
     print ("I am unable to connect to the database")
 
