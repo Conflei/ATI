@@ -50,7 +50,7 @@ def login():
 	return render_template('form.html')
 
 @app.route('/mylogin/go', methods = ['POST'])
-def login():
+def myLoginGo():
 	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
 	name = request.form['Name']
 	password = request.form['Password']
