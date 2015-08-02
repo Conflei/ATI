@@ -17,6 +17,11 @@ def pedro():
 def mylogin():
 	return render_template('index.html')
 
+@app.route('/css/bootstrap.min.css')
+def bootstrapcss():
+	return ('/css/bootstrap.min.css')
+
+
 @app.route('/form')
 def xs():
 	return render_template('form.html')
