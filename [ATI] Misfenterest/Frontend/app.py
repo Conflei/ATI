@@ -39,6 +39,26 @@ def send_fonts(path):
 def xs():
 	return render_template('form.html')
 
+
+def obtenerCodUsuario (name,password):
+
+	print("obtenerCodUsuarioooo")
+
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+
+	cursor.execute('select name from users where name=%s and password=%s',(name,password))
+
+	if cursor.rowcount == 0:
+		return False
+
+	codUsuario = cursor.fetchone()[0]
+
+	cursor.close()
+	dbConnection.close()
+
+	return codUsuario
+
 @app.route('/login', methods = ['POST'])
 def login():
 	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
