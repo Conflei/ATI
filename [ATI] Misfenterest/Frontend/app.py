@@ -4,6 +4,8 @@ import psycopg2
 
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 
+pageP = 1;
+
 # Routes goes here
 
 #@app.route('/sayhello')
@@ -41,41 +43,21 @@ def xs():
 	return render_template('form.html')
 
 
-def obtenerCodUsuario (name,password):
-
-	print("obtenerCodUsuarioooo")
-
-	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
-	cursor = dbConnection.cursor()
-
-	cursor.execute('select fullname from users where name=%s and password=%s',(name,password))
-
-	if cursor.rowcount == 0:
-		return False
-
-	codUsuario = cursor.fetchone()[0]
-
-	cursor.close()
-	dbConnection.close()
-
-	return codUsuario
-
 @app.route('/login', methods = ['POST'])
 def login():
 	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
 	name = request.form['Name']
 	password = request.form['Password']
-	codUsuario = obtenerCodUsuario(name=name,password=password)
-
-	if codUsuario:
-	#	datos = obtenerDatosUsuario(codUsuario)
-#		usuario = datos['name']
-		print("usuario: "+codUsuario)
-#	else:
-#		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
-	#listaPasties = leerPasties(pastieP,False,codUsuario)
-	#return render_template('Inicio.html',error = error, estado = estado, usuario = usuario, listaPasties = listaPasties)
-	return render_template('lobby.html')
+	exist = existUser(name=name,password=password)
+	error = "":
+	if exist:
+		datos = obtenerDatosUsuario(name)
+		usuario = datos['fullname']
+		print("usuario: "+usuario)
+	else:
+		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
+	listPin = searchPin(pageP,name)
+	return render_template('lobby.html',error = error, usuario = usuario, listPin = listPin)
 
 # Routes end here
 
@@ -83,4 +65,57 @@ if __name__ == '__main__':
   app.debug = True
   app.run( host = '0.0.0.0', port = 5000 )
 
+#####################################################################################################################
+#modeloo################################################
 
+def existUser (name,password):
+
+	#print("obtenerCodUsuarioooo")
+
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+
+	cursor.execute('select name from users where name=%s and password=%s',(name,password))
+
+	if cursor.rowcount == 0:
+		return False
+
+	cursor.close()
+	dbConnection.close()
+
+	return True
+
+def  obtenerDatosUsuario (codUsuario):
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+
+	datos = {}
+	cursor.execute('select name,email from usuario where name=%s',(codUsuario))
+
+	tmp = cursor.fetchone()
+	datos['name'] = tmp[0]
+	datos['email'] = tmp[1]
+
+	cursor.close()
+	dbConnection.close()
+
+	return datos
+
+def searchPin(pageP,name):
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+
+	listPin = []
+	cursor.execute('select picdir from pictures offset %s limit 5',((pageP-1)*7))
+	
+	dataPin = cursor.fetchall();
+
+	for dPin in dataPin:
+		Pin = {}
+		Pin['url'] = dPin[0]
+		listPin.append(Pin)
+
+	cursor.close()
+	dbConnection.close()
+
+	return listPin

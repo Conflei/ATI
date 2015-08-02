@@ -1,4 +1,4 @@
-var misObjetos = [
+/*var misObjetos = [
   {
   	"creator_id" : "Evo",
   	"description" : "Quiero compartir esta foto con ustedesasda",
@@ -25,7 +25,7 @@ var misObjetos = [
 	"url" : "/assets/img4.png"
   }
 ];
-
+*/
 function getDocHeight()
 {
 	var D = document;
