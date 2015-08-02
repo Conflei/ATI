@@ -1,8 +1,8 @@
 var misObjetos = [
   {
   	"creator_id" : "Evo",
-  	"description" : "Quiero compartir esta foto con ustedes",
-    "url" : "../assets/img0.png"
+  	"description" : "Quiero compartir esta foto con ustedesasda",
+    "url" : "/assets/img0.png"
   },
   {
   	"creator_id" : "Misa",
