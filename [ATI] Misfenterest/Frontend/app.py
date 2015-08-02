@@ -56,7 +56,7 @@ def searchPin(pageP,name):
 	for dPin in dataPin:
 		
 		Pin = {}
-		Pin['url'] = dPin
+		Pin['url'] = dPin[0]
 		print (Pin['url'])
 		listPin.append(Pin)
 
