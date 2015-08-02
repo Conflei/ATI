@@ -13,7 +13,7 @@ pageP = 1;
 
 def existUser (name,password):
 
-	#print("obtenerCodUsuarioooo")
+	#·print("obtenerCodUsuarioooo")
 
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
