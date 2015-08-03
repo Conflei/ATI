@@ -81,10 +81,10 @@ def crearCuenta (newName, newPassword, newEmail, newFullname):
 
 	return False
 
-def GetImageFilename():
+def GetImageFilename(category):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
-	cursor.execute('SELECT COUNT(*) FROM pictures WHERE category = upload')
+	cursor.execute('SELECT COUNT(*) FROM pictures WHERE category = %s', [category])
 	count = cursor.fetchall()
 	count = count[0]
 	print("Hay %s elementos subidos")
@@ -168,7 +168,7 @@ def loadImage():
 	title 		= request.form['title']
 	description = request.form['description']
 	imageData 	= request.files['file'];
-	filename = GetImageFilename()
+	filename = GetImageFilename('upload')
 
 	
 
