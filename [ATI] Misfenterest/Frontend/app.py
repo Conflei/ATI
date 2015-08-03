@@ -89,6 +89,18 @@ def GetImageFilename(category):
 	(count,) = cursor.fetchone()
 	return "picture"+str(count)
 
+def NewPicture(picDir, title, category, description, author):
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+		cursor.execute('insert into pictures (picdir, title, category, description, author) values (%s, %s, %s, %s, %s)',
+			(picDir, title, category, description, author))
+
+		dbConnection.commit();
+		cursor.close()
+		dbConnection.close()
+		return True
+
+
 
 # Routes goes here
 
@@ -154,7 +166,7 @@ def registerAction():
 		return render_template('lobby.html',usuario = name, listPin = listPin)
 
 	return render_template('register.html',usuario = name, listPin = listPin)
-	
+
 
 @app.route('/uploadcontent', methods = ['POST'])
 def loadImage():
@@ -164,9 +176,12 @@ def loadImage():
 	imageData 	= request.files['file'];
 	name = imageData.filename
 	ext = name.rsplit('.', 1)[1]
-	filename = GetImageFilename('upload')+ext
-	print("El nombre de esta imagen sera "+filename)
-	imageData.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+	filename = GetImageFilename('upload')+"."+ext
+	finalPath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+	imageData.save(finalPath)
+	print("La imagen fisica se guardo en el server en la ruta "+finalPath)
+	NewPicture(finalPath, title, "upload", description, "conflei")
+	print("La imagen se guardo en la BD")
 
 	return render_template('lobby.html')
 
