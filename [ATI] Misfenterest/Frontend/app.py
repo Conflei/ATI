@@ -85,7 +85,7 @@ def GetImageFilename(category):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 	cursor.execute('SELECT COUNT(*) FROM pictures WHERE category = %s', [category])
-	count = cursor.fetchone()
+	(count,) = cursor.fetchone()
 	print("Hay "+count+" elementos subidos")
 
 
