@@ -1,6 +1,7 @@
 from flask import *
 import modelo
 import psycopg2
+import os
 
 UPLOAD_FOLDER = "models/uploads"
 
