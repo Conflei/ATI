@@ -87,7 +87,7 @@ def GetImageFilename(category):
 	cursor.execute('SELECT COUNT(*) FROM pictures WHERE category = %s', [category])
 	count = cursor.fetchall()
 	count = count[0]
-	print("Hay %s elementos subidos")
+	print("Hay %s elementos subidos", count)
 
 
 
