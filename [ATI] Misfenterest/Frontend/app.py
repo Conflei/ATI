@@ -161,9 +161,12 @@ def loadImage():
 	title 		= request.form['title']
 	description = request.form['description']
 	imageData 	= request.files['file'];
-	filename = GetImageFilename('upload')
+	name = imageData.filename
+	ext = name.rsplit('.', 1)[1]
+	filename = GetImageFilename('upload')+ext
 	print("El nombre de esta imagen sera "+filename)
 	imageData.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+	print
 
 	return redirect(url_for('uploaded_file', filename = filename))
 
