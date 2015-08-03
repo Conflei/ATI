@@ -176,7 +176,7 @@ def loadImage():
 	imageData 	= request.files['file'];
 	name = imageData.filename
 	ext = name.rsplit('.', 1)[1]
-	filename = GetImageFilename('upload')+"."+ext
+	filename = GetImageFilename('upload')+"."+ext.lower()
 	finalPath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 	imageData.save(finalPath)
 	print("La imagen fisica se guardo en el server en la ruta "+finalPath)
