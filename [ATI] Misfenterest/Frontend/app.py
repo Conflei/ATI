@@ -86,7 +86,7 @@ def GetImageFilename(category):
 	cursor = dbConnection.cursor()
 	cursor.execute('SELECT COUNT(*) FROM pictures WHERE category = %s', [category])
 	(count,) = cursor.fetchone()
-	print("Hay"+ str(count)+" elementos subidos")
+	return "picture"+str(count)
 
 
 # Routes goes here
@@ -161,6 +161,12 @@ def loadImage():
 	description = request.form['description']
 	imageData 	= request.files['file'];
 	filename = GetImageFilename('upload')
+	print("El nombre de esta imagen sera "+filename)
+	imageData.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+	return redirect(url_for('uploaded_file', filename = filename))
+
+
 
 	
 
