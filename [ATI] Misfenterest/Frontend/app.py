@@ -81,7 +81,7 @@ def crearCuenta (newName, newPassword, newEmail, newFullname):
 
 	return False
 
-def GetFilename():
+def GetImageFilename():
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 	cursor.execute('SELECT COUNT(*) FROM pictures WHERE category = upload')
