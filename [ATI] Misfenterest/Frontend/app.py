@@ -154,6 +154,7 @@ def registerAction():
 		return render_template('lobby.html',usuario = name, listPin = listPin)
 
 	return render_template('register.html',usuario = name, listPin = listPin)
+	
 
 @app.route('/uploadcontent', methods = ['POST'])
 def loadImage():
@@ -166,9 +167,8 @@ def loadImage():
 	filename = GetImageFilename('upload')+ext
 	print("El nombre de esta imagen sera "+filename)
 	imageData.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-	print
 
-	return redirect(url_for('uploaded_file', filename = filename))
+	return render_template('lobby.html')
 
 
 
