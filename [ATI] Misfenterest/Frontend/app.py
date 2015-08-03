@@ -86,7 +86,7 @@ def GetImageFilename(category):
 	cursor = dbConnection.cursor()
 	cursor.execute('SELECT COUNT(*) FROM pictures WHERE category = %s', [category])
 	(count,) = cursor.fetchone()
-	print("Hay %s elementos subidos", count)
+	print("Hay"+ str(count)+" elementos subidos")
 
 
 # Routes goes here
