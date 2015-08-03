@@ -128,7 +128,7 @@ $(document).ready( function(){
 
 function fill()
 {
-		for(i = 0; i<7; i++)
+		for(i = 0; i<4; i++)
 		{
 			var gridElement = $("<div>");
 			var rand = Math.floor(Math.random()*10) % 3;
@@ -140,13 +140,12 @@ function fill()
 			var elemento = $("<div>");
 			elemento.attr("class", "miElemento");
 
-			var randObject = Math.floor(Math.random()*10) % 6;
 			var imagen = $("<img>");
-			imagen.attr("src",misObjetos[randObject]["url"]);
-			imagen.attr("onclick", "showImage("+randObject+")");
+			imagen.attr("src",misObjetos[i]["url"]);
+			imagen.attr("onclick", "showImage("+i+")");
 			elemento.append(imagen);
 			elemento.append("<hr>");
-			elemento.append("<p>"+misObjetos[randObject]["description"]);
+			elemento.append("<p>"+misObjetos[i]["description"]);
 			elemento.append("<hr>");
 
 			var imagenPerfil = $("<img>");
@@ -159,7 +158,7 @@ function fill()
 			link.attr("href", "#");
 			link.attr("class", "userName");
 			link.attr("id", "profileName");
-			link.append(misObjetos[randObject]["creator_id"]);
+			link.append(misObjetos[i]["creator_id"]);
 			elemento.append(link);
 
 			gridElement.append(elemento);

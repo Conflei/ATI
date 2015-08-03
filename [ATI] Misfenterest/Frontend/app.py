@@ -53,19 +53,15 @@ def searchPin(pageP,name):
 	print("estoy en search pin")
 
 	listPin = []
-	cursor.execute('select picdir from pictures offset %s limit 6',[((pageP-1)*7)])
+	cursor.execute('select * from pictures where category = upload')
 	
 	dataPin = cursor.fetchall();
 	for dPin in dataPin:
-		
-		Pin = {}
-		Pin['url'] = dPin
-		print (Pin['url'])
-		listPin.append(Pin)
+		listPin.append(dPin)
 
 	cursor.close()
 	dbConnection.close()
-
+	print("enviare pines: "+str(len(listPin)))
 	return listPin
 
 def crearCuenta (newName, newPassword, newEmail, newFullname):
