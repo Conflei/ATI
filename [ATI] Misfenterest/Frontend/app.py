@@ -2,7 +2,10 @@ from flask import *
 import modelo
 import psycopg2
 
+UPLOAD_FOLDER = "models/uploads"
+
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 pageP = 1;
 
@@ -78,6 +81,16 @@ def crearCuenta (newName, newPassword, newEmail, newFullname):
 
 	return False
 
+def GetFilename():
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+	cursor.execute('SELECT COUNT(*) FROM pictures WHERE category = upload')
+	count = cursor.fetchall()
+	count = count[0]
+	print("Hay %s elementos subidos")
+
+
+
 
 
 
@@ -149,11 +162,13 @@ def registerAction():
 
 	return render_template('register.html',usuario = name, listPin = listPin)
 
-@app.route('/loadimage', methods = ['POST'])
+@app.route('/uploadcontent', methods = ['POST'])
 def loadImage():
+	print("Upload Content")
 	title 		= request.form['title']
 	description = request.form['description']
-	imageData 	= request.data;
+	imageData 	= request.files['file'];
+	filename = GetImageFilename()
 
 	
 

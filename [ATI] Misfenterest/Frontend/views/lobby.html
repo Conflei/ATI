@@ -94,7 +94,8 @@
           <h3><span class="glyphicon glyphicon-upload"></span> Upload your Pin</h3>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-          <form role="form" enctype="multipart/form-data">
+          <form action="http://mesfinterest.conflei.koding.io:5000/uploadcontent" role="form" 
+          enctype="multipart/form-data" method="POST">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-tint"></span> Title</label>
               <input type="text" class="form-control" id="usrname" placeholder="Title" name="title">
@@ -105,7 +106,7 @@
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-picture"></span> Select the Content</label>
-              <input type="file" class="form-control" id="psw" placeholder="Select Content" accept="image/*" name="image">
+              <input type="file" class="form-control" id="psw" placeholder="Select Content" accept="image/*" name="file">
             </div>
               <button type="submit" class="btn btn-fail btn-block"><span class="glyphicon glyphicon-off"></span>Upload</button>
           </form>
