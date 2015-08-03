@@ -92,13 +92,13 @@ def GetImageFilename(category):
 def NewPicture(picDir, title, category, description, author):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
-		cursor.execute('insert into pictures (picdir, title, category, description, author) values (%s, %s, %s, %s, %s)',
+	cursor.execute('insert into pictures (picdir, title, category, description, author) values (%s, %s, %s, %s, %s)',
 			(picDir, title, category, description, author))
 
-		dbConnection.commit();
-		cursor.close()
-		dbConnection.close()
-		return True
+	dbConnection.commit();
+	cursor.close()
+	dbConnection.close()
+	return True
 
 
 
