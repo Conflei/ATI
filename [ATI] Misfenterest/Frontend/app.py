@@ -16,7 +16,7 @@ pageP = 1;
 #modeloo################################################
 
 def existUser (name,password):
-	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=newPassword host=localhost')
 	cursor = dbConnection.cursor()
 
 	cursor.execute('select name from users where name=%s and password=%s',(name,password))
@@ -34,7 +34,7 @@ def existUser (name,password):
 
 def  obtenerDatosUsuario (name):
 
-	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=newPassword host=localhost')
 	cursor = dbConnection.cursor()
 
 	datos = {}
@@ -48,12 +48,12 @@ def  obtenerDatosUsuario (name):
 	return datos
 
 def searchPin(pageP,name):
-	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=newPassword host=localhost')
 	cursor = dbConnection.cursor()
 	print("estoy en search pin")
 
 	listPin = []
-	cursor.execute('select * from pictures where category = upload')
+	cursor.execute('select * from pictures')
 	
 	dataPin = cursor.fetchall();
 	for dPin in dataPin:
@@ -66,7 +66,7 @@ def searchPin(pageP,name):
 
 def crearCuenta (newName, newPassword, newEmail, newFullname):
 	if(not existUser(newName, newPassword)):
-		dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+		dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=newPassword host=localhost')
 		cursor = dbConnection.cursor()
 		cursor.execute('insert into users (name, password, email, fullname) values (%s, %s, %s, %s)',
 			(newName, newPassword, newEmail, newFullname))
@@ -79,14 +79,14 @@ def crearCuenta (newName, newPassword, newEmail, newFullname):
 	return False
 
 def GetImageFilename(category):
-	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=newPassword host=localhost')
 	cursor = dbConnection.cursor()
 	cursor.execute('SELECT COUNT(*) FROM pictures WHERE category = %s', [category])
 	(count,) = cursor.fetchone()
 	return "picture"+str(count)
 
 def NewPicture(picDir, title, category, description, author):
-	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=newPassword host=localhost')
 	cursor = dbConnection.cursor()
 	cursor.execute('insert into pictures (picdir, title, category, description, author) values (%s, %s, %s, %s, %s)',
 			(picDir, title, category, description, author))
