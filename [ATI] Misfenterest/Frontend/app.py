@@ -4,12 +4,12 @@ import psycopg2
 import os
 
 class User:
-	def __init__(self, name, fullname, picDir, description, email)
-	self.name 		 = name
-	self.newFullname = fullname
-	self.picdir		 = picDir
-	self.description = description
-	self.email 		 = email
+	def __init__(self, name, fullname, picDir, description, email):
+		self.name 		 = name
+		self.newFullname = fullname
+		self.picdir		 = picDir
+		self.description = description
+		self.email 		 = email
 
 UPLOAD_FOLDER = "models/uploads"
 
