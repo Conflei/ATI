@@ -135,7 +135,7 @@ function fill()
 			if(rand==0) gridElement.attr("class", "grid-item grid-item--height3");
 			if(rand==1) gridElement.attr("class", "grid-item grid-item--height2");
 			if(rand==2) gridElement.attr("class", "grid-item");
-			if(rand==3) gridElement.attr("class", "grid-item grid-item--height1");
+			if(rand==3) gridEle ment.attr("class", "grid-item grid-item--height1");
 
 			var elemento = $("<div>");
 			elemento.attr("class", "miElemento");
@@ -154,8 +154,8 @@ function fill()
 
 			elemento.append(imagenPerfil);
 
-			var link = $("<a>");
-			link.attr("href", "#");
+			var link = $("<a>")
+			link.attr("href", "#;");
 			link.attr("class", "userName");
 			link.attr("id", "profileName");
 			link.append(misObjetos[i]["creator_id"]);

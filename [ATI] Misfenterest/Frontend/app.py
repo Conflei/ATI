@@ -2,6 +2,7 @@ from flask import *
 import modelo
 import psycopg2
 import os
+import session
 
 UPLOAD_FOLDER = "models/uploads"
 
@@ -102,7 +103,7 @@ def NewPicture(picDir, title, category, description, author):
 
 @app.route('/')
 def index():
-	print('funciona')
+	print('funciona y la sesion es '+session.session)
 	return render_template('index.html')
 
 @app.route('/register')
