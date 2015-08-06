@@ -10,7 +10,7 @@ app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 pageP = 1;
-app.secure_key = urandom(24)
+app.secure_key = os.urandom(24)
 
 
 
