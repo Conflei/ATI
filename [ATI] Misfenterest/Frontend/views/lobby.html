@@ -12,7 +12,6 @@
 	<script src="js/isotope.js"></script>
 	<script>
     var misObjetos = {{ listPin|safe }};
-    var name = {{usuario|safe}};
   </script>
   <script src="js/lobbyController.js">	</script>
 
@@ -110,7 +109,7 @@
               <input type="file" class="form-control" id="psw" placeholder="Select Content" accept="image/*" name="file">
             </div>
             <div class="form-group">
-                 <input type="text" class="form-control" id="desc" name="author" type="hidden" value={{usuario|safe}}>
+                 <input type="text" class="form-control" id="desc" name="author" type="hidden" value="{{usuario|safe}}">
             </div>
               <button type="submit" class="btn btn-fail btn-block"><span class="glyphicon glyphicon-off"></span>Upload</button>
           </form>
