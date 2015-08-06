@@ -76,12 +76,12 @@ def searchPin(pageP,name):
 	print("enviare pines: "+str(len(listPin)))
 	return listPin
 
-def crearCuenta (newName, newPassword, newEmail, newFullname):
+def crearCuenta (newName, newPassword, newEmail, newFullname, newDescription):
 	if(not existUser(newName, newPassword)):
 		dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 		cursor = dbConnection.cursor()
-		cursor.execute('insert into users (name, password, email, fullname) values (%s, %s, %s, %s)',
-			(newName, newPassword, newEmail, newFullname))
+		cursor.execute('insert into users (name, password, email, fullname, description) values (%s, %s, %s, %s, %s)',
+			(newName, newPassword, newEmail, newFullname, newDescription))
 
 		dbConnection.commit();
 		cursor.close()
@@ -170,7 +170,8 @@ def registerAction():
 	password = request.form['password']
 	email	 = request.form['email']
 	fullname = request.form['fullname']
-	if(crearCuenta(name, password, email, fullname)):
+	description = request.form['description']
+	if(crearCuenta(name, password, email, fullname, description)):
 		listPin = searchPin(pageP,name)
 		return render_template('lobby.html',usuario = name, listPin = listPin)
 
