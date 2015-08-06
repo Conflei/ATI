@@ -12,6 +12,7 @@
 	<script src="js/isotope.js"></script>
 	<script>
     var misObjetos = {{ listPin|safe }}
+    var name = {{usuario|safe}}
   </script>
   <script src="js/lobbyController.js">	</script>
 
@@ -41,7 +42,7 @@
                           </div>
                       <div class="col-sm-3">
                         <div  class = "infoSesion" >
-                          <a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">{{data.usuario|safe}}</strong>
+                          <a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">{{usuario|safe}}</strong>
                             <img  class = "img-circle logoSesion" src="img/misael.jpg">             
                           </a>
                         </div>
