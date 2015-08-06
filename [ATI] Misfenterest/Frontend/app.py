@@ -59,13 +59,13 @@ def  obtenerDatosUsuario (name):
 
 	return user
 
-def searchPin(pageP,name):
+def searchPin(pageP,name,page):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 	print("estoy en search pin")
 	cat ="upload"
 	listPin = []
-	cursor.execute('select * from pictures where category =%s', [cat])
+	cursor.execute('select * from pictures where category =%s offset %d limit 5',[cat],5*page)
 	
 	dataPin = cursor.fetchall();
 	for dPin in dataPin:
@@ -162,7 +162,7 @@ def login():
 		datos = obtenerDatosUsuario(name)
 		usuario = datos.name
 		print("usuario: "+usuario)
-		listPin = searchPin(pageP,name)
+		listPin = searchPin(pageP,name,0)
 		print('Sending user '+usuario)
 		return render_template('lobby.html',error = error, usuario = datos, listPin = json.dumps(listPin))
 	else:
@@ -178,7 +178,7 @@ def registerAction():
 	email	 = request.form['email']
 	fullname = request.form['fullname']
 	if(crearCuenta(name, password, email, fullname)):
-		listPin = searchPin(pageP,name)
+		listPin = searchPin(pageP,name,0)
 		return render_template('lobby.html',usuario = name, listPin = listPin)
 
 	return render_template('register.html',usuario = name, listPin = listPin)

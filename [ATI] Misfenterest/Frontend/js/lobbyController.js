@@ -128,7 +128,8 @@ $(document).ready( function(){
 
 function fill()
 {
-		for(i = 0; i<4; i++)
+		misObjetos = doAjaxPage(page);
+		for(i = 0; i<misObjetos.length i++)
 		{
 			var gridElement = $("<div>");
 			var rand = Math.floor(Math.random()*10) % 3;
@@ -141,11 +142,11 @@ function fill()
 			elemento.attr("class", "miElemento");
 
 			var imagen = $("<img>");
-			imagen.attr("src",misObjetos[i][0]);
+			imagen.attr("src",misObjetos[i]["dirpic"]);
 			imagen.attr("onclick", "showImage("+i+")");
 			elemento.append(imagen);
 			elemento.append("<hr>");
-			elemento.append("<p>"+misObjetos[i][3]);
+			elemento.append("<p>"+misObjetos[i]["description"]);
 			elemento.append("<hr>");
 
 			var imagenPerfil = $("<img>");
@@ -158,7 +159,7 @@ function fill()
 			link.attr("href", "#;");
 			link.attr("class", "userName");
 			link.attr("id", "profileName");
-			link.append(misObjetos[i][1]);
+			link.append(misObjetos[i]["title"]);
 			elemento.append(link);
 
 			gridElement.append(elemento);
