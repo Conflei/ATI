@@ -3,14 +3,20 @@ import modelo
 import psycopg2
 import os
 
+class User:
+	def __init__(self, name, fullname, picDir, description, email):
+		self.name 		 = name
+		self.fullname = fullname
+		self.picdir		 = picDir
+		self.description = description
+		self.email 		 = email
+
 UPLOAD_FOLDER = "models/uploads"
 
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 pageP = 1;
-
-
 
 #####################################################################################################################
 #modeloo################################################
@@ -40,20 +46,26 @@ def  obtenerDatosUsuario (name):
 	datos = {}
 	cursor.execute('select * from users where name=%s',[name]) 
 	tmp = cursor.fetchone()
-	datos['fullname'] = tmp[0]
+	user = User(tmp[0], tmp[4], tmp[2], tmp[5], tmp[3])
+	print("Obtenidos los datos de un usuario")
+	print("Nickname: "+user.name)
+	print("Fullname: "+user.fullname)
+	print("picDir: "+user.picdir)
+	print("Description: "+str(user.description))
+	print("Email: "+user.email)
 
 	cursor.close()
 	dbConnection.close()
 
-	return datos
+	return user
 
 def searchPin(pageP,name):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 	print("estoy en search pin")
-
+	cat ="upload"
 	listPin = []
-	cursor.execute('select * from pictures')
+	cursor.execute('select * from pictures where category =%s', [cat])
 	
 	dataPin = cursor.fetchall();
 	for dPin in dataPin:
@@ -102,7 +114,7 @@ def NewPicture(picDir, title, category, description, author):
 
 @app.route('/')
 def index():
-	print('funciona')
+	print('funciona')                                                                                                                        
 	return render_template('index.html')
 
 @app.route('/register')
@@ -141,10 +153,11 @@ def login():
 	if exist:
 		print("el usuario existe en la BD")
 		datos = obtenerDatosUsuario(name)
-		usuario = datos['fullname']
+		usuario = datos.name
 		print("usuario: "+usuario)
 		listPin = searchPin(pageP,name)
-		return render_template('lobby.html',error = error, usuario = usuario, listPin = json.dumps(listPin))
+		print('Sending user '+usuario)
+		return render_template('lobby.html',error = error, usuario = datos, listPin = json.dumps(listPin))
 	else:
 		print("el usuario no existe en la BD")
 		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
@@ -169,17 +182,27 @@ def loadImage():
 	print("Upload Content")
 	title 		= request.form['title']
 	description = request.form['description']
-	imageData 	= request.files['file'];
+	imageData 	= request.files['file']
+	author 		= request.form['author']
 	name = imageData.filename
 	ext = name.rsplit('.', 1)[1]
 	filename = GetImageFilename('upload')+"."+ext.lower()
 	finalPath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 	imageData.save(finalPath)
 	print("La imagen fisica se guardo en el server en la ruta "+finalPath)
-	NewPicture(finalPath, title, "upload", description, "conflei")
+	NewPicture(finalPath, title, "upload", description, author)
 	print("La imagen se guardo en la BD")
 
-	return render_template('lobby.html')
+	return render_template('lobby.html', usuario = author)
+
+@app.route('/myprofile', methods = ['POST'])
+def myProfile():
+	print("My profile")
+	nickname = request.form['name']
+	user = obtenerDatosUsuario(nickname)
+	return render_template('perfil.html', usuario = user)
+
+
 
 
 

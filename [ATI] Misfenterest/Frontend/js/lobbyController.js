@@ -154,8 +154,8 @@ function fill()
 
 			elemento.append(imagenPerfil);
 
-			var link = $("<a>");
-			link.attr("href", "#");
+			var link = $("<a>")
+			link.attr("href", "#;");
 			link.attr("class", "userName");
 			link.attr("id", "profileName");
 			link.append(misObjetos[i][1]);

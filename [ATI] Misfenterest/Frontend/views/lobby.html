@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="css/styles1.css">
 	<script src="js/isotope.js"></script>
 	<script>
-    var misObjetos = {{ listPin|safe }}
+    var misObjetos = {{ listPin|safe }};
   </script>
   <script src="js/lobbyController.js">	</script>
 
@@ -41,9 +41,22 @@
                           </div>
                       <div class="col-sm-3">
                         <div  class = "infoSesion" >
-                          <a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">Mi Perfil</strong>
+                        <form action="/myprofile" method="post">
+
+                        
+                        <div class="form-group">
+                         <input type="text" type="hidden" style="display:none" class="form-control" id="desc" name="name" value="{{usuario.name|safe}}">
+                         </div>
+
+                        <button type="submit" class="btn btn-fail btn-block"><span class="glyphicon glyphicon-off">
+                          <span class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">
+                          {{usuario.name|safe}}
+                          </strong>
                             <img  class = "img-circle logoSesion" src="img/misael.jpg">             
-                          </a>
+                          </span>  
+                          
+                        </form>
+                          
                         </div>
                       </div>
                    </div>
@@ -107,6 +120,9 @@
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-picture"></span> Select the Content</label>
               <input type="file" class="form-control" id="psw" placeholder="Select Content" accept="image/*" name="file">
+            </div>
+            <div class="form-group">
+                 <input type="text" type="hidden" style="display:none" class="form-control" id="desc" name="author" value="{{usuario.name|safe}}">
             </div>
               <button type="submit" class="btn btn-fail btn-block"><span class="glyphicon glyphicon-off"></span>Upload</button>
           </form>
