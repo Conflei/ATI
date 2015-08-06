@@ -4,7 +4,6 @@ import os
 import app
 
 session = 1
-app.seed.secure_key = os.urandom(24)
 
 
 @app.route('/login', methods = ['POST'])
