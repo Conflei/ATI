@@ -49,9 +49,9 @@ def searchPin(pageP,name):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 	print("estoy en search pin")
-
+	cat ="upload"
 	listPin = []
-	cursor.execute('select * from pictures where category = upload')
+	cursor.execute('select * from pictures where category =%s', [cat])
 	
 	dataPin = cursor.fetchall();
 	for dPin in dataPin:
