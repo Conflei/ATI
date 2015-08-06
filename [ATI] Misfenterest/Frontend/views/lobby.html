@@ -41,7 +41,7 @@
                           </div>
                       <div class="col-sm-3">
                         <div  class = "infoSesion" >
-                          <a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">{{usuario|safe}}</strong>
+                          <a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">{{usuario.name|safe}}</strong>
                             <img  class = "img-circle logoSesion" src="img/misael.jpg">             
                           </a>
                         </div>
@@ -109,7 +109,7 @@
               <input type="file" class="form-control" id="psw" placeholder="Select Content" accept="image/*" name="file">
             </div>
             <div class="form-group">
-                 <input type="text" type="hidden" style="display:none" class="form-control" id="desc" name="author" value="{{usuario|safe}}">
+                 <input type="text" type="hidden" style="display:none" class="form-control" id="desc" name="author" value="{{usuario.name|safe}}">
             </div>
               <button type="submit" class="btn btn-fail btn-block"><span class="glyphicon glyphicon-off"></span>Upload</button>
           </form>
