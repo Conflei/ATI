@@ -142,6 +142,7 @@ def login():
 		usuario = datos['fullname']
 		print("usuario: "+usuario)
 		listPin = searchPin(pageP,name)
+		print('Sending user '+usuario)
 		return render_template('lobby.html',error = error, usuario = usuario, listPin = json.dumps(listPin))
 	else:
 		print("el usuario no existe en la BD")
@@ -168,13 +169,14 @@ def loadImage():
 	title 		= request.form['title']
 	description = request.form['description']
 	imageData 	= request.files['file'];
+	author 		= request.form['author']
 	name = imageData.filename
 	ext = name.rsplit('.', 1)[1]
 	filename = GetImageFilename('upload')+"."+ext.lower()
 	finalPath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 	imageData.save(finalPath)
 	print("La imagen fisica se guardo en el server en la ruta "+finalPath)
-	NewPicture(finalPath, title, "upload", description, "conflei")
+	NewPicture(finalPath, title, "upload", description, author)
 	print("La imagen se guardo en la BD")
 
 	return render_template('lobby.html')
