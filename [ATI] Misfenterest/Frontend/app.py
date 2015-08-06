@@ -2,7 +2,6 @@ from flask import *
 import modelo
 import psycopg2
 import os
-import session
 
 UPLOAD_FOLDER = "models/uploads"
 
@@ -10,9 +9,6 @@ app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 pageP = 1;
-app.secure_key = os.urandom(24)
-
-
 
 #####################################################################################################################
 #modeloo################################################
@@ -104,7 +100,7 @@ def NewPicture(picDir, title, category, description, author):
 
 @app.route('/')
 def index():
-	print('funciona y la sesion es '+str(session.session))
+	print('funciona)                                                                                                                        
 	return render_template('index.html')
 
 @app.route('/register')
@@ -133,7 +129,24 @@ def send_fonts(path):
 	return send_from_directory('fonts', path)
 
 
-
+@app.route('/login', methods = ['POST'])
+def login():
+	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
+	name = request.form['Name']
+	password = request.form['Password']
+	exist = existUser(name=name,password=password)
+	error = ""
+	if exist:
+		print("el usuario existe en la BD")
+		datos = obtenerDatosUsuario(name)
+		usuario = datos['fullname']
+		print("usuario: "+usuario)
+		listPin = searchPin(pageP,name)
+		return render_template('lobby.html',error = error, usuario = usuario, listPin = json.dumps(listPin))
+	else:
+		print("el usuario no existe en la BD")
+		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
+		return render_template('index.html', error = error, usuario = name)
 
 
 @app.route('/registeraction', methods = ['POST'])
