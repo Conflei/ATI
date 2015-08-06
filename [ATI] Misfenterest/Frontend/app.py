@@ -100,7 +100,7 @@ def NewPicture(picDir, title, category, description, author):
 
 @app.route('/')
 def index():
-	print('funciona)                                                                                                                        
+	print('funciona')                                                                                                                        
 	return render_template('index.html')
 
 @app.route('/register')
