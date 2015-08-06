@@ -54,7 +54,7 @@ def searchPin(pageP,name):
 	print("estoy en search pin")
 
 	listPin = []
-	cursor.execute('select * from pictures')
+	cursor.execute('select * from pictures where category = upload')
 	
 	dataPin = cursor.fetchall();
 	for dPin in dataPin:
@@ -103,7 +103,7 @@ def NewPicture(picDir, title, category, description, author):
 
 @app.route('/')
 def index():
-	print('funciona y la sesion es '+session.session)
+	print('funciona y la sesion es '+str(session.session))
 	return render_template('index.html')
 
 @app.route('/register')
