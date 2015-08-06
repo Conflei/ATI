@@ -182,7 +182,7 @@ def loadImage():
 	print("Upload Content")
 	title 		= request.form['title']
 	description = request.form['description']
-	imageData 	= request.files['file'];
+	imageData 	= request.files['file']
 	author 		= request.form['author']
 	name = imageData.filename
 	ext = name.rsplit('.', 1)[1]
@@ -198,6 +198,9 @@ def loadImage():
 @app.route('/myprofile', methods = ['POST'])
 def myProfile():
 	print("My profile")
+	nickname = request.form['name']
+	user = obtenerDatosUsuario(nickname)
+	return render_template('perfil.html', usuario = user)
 
 
 
