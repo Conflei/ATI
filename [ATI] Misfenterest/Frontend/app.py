@@ -69,6 +69,7 @@ def searchPin(pageP,name):
 	
 	dataPin = cursor.fetchall();
 	for dPin in dataPin:
+		print(dPin[0]);
 		listPin.append(dPin)
 
 	cursor.close()
@@ -134,6 +135,8 @@ def send_js(path):
 def send_img(path):
 	return send_from_directory('img', path)
 
+
+
 @app.route('/assets/<path:path>')
 def send_assets(path):
 	return send_from_directory('assets', path)
@@ -141,6 +144,10 @@ def send_assets(path):
 @app.route('/fonts/<path:path>')
 def send_fonts(path):
 	return send_from_directory('fonts', path)
+
+@app.route('/models/uploads/<path:path>')
+def send_up(path):
+	return send_from_directory('models/uploads', path)
 
 
 @app.route('/login', methods = ['POST'])
