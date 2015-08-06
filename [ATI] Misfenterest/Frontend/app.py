@@ -2,7 +2,7 @@ from flask import *
 import modelo
 import psycopg2
 import os
-import session
+import session import *
 
 UPLOAD_FOLDER = "models/uploads"
 
@@ -132,24 +132,7 @@ def send_fonts(path):
 	return send_from_directory('fonts', path)
 
 
-@app.route('/login', methods = ['POST'])
-def login():
-	print("Los datos que llegaron al server son "+request.form['Name']+" "+request.form['Password'])
-	name = request.form['Name']
-	password = request.form['Password']
-	exist = existUser(name=name,password=password)
-	error = ""
-	if exist:
-		print("el usuario existe en la BD")
-		datos = obtenerDatosUsuario(name)
-		usuario = datos['fullname']
-		print("usuario: "+usuario)
-		listPin = searchPin(pageP,name)
-		return render_template('lobby.html',error = error, usuario = usuario, listPin = json.dumps(listPin))
-	else:
-		print("el usuario no existe en la BD")
-		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
-		return render_template('index.html', error = error, usuario = name)
+
 
 
 @app.route('/registeraction', methods = ['POST'])
