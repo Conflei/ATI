@@ -141,15 +141,15 @@ function fill()
 			elemento.attr("class", "miElemento");
 
 			var imagen = $("<img>");
-			imagen.attr("src",misObjetos[i]["url"]);
+			imagen.attr("src",misObjetos[i][0]);
 			imagen.attr("onclick", "showImage("+i+")");
 			elemento.append(imagen);
 			elemento.append("<hr>");
-			elemento.append("<p>"+misObjetos[i]["description"]);
+			elemento.append("<p>"+misObjetos[i][3]);
 			elemento.append("<hr>");
 
 			var imagenPerfil = $("<img>");
-			imagenPerfil.attr("src", "assets/profile.jpg");
+			imagenPerfil.attr("src", "img/misael.jpg");
 			imagenPerfil.attr("id", "profile");
 
 			elemento.append(imagenPerfil);
@@ -158,7 +158,7 @@ function fill()
 			link.attr("href", "#;");
 			link.attr("class", "userName");
 			link.attr("id", "profileName");
-			link.append(misObjetos[i]["creator_id"]);
+			link.append(misObjetos[i][1]);
 			elemento.append(link);
 
 			gridElement.append(elemento);

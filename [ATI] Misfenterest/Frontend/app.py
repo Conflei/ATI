@@ -54,7 +54,7 @@ def searchPin(pageP,name):
 	print("estoy en search pin")
 
 	listPin = []
-	cursor.execute('select * from pictures where category = upload')
+	cursor.execute('select * from pictures')
 	
 	dataPin = cursor.fetchall();
 	for dPin in dataPin:
