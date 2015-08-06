@@ -6,7 +6,7 @@ import os
 class User:
 	def __init__(self, name, fullname, picDir, description, email):
 		self.name 		 = name
-		self.newFullname = fullname
+		self.fullname = fullname
 		self.picdir		 = picDir
 		self.description = description
 		self.email 		 = email
