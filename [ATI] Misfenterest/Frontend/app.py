@@ -3,6 +3,14 @@ import modelo
 import psycopg2
 import os
 
+class User:
+	def __init__(self, name, fullname, picDir, description, email)
+	self.name 		 = name
+	self.newFullname = fullname
+	self.picdir		 = picDir
+	self.description = description
+	self.email 		 = email
+
 UPLOAD_FOLDER = "models/uploads"
 
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
@@ -38,12 +46,18 @@ def  obtenerDatosUsuario (name):
 	datos = {}
 	cursor.execute('select * from users where name=%s',[name]) 
 	tmp = cursor.fetchone()
-	datos['fullname'] = tmp[0]
+	user = User(tmp[0], tmp[4], tmp[2], tmp[5], tmp[3])
+	print("Obtenidos los datos de un usuario")
+	print("Nickname: "+user.name)
+	print("Fullname: "+user.fullname)
+	print("picDir: "+user.name)
+	print("Description: "+user.name)
+	print("Nickname: "+user.name)
 
 	cursor.close()
 	dbConnection.close()
 
-	return datos
+	return user
 
 def searchPin(pageP,name):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
@@ -139,7 +153,7 @@ def login():
 	if exist:
 		print("el usuario existe en la BD")
 		datos = obtenerDatosUsuario(name)
-		usuario = datos['fullname']
+		usuario = datos.name
 		print("usuario: "+usuario)
 		listPin = searchPin(pageP,name)
 		print('Sending user '+usuario)
@@ -179,7 +193,13 @@ def loadImage():
 	NewPicture(finalPath, title, "upload", description, author)
 	print("La imagen se guardo en la BD")
 
-	return render_template('lobby.html')
+	return render_template('lobby.html', usuario = author)
+
+@app.route('/myprofile', methods = ['POST'])
+def myProfile():
+	print("My profile")
+
+
 
 
 
