@@ -50,9 +50,9 @@ def  obtenerDatosUsuario (name):
 	print("Obtenidos los datos de un usuario")
 	print("Nickname: "+user.name)
 	print("Fullname: "+user.fullname)
-	print("picDir: "+user.name)
-	print("Description: "+user.name)
-	print("Nickname: "+user.name)
+	print("picDir: "+user.picdir)
+	print("Description: "+user.description)
+	print("Email: "+user.email)
 
 	cursor.close()
 	dbConnection.close()
