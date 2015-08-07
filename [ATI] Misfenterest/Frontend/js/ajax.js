@@ -1,30 +1,29 @@
-function doAjaxPage(page){
-	return [
-  {
-  	"creator_id" : "Evo",
-  	"description" : "Quiero compartir esta foto con ustedesasda",
-    "url" : "/assets/img0.png"
-  },
-  {
-  	"creator_id" : "Misa",
-	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img1.png"
-  },
-  {
-  	"creator_id" : "Shortman",
-	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img2.png"
-  },
-  {
-  	"creator_id" : "Cebin",
-	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img3.png"
-  },
-  {
-  	"creator_id" : "Yldemaro (Divino)",
-	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img4.png"
-  }
-];	
+function doAjaxPage(){
+	var retorno;
+	$.ajax({
+		type: "GET",
+		url: urlImagesLobby,
+		data: {'page':page},
+		async: false,
+		success: function(data){
+			retorno = JSON.parse(data);
+			//alert("hola soy ajax "+retorno);
+			if(retorno != "vacio"){
+				page = page+(retorno.length);
+			}
+			else{
+				retorno = false;
+			}
+		},
+		error: function(xhr){
+            //alert("An error occured: " + xhr.status + " " + xhr.statusText);
+			retorno = "An error occured: " + xhr.status + " " + xhr.statusText;
+			//mostrarError(retorno);
+			alert(retorno);
+			retorno = false;
+		}
+	});
+
+	return retorno;
 
 }

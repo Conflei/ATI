@@ -10,11 +10,13 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="css/perfil.css"/>
 	<link rel="stylesheet" href="css/styles1.css">
 	<script src="js/isotope.js"></script>
+	<script src="js/ajax.js"></script>
+	<script src="js/lobbyController.js"></script>
 	<script>
-    //var misObjetos = {{ listPin|safe }};
-	var page = 0;
-  </script>
-  <script src="js/lobbyController.js">	</script>
+		var page = 0;
+		var urlImagesLobby = "/get_image_json";
+	</script>
+  
 
 	
 	
@@ -39,30 +41,17 @@
                            <input type= "search" autocomplete="off" class="Input" placeholder="Buscar">
                             <a href="#" class="btn btn-lg colorBoton"><span class="glyphicon glyphicon-search"></span> Buscar</a>
                         </form>
-                          </div>
-                      <div class="col-sm-3">
-                        <div  class = "infoSesion" >
-                        <form action="/myprofile" method="post">
-
-                        
-                        <div class="form-group">
-                         <input type="text" type="hidden" style="display:none" class="form-control" id="desc" name="name" value="{{usuario.name|safe}}">
-                         </div>
-
-                        <button type="submit" class="btn btn-fail btn-block"><span class="glyphicon glyphicon-off">
-                          <span class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">
-                          {{usuario.name|safe}}
-                          </strong>
+                     </div>
+					<div class="col-sm-3">
+                       <div  class = "infoSesion" >
+                         <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none"><strong style="font-size=20px;" id="nombrePerfil">{{usuario.name|safe}}</strong>
                             <img  class = "img-circle logoSesion" src="img/misael.jpg">             
-                          </span>  
-                          
-                        </form>
-                          
-                        </div>
-                      </div>
+                         </a>
+                       </div>
                    </div>
                  </div>
-             	</div>
+                </div>
+              </div>
          	</nav>
          </div>		
 	</div>

@@ -16,7 +16,6 @@ UPLOAD_FOLDER = "models/uploads"
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-pageP = 1;
 
 #####################################################################################################################
 #modeloo################################################
@@ -38,7 +37,7 @@ def existUser (name,password):
 	print("founded")
 	return True
 
-def  obtenerDatosUsuario (name):
+def obtenerDatosUsuario(name):
 
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
@@ -46,7 +45,7 @@ def  obtenerDatosUsuario (name):
 	datos = {}
 	cursor.execute('select * from users where name=%s',[name]) 
 	tmp = cursor.fetchone()
-	user = User(tmp[0], tmp[4], tmp[2], tmp[5], tmp[3])
+	user = User(tmp[0], tmp[3], "img/misael.jpg", tmp[4], tmp[2])
 	print("Obtenidos los datos de un usuario")
 	print("Nickname: "+user.name)
 	print("Fullname: "+user.fullname)
@@ -59,23 +58,31 @@ def  obtenerDatosUsuario (name):
 
 	return user
 
-def searchPin(pageP,name,page):
+def searchPin(page): #retorna 5 imagenes en formato json
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 	print("estoy en search pin")
 	cat ="upload"
-	listPin = []
-	cursor.execute('select * from pictures where category =%s offset %d limit 5',[cat],5*page)
+	cursor.execute('select * from pictures where category =%s offset %s limit %s',(cat,page,5))
 	
-	dataPin = cursor.fetchall();
+	dataPin = cursor.fetchall()
+	dataJSON = ""
+	imgJSON = ""
+	i = 0
+	
 	for dPin in dataPin:
-		print(dPin[0]);
-		listPin.append(dPin)
-
+		print(dPin[0])
+		imgJSON = "{\"picdir\":\""+dPin[0]+"\",\"title\":\""+dPin[1]+"\",\"category\":\""+dPin[2]+"\",\"description\":\""+dPin[3]+"\",\"author\":\""+dPin[4]+"\"}"
+		if dataJSON == "":
+			dataJSON = "[" + imgJSON
+		else:
+			dataJSON = dataJSON + "," + imgJSON 
+	if dataJSON != "":
+		dataJSON = dataJSON + "]"
 	cursor.close()
 	dbConnection.close()
-	print("enviare pines: "+str(len(listPin)))
-	return listPin
+	print("enviare pines: "+dataJSON)
+	return dataJSON
 
 def crearCuenta (newName, newPassword, newEmail, newFullname):
 	if(not existUser(newName, newPassword)):
@@ -84,7 +91,7 @@ def crearCuenta (newName, newPassword, newEmail, newFullname):
 		cursor.execute('insert into users (name, password, email, fullname) values (%s, %s, %s, %s)',
 			(newName, newPassword, newEmail, newFullname))
 
-		dbConnection.commit();
+		dbConnection.commit()
 		cursor.close()
 		dbConnection.close()
 		return True
@@ -104,13 +111,13 @@ def NewPicture(picDir, title, category, description, author):
 	cursor.execute('insert into pictures (picdir, title, category, description, author) values (%s, %s, %s, %s, %s)',
 			(picDir, title, category, description, author))
 
-	dbConnection.commit();
+	dbConnection.commit()
 	cursor.close()
 	dbConnection.close()
 	return True
 
 
-
+######################################FIN MODELO###################################
 # Routes goes here
 
 @app.route('/')
@@ -162,9 +169,9 @@ def login():
 		datos = obtenerDatosUsuario(name)
 		usuario = datos.name
 		print("usuario: "+usuario)
-		listPin = searchPin(pageP,name,0)
+		#listPin = searchPin(pageP,name,0)
 		print('Sending user '+usuario)
-		return render_template('lobby.html',error = error, usuario = datos, listPin = json.dumps(listPin))
+		return render_template('lobby.html',error = error, usuario = datos)#, listPin = json.dumps(listPin))
 	else:
 		print("el usuario no existe en la BD")
 		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
@@ -178,10 +185,10 @@ def registerAction():
 	email	 = request.form['email']
 	fullname = request.form['fullname']
 	if(crearCuenta(name, password, email, fullname)):
-		listPin = searchPin(pageP,name,0)
-		return render_template('lobby.html',usuario = name, listPin = listPin)
+		#listPin = searchPin(pageP,name,0)
+		return render_template('lobby.html',usuario = name)#, listPin = listPin)
 
-	return render_template('register.html',usuario = name, listPin = listPin)
+	return render_template('register.html',usuario = name)#, listPin = listPin)
 
 
 @app.route('/uploadcontent', methods = ['POST'])
@@ -209,7 +216,12 @@ def myProfile():
 	user = obtenerDatosUsuario(nickname)
 	return render_template('perfil.html', usuario = user)
 
+@app.route('/get_image_json')
+def get_image_json(): #funcion llamada por el ajax para paginar
 
+	page = request.args.get('page')
+	print("Paginando"+str(page))
+	return searchPin(page) #retorna json con 5 imagenes
 
 
 

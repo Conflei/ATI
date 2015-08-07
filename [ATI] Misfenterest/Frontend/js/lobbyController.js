@@ -1,31 +1,33 @@
-/*var misObjetos = [
-  {
-  	"creator_id" : "Evo",
-  	"description" : "Quiero compartir esta foto con ustedesasda",
-    "url" : "/assets/img0.png"
-  },
-  {
-  	"creator_id" : "Misa",
-	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img1.png"
-  },
-  {
-  	"creator_id" : "Shortman",
-	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img2.png"
-  },
-  {
-  	"creator_id" : "Cebin",
-	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img3.png"
-  },
-  {
-  	"creator_id" : "Yldemaro (Divino)",
-	"description" : "Quiero compartir esta foto con ustedes",
-	"url" : "/assets/img4.png"
-  }
-];
-*/
+$(document).ready(function(){
+	$("#myBtn").click(function(){
+		$("#myModal").modal();
+	});
+	ini();
+	$('#cerrar').bind('click', function(){
+		hideSeleccion();
+	});
+	fill();
+	$("#verMiPerfil").click(function(){
+		var form = $('<form action="/myprofile" method="post">' +
+	
+		 '<input type="text" name="name" value="'+$("#nombrePerfil").text()+'">' +
+		   '<button type="submit" id="sub"></button>'+
+		  '</form>');
+		$('body').append(form);
+		$("#sub").click();
+	});
+
+});
+
+$(window).scroll(function(){
+	if($(window).scrollTop() + $(window).height() == getDocHeight())
+	{
+		//alert("holaa "+page);
+		fill();
+	}
+})
+
+
 function getDocHeight()
 {
 	var D = document;
@@ -54,7 +56,7 @@ var isoOptions = {
   	  }
 }
 
-$(document).ready(function(){
+function ini(){
 
 	body = $(".allContent");
 
@@ -73,32 +75,14 @@ $(document).ready(function(){
 	body.prepend(mainContainer);
 	$isoGrid = $('.grid').isotope(isoOptions);
 
-	fill();
 	firstFill = true;
 	showingIMG = false;
-})
+}
 
-$(document).ready(function(){
-
-		$(window).scroll(function(){
-			if($(window).scrollTop() + $(window).height() == getDocHeight())
-			{
-				if(firstFill)fill();
-			}
-		})
-
-});
 
 function UploadContent(){
 	$("#myModal").modal();
 }
-
-$(document).ready(function(){
-    $("#myBtn").click(function(){
-        $("#myModal").modal();
-    });
-});
-
 
 function showImage(index)
 {
@@ -118,56 +102,55 @@ function hideSeleccion(){
 	
 };
 
-$(document).ready( function(){
-	$('#cerrar').bind('click', function(){
-		hideSeleccion();
-	});
-})
-
-
-
 function fill()
 {
-		misObjetos = doAjaxPage(page);
-		for(i = 0; i<misObjetos.length i++)
-		{
-			var gridElement = $("<div>");
-			var rand = Math.floor(Math.random()*10) % 3;
-			if(rand==0) gridElement.attr("class", "grid-item grid-item--height3");
-			if(rand==1) gridElement.attr("class", "grid-item grid-item--height2");
-			if(rand==2) gridElement.attr("class", "grid-item");
-			if(rand==3) gridElement.attr("class", "grid-item grid-item--height1");
+		misObjetos = doAjaxPage();
+		//alert(misObjetos);
+		if(misObjetos && misObjetos != "fallo"){
+			for(i = 0; i<misObjetos.length; i++)
+			{
+				//alert(misObjetos[i]["picdir"] + misObjetos[i]["title"] + misObjetos[i]["description"] + misObjetos[i]["author"]);
+				var gridElement = $("<div>");
+				var rand = Math.floor(Math.random()*10) % 3;
+				if(rand==0) gridElement.attr("class", "grid-item grid-item--height3");
+				if(rand==1) gridElement.attr("class", "grid-item grid-item--height2");
+				if(rand==2) gridElement.attr("class", "grid-item");
+				if(rand==3) gridElement.attr("class", "grid-item grid-item--height1");
 
-			var elemento = $("<div>");
-			elemento.attr("class", "miElemento");
+				var elemento = $("<div>");
+				elemento.attr("class", "miElemento");
 
-			var imagen = $("<img>");
-			imagen.attr("src",misObjetos[i]["dirpic"]);
-			imagen.attr("onclick", "showImage("+i+")");
-			elemento.append(imagen);
-			elemento.append("<hr>");
-			elemento.append("<p>"+misObjetos[i]["description"]);
-			elemento.append("<hr>");
+				var imagen = $("<img>");
+				imagen.attr("src",misObjetos[i]["picdir"]);
+				imagen.attr("onclick", "showImage("+i+")");
+				elemento.append(imagen);
+				elemento.append("<hr>");
+				elemento.append("<p>"+misObjetos[i]["title"]);
+				elemento.append("<p>"+misObjetos[i]["description"]);
+				elemento.append("<hr>");
 
-			var imagenPerfil = $("<img>");
-			imagenPerfil.attr("src", "img/misael.jpg");
-			imagenPerfil.attr("id", "profile");
+				var imagenPerfil = $("<img>");
+				imagenPerfil.attr("src", "img/misael.jpg"); //OJO ESTE DATO ESTA CABLEADO -> aqui va la foto de quien subio la imagen
+				imagenPerfil.attr("id", "profile");
 
-			elemento.append(imagenPerfil);
+				elemento.append(imagenPerfil);
 
-			var link = $("<a>")
-			link.attr("href", "#;");
-			link.attr("class", "userName");
-			link.attr("id", "profileName");
-			link.append(misObjetos[i]["title"]);
-			elemento.append(link);
+				var link = $("<a>")
+				link.attr("href", "#;");
+				link.attr("class", "userName");
+				link.attr("id", "profileName");
+				link.append(misObjetos[i]["author"]);
+				elemento.append(link);
 
-			gridElement.append(elemento);
-			$isoGrid.append(gridElement).isotope('appended', gridElement);			
+				gridElement.append(elemento);
+				$isoGrid.append(gridElement).isotope('appended', gridElement);			
+			}
 		}
-
+		
 		
 }
+
+
 
 
 
