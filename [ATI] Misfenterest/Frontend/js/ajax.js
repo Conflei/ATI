@@ -1,14 +1,15 @@
-function doAjaxPage(){
+function doAjaxPage(type){ //busca 5 imagenes segun el tipo de busqueda ('all','upload','pin') y las retorna en un json
 	var retorno;
 	$.ajax({
 		type: "GET",
-		url: urlImagesLobby,
-		data: {'page':page},
+		url: urlImages,
+		data: {'page':page,'type':type},
 		async: false,
 		success: function(data){
 			retorno = JSON.parse(data);
 			//alert("hola soy ajax "+retorno);
-			if(retorno != "vacio"){
+			if(retorno != "vacio" && retorno.length>0){
+				
 				page = page+(retorno.length);
 			}
 			else{
@@ -27,3 +28,4 @@ function doAjaxPage(){
 	return retorno;
 
 }
+

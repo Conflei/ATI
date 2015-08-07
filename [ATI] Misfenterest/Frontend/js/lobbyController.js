@@ -1,3 +1,11 @@
+var body;
+var mainContainer;
+var grid;
+var gridSizer;
+var $isoGrid;
+var firstFill = false;
+var showingIMG = false;
+
 $(document).ready(function(){
 	$("#myBtn").click(function(){
 		$("#myModal").modal();
@@ -38,13 +46,7 @@ function getDocHeight()
 		);
 }
 
-var body;
-var mainContainer;
-var grid;
-var gridSizer;
-var $isoGrid;
-var firstFill = false;
-var showingIMG = false;
+
 
 var isoOptions = {
 	itemSelector: '.grid-item',
@@ -88,8 +90,8 @@ function showImage(index)
 {
 			$('.contenidoSelecto').slideDown('fast');
 			$('.allContent').css("opacity", "0.4");
-			$('#imgContent').attr("src", misObjetos[index]["url"]);
-			$('h4').html(misObjetos[index]["creator_id"]);
+			$('#imgContent').attr("src", misObjetos[index]["picdir"]);
+			$('h4').html(misObjetos[index]["author"]);
 			$('#parContent').html(misObjetos[index]["description"]);
 			showingIMG = true;
 };
@@ -104,7 +106,7 @@ function hideSeleccion(){
 
 function fill()
 {
-		misObjetos = doAjaxPage();
+		misObjetos = doAjaxPage("all");
 		//alert(misObjetos);
 		if(misObjetos && misObjetos != "fallo"){
 			for(i = 0; i<misObjetos.length; i++)

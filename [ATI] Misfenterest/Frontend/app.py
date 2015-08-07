@@ -58,12 +58,20 @@ def obtenerDatosUsuario(name):
 
 	return user
 
-def searchPin(page): #retorna 5 imagenes en formato json
+def searchPin(page,type,username): #retorna 5 imagenes en formato json
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 	print("estoy en search pin")
-	cat ="upload"
-	cursor.execute('select * from pictures where category =%s offset %s limit %s',(cat,page,5))
+	if type == 'all':
+		cursor.execute('select * from pictures offset %s limit %s',(page,5))
+	else:
+		if type == 'upload':
+			cursor.execute('select * from pictures offset %s limit %s',(page,5)) #comentar cuando todo este bien
+			#cursor.execute('select * from pictures where author =%s offset %s limit %s',(name,page,5))
+		else:
+			if type == 'pin':
+				cursor.execute('select * from pictures offset %s limit %s',(page,5))
+				#llamar a base de datos pin where name = username
 	
 	dataPin = cursor.fetchall()
 	dataJSON = ""
@@ -79,6 +87,8 @@ def searchPin(page): #retorna 5 imagenes en formato json
 			dataJSON = dataJSON + "," + imgJSON 
 	if dataJSON != "":
 		dataJSON = dataJSON + "]"
+	else:
+		dataJSON = "[]"
 	cursor.close()
 	dbConnection.close()
 	print("enviare pines: "+dataJSON)
@@ -220,8 +230,10 @@ def myProfile():
 def get_image_json(): #funcion llamada por el ajax para paginar
 
 	page = request.args.get('page')
+	type = request.args.get('type')
+	username = request.args.get('username')
 	print("Paginando"+str(page))
-	return searchPin(page) #retorna json con 5 imagenes
+	return searchPin(page,type,username) #retorna json con 5 imagenes
 
 
 

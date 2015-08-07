@@ -9,20 +9,28 @@
   <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" media="screen" href="css/perfil.css"/>
   <link rel="shortcut icon" href="img/pinterest.ico">
+  <script src="js/ajax.js"></script>
   <script src="js/cargarDatos.js"></script>
   <script src="js/datos.js"></script>
   <script src="js/eventosPerfil.js"></script>
   <script>
+	var j = 1;
     var cant = 0;
     var active = null;
+    var page = 0;
+    var urlImages = "/get_image_json";
     $(document).ready(function()
     {   
       $("#irLobby").attr("href","lobby.html");
+      $(".nav-tabs a").click(function(){
+        $(this).tab('show');
+	  });
     });
   </script>
 </head>
 
 <body>
+<!--Contendio Principal-->
  <div class="container-fluid" >
       <!--HEADER-->
       <div class="row sombra" id="header">
@@ -169,41 +177,71 @@
     <!--FIN INFORMACION PERFIL-->
 
      <!--CONTENIDO: IMAGENES CUATRO COLUMNAS-->
-    <div class="row" id="columnas">
+     
+<div class="container" id="columnas">
+  <ul class="nav nav-tabs" >
+    <li class="active"><a href="#home">Subidas</a></li>
+    <li><a href="#menu1">Pineadas</a></li>
+  </ul>
 
-      <ul class="nav nav-tabs" style = "margin-left:10%;border-color:white;">
-        <li id="misGalerias"><a href="#" style="color:#FE2E2E;">Mis Galerias</a></li>
-        <li id="meGusta" ><a href="#" style="color:#FE2E2E;">Pin</a></li>
-      </ul>
-      <div class="container " id = "general" style = "background-color : #D8D8D8; width:98%; display:none; border-radius:6px;">
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+		
+      <div class="container " id = "general" style = "background-color : #D8D8D8; width:98%; display:block; border-radius:6px; margin-top:2%;">
          <div class="" style = "width: auto">
             <!--PRIMERA COLUMNA: IMAGENES-->
             <div class="col-sm-3 col-md-3 col-lg-3" id = "content1">
-              
+
             </div>
             <!--SEGUNDA COLUMNA: IMAGENES-->
             <div class="col-sm-3 col-md-3 col-lg-3" id = "content2">
-              
+
                   
             </div>
             <!--TERCERA COLUMNA: IMAGENES-->
             <div class="col-sm-3 col-md-3 col-lg-3" id = "content3">
-              
+
                   
             </div>
             <!--CUARTA COLUMNA: IMAGENES-->
             <div class="col-sm-3 col-md-3 col-lg-3" id = "content4">
-              
+
                 
             </div>
         </div>
-
       </div>
     </div>
+    <div id="menu1" class="tab-pane fade">
+		 <div class="container " id = "pin" style = "background-color : #D8D8D8; width:98%; display:block; border-radius:6px; margin-top:2%;">
+			 <div class="" style = "width: auto">
+				<!--PRIMERA COLUMNA: IMAGENES-->
+				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin1">
+				  <p>col 1</p>
+				</div>
+				<!--SEGUNDA COLUMNA: IMAGENES-->
+				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin2">
+				  <p>col 2</p>
+					  
+				</div>
+				<!--TERCERA COLUMNA: IMAGENES-->
+				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin3">
+				  <p>col 3</p>
+					  
+				</div>
+				<!--CUARTA COLUMNA: IMAGENES-->
+				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin4">
+				  <p>col 4</p>
+					
+				</div>
+			</div>
+		  </div>
+    </div>
+  </div>
+</div>
     <!--FIN CONTENIDO: IMAGENES CUATRO COLUMNAS-->
 
-  </div>
-
+</div>
+<!--Fin Principal-->
 
     <!-- Mostrando imagen selecionada-->
 
