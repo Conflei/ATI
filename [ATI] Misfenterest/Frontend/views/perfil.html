@@ -52,7 +52,7 @@
                           </div>
                       <div class="col-sm-3">
                         <div  class = "infoSesion" >
-                          <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none"><strong style="font-size=20px;">Mi Perfil</strong>
+                          <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none"><strong style="font-size=20px;">{{usuario.name|safe}}</strong>
                             <img  class = "img-circle logoSesion" src="img/misael.jpg">             
                           </a>
                         </div>
@@ -76,7 +76,7 @@
                                     <div class="form-group">
                                       
                                           <label for="name">Nombre:</label>
-                                          <input type="text" value="Misael" class="form-control" id="nombreUsr" placeholder="First name" name= "fname" required >
+                                          <input type="text" value={{usuario.fullname|safe}} class="form-control" id="nombreUsr" placeholder="First name" name= "fname" required >
                                         
 
                                     </div>
@@ -89,7 +89,7 @@
                                     <label for="email">Foto:</label>
                                     <div class="form-group">
                                         <div class="profileImageWrapper">
-                                           <img src="img/misael.jpg"  class="img-circle imgCambio" alt="Cinque Terre" > 
+                                           <img src={{usuario.picdir|safe}}  class="img-circle imgCambio" alt="Cinque Terre" > 
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -101,7 +101,7 @@
                                     <label for="usuario">Nombre de usuario:</label>
                                     <div class="form-group">
                                         <label for="usr">Nombre:</label>
-                                        <input type="text" value="Misael2729" class="form-control" id="Usr" placeholder="User Name" required>
+                                        <input type="text" value={{usuario.name|safe}} class="form-control" id="Usr" placeholder="User Name" required>
                                     </div>
                                     
                                 </li>
@@ -109,7 +109,7 @@
                                 <li>
                                    <label for="userAbout">Acerca de ti:</label>
                                    
-                                          <textarea name="about" id="userAbout" style="border-radius:3px; width:95%; height:auto;">Optimista y perseverante cuando se trata de lograr mis meta.Trato de ser siempre cordial y honesto con la gente que me rodea. Me gusta ir al gym a ejercitarme. =) </textarea>
+                                          <textarea name="about" id="userAbout" style="border-radius:3px; width:95%; height:auto;">{{usuario.description|safe}}</textarea>
                                       
                                   
                                 </li>
@@ -154,8 +154,8 @@
               <div class="col-sm-7 col-md-7 col-lg-7"> 
                 <div class = "textoPerfil">
                   <br>
-                  <h2>Misael Polidor</h2>      
-                  <p><br>Optimista y perseverante cuando se trata de lograr mis meta. Trato de ser siempre cordial y honesto con la gente que me rodea. Me gusta ir al gym a ejercitarm</p> 
+                  <h2>{{usuario.fullname|safe}}</h2>      
+                  <p><br>{{usuario.description|safe}}</p> 
                 </div>   
               </div>
               <div class="col-sm-2 col-md-2 col-lg-2">
@@ -180,8 +180,8 @@
      
 <div class="container" id="columnas">
   <ul class="nav nav-tabs" >
-    <li class="active"><a href="#home">Subidas</a></li>
-    <li><a href="#menu1">Pineadas</a></li>
+    <li class="active"><a href="#home">Uploads</a></li>
+    <li><a href="#menu1">Pin</a></li>
   </ul>
 
   <div class="tab-content">
@@ -216,21 +216,21 @@
 			 <div class="" style = "width: auto">
 				<!--PRIMERA COLUMNA: IMAGENES-->
 				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin1">
-				  <p>col 1</p>
+				  
 				</div>
 				<!--SEGUNDA COLUMNA: IMAGENES-->
 				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin2">
-				  <p>col 2</p>
+				  
 					  
 				</div>
 				<!--TERCERA COLUMNA: IMAGENES-->
 				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin3">
-				  <p>col 3</p>
+				  
 					  
 				</div>
 				<!--CUARTA COLUMNA: IMAGENES-->
 				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin4">
-				  <p>col 4</p>
+				 
 					
 				</div>
 			</div>

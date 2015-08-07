@@ -1,6 +1,7 @@
 $(document).ready(function()
 {	
-	$("#misGalerias").bind("click",
+	generationUP();
+	$("#misGalerias").click(
 		function(){
 			if(active != null){
 				$("#"+active).removeClass("active");
@@ -13,7 +14,7 @@ $(document).ready(function()
 
 		}
 	);
-	$("#meGusta").bind("click",
+	$("#meGusta").click(
 		function(){
 			if(active != null){
 				$("#"+active).removeClass("active");
@@ -26,7 +27,7 @@ $(document).ready(function()
 
 		}
 	);
-	$("#editarPerfil").bind("click",
+	$("#editarPerfil").click(
 		function(){
 			$("#editar").css("display","block");
 			$("#barra").addClass("opacar");
@@ -42,7 +43,7 @@ $(document).ready(function()
 			$("#columnas").removeClass("opacar");
 		}
 	);
-	$("#cerrarModificar").bind("click",
+	$("#cerrarModificar").click(
 		function(){
 			$("#editar").css("display","none");
 			$("#barra").removeClass("opacar");
@@ -50,8 +51,7 @@ $(document).ready(function()
 			$("#columnas").removeClass("opacar");
 		}
 	);
-	$("#verMiPerfil").attr("href","perfil.html");
-	$("#guardarPerfil").bind("click",
+	$("#guardarPerfil").click(
 		function(){
 			//validar entrada
 			if($("#nombreUsr").attr("value") != null && $("#nombreUsr").attr("value") != "")
@@ -71,7 +71,7 @@ $(document).ready(function()
 	);
 
 
-	$("#aceptarMensaje").bind("click",
+	$("#aceptarMensaje").click(
 		function(){
 			$("#editar").css("display","none");
 			$("#editar").removeClass("opacar");
@@ -81,7 +81,7 @@ $(document).ready(function()
 			$("#mensajeExito").slideUp();	
 		}
 	);
-	$("#cerrar").bind("click",
+	$("#cerrar").click(
 		function(){
 			$("#contenido").slideUp();
 			$("#barra").removeClass("opacar");
@@ -90,6 +90,14 @@ $(document).ready(function()
 		}
 	);
 });
+
+
+$(window).scroll(function(){
+	if ($(window).scrollTop() == $(document).height() - $(window).height()){
+		generationUP();
+	}					
+});
+
 
 function mostrarImagen(id){
 	$("h4").text(title(id));

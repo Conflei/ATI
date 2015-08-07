@@ -44,8 +44,8 @@
                      </div>
 					<div class="col-sm-3">
                        <div  class = "infoSesion" >
-                         <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none"><strong style="font-size=20px;" id="nombrePerfil">{{usuario.name|safe}}</strong>
-                            <img  class = "img-circle logoSesion" src="img/misael.jpg">             
+                         <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none" onclick="verMiPerfil('{{usuario.name|safe}}')"><strong style="font-size=20px;">My profile</strong>
+                            <img  class = "img-circle logoSesion" src= {{usuario.picdir|safe}}>          
                          </a>
                        </div>
                    </div>

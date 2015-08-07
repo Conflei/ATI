@@ -15,15 +15,6 @@ $(document).ready(function(){
 		hideSeleccion();
 	});
 	fill();
-	$("#verMiPerfil").click(function(){
-		var form = $('<form action="/myprofile" method="post">' +
-	
-		 '<input type="text" name="name" value="'+$("#nombrePerfil").text()+'">' +
-		   '<button type="submit" id="sub"></button>'+
-		  '</form>');
-		$('body').append(form);
-		$("#sub").click();
-	});
 
 });
 
@@ -152,8 +143,16 @@ function fill()
 		
 }
 
-
-
+function verMiPerfil(name){
+		//alert("holaaaa"+name);
+		var form = $('<form action="/myprofile" method="post">' +
+	
+		 '<input type="text" name="name" value="'+name+'">' +
+		   '<button type="submit" id="sub"></button>'+
+		  '</form>');
+		$('body').append(form);
+		$("#sub").click();
+	}
 
 
 

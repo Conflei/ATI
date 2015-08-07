@@ -1,22 +1,10 @@
-$(document).ready(function()
-{	
-	generationUP();
-	
-});
-
-$(window).scroll(function(){
-	if ($(window).scrollTop() == $(document).height() - $(window).height()){
-		generationUP();
-	}					
-});
-
 function generationUP() {
 
 	images = doAjaxPage("upload");
 	
 	if(images && images != undefined && images != "fallo"){
 		//alert(images[i]["picdir"] + images[i]["title"] + images[i]["description"] + images[i]["author"]);
-		alert(images.length);
+		//alert(images.length);
 		for(var i=0; i<images.length; i++){
 			n = 150+Math.floor((Math.random() * 130) + 1);
 
