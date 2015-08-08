@@ -45,7 +45,7 @@ def obtenerDatosUsuario(name):
 	datos = {}
 	cursor.execute('select * from users where name=%s',[name]) 
 	tmp = cursor.fetchone()
-	user = User(tmp[0], tmp[3], "img/misael.jpg", tmp[4], tmp[2])
+	user = User(tmp[0], tmp[3], tmp[5], tmp[4], tmp[2])
 	print("Obtenidos los datos de un usuario")
 	print("Nickname: "+user.name)
 	print("Fullname: "+user.fullname)
@@ -131,7 +131,8 @@ def EditPerfilInDB(name,fullname,userAbout,img):#,cargarImagen): #usuario,nombre
 	cursor = dbConnection.cursor()
 	cursor.execute('UPDATE users SET fullname  = %s WHERE name = %s',(fullname, name))
 	cursor.execute('UPDATE users SET description  = %s WHERE name = %s',(userAbout, name))
-	#cursor.execute('UPDATE users SET picdir  = %s WHERE name = %s',(cargarImagen, name)) #modifcar base de datos para que acepte foto de perfil
+	if img != 'none':
+		cursor.execute('UPDATE users SET picdir  = %s WHERE name = %s',(img, name))
 	dbConnection.commit()
 	cursor.close()
 	dbConnection.close()
@@ -272,19 +273,20 @@ def EditPerfil(): #funcion llamada por el ajax para Editar Perfil
 
 
 @app.route('/editarPerfilForm', methods = ['POST'])
-def loadImage():
-	print("Upload Content")
+def editarPerfilForm():
+	
 	nameUsr 	= request.form['name']
 	fname 		= request.form['fname']
-	description = request.form['description']
+	description = request.form['about']
 	imageData 	= request.files['file']
+	
 	name = imageData.filename
 	ext = name.rsplit('.', 1)[1]
 	filename = GetImageFilename('upload')+"."+ext.lower()
 	finalPath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 	imageData.save(finalPath)
-	print("La imagen fisica se guardo en el server en la ruta "+finalPath)
-	return EditPerfilInDB(nameUsr,fname,description,finalPath)
+	print("Ya guarde la imagen estos son los datos %s %s %s",nameUsr, fname,description,finalPath)
+	EditPerfilInDB(nameUsr,fname,description,finalPath)
 
 	user = obtenerDatosUsuario(nameUsr)
 	

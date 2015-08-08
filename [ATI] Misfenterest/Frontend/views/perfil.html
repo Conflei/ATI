@@ -4,6 +4,10 @@
   <title>Pinterest | Perfil</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+	<meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
+  <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -31,8 +35,84 @@
 </head>
 
 <body>
-<!--Contendio Principal-->
+<!--Contendio Principal --> 
+<!--modal edit-->
+
+<div class="modal fade" id="myModalEditarPerfil" role="dialog">
+				<div class="modal-dialog">
+    
+			  <!-- Modal content-->
+				  <div class="modal-content">
+					<div style="padding:35px 50px; background-color:black">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 style="background-color:black; color:white;">Editar Pastie</h4>
+					</div>
+					<div class="modal-body" style="padding:40px 50px;">
+					 
+						<div class="form-group">
+						  <label for="usrname">Titulo:</label>
+						  <input type="text" class="form-control" id="titlePastie" placeholder="Enter title">
+						</div>
+						<div class="form-group">
+						  <label for="psw">Propietario:</label>
+						  <input type="text" class="form-control" id="ownerPastie" placeholder="Enter owner">
+						</div>
+						<div class="form-group">
+						  <label for="male">Privado</label>
+							<input type="radio" name="privacy" id="privatePastie" value="private">
+							<label for="female">P&uacute;blico</label>
+							<input type="radio" name="privacy" id="publicPastie" value="public"><br>
+						</div>
+						<div class="form-group">
+							<textarea rows="8" cols="60" id="contenidoPastie"></textarea>
+						</div>
+						
+						  <button type="submit" class="btn btn-success btn" onclick= "Modificar()";>Editar</button>
+						  <button type="submit" class="btn btn-danger btn-default pull" data-dismiss="modal">Cancel</button>
+					 
+					</div>
+
+				  </div>
+				  
+				</div>
+			  </div> 
+
+<!--end modal edit-->
+<!--modal pass-->
+		<div class="modal fade" id="myModalEditar" role="dialog">
+				<div class="modal-dialog">
+    
+			  <!-- Modal content-->
+				  <div class="modal-content">
+					<div style="padding:35px 50px; background-color:black">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 style="background-color:black; color:white;">Change Password</h4>
+					</div>
+					<div class="modal-body" style="padding:40px 50px;">
+						<div class="form-group">
+						  <label for="usrname">Enter your Password:</label>
+						  <input type="password" class="form-control" id="titlePastie">
+						</div>
+						<div class="form-group">
+						  <label for="usrname">New Password:</label>
+						  <input type="password" class="form-control" id="titlePastie">
+						</div>
+						<div class="form-group">
+						  <label for="psw">Repeat New Password:</label>
+						  <input type="password" class="form-control" id="ownerPastie">
+						</div>
+						 <button type="submit" class="btn btn-success btn" onclick= "Modificar()";>Confirm</button>
+						 <button type="submit" class="btn btn-danger btn-default pull" data-dismiss="modal">Cancel</button>
+					 
+					</div>
+
+				  </div>
+				  
+				</div>
+			  </div> 
+<!--fin modal-->
  <div class="container-fluid" >
+		
       <!--HEADER-->
       <div class="row sombra" id="header">
         <!-- barra de buscqueda -->
@@ -54,7 +134,7 @@
                       <div class="col-sm-3">
                         <div  class = "infoSesion" >
                           <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none"><strong style="font-size=20px;">{{usuario.name|safe}}</strong>
-                            <img  class = "img-circle logoSesion" src="img/misael.jpg">             
+                            <img  class = "img-circle logoSesion" src={{usuario.picdir|safe}}>             
                           </a>
                           <ul class="dropdown-menu " role="menu" id="botonPerfilOpciones">
 								<li><a onclick="verLobby('{{usuario.name|safe}}')">Lobby</a></li>
@@ -76,9 +156,9 @@
                           </a>
                           <h1 style="text-align:center">Edit Profile</h1>
                           <br>
-                           <form class="form-inline" role="form" id="formEditarPerfil" action="" method="POST">
+                           <form enctype="multipart/form-data" class="form-inline" role="form" id="formEditarPerfil" action="" method="POST">
                               <ul style="list-style-type: none;">
-                                  <li>
+                                <li>
                                     <div class="form-group">
                                       
                                           <label for="name">Name:</label>
@@ -92,39 +172,40 @@
                                     <div class="form-group">
                                         <div class="profileImageWrapper">
                                            <img src={{usuario.picdir|safe}}  class="img-circle imgCambio" alt="Cinque Terre" > 
+											 <input type="file" class="form-control" id="cargarImagen" placeholder="Select Content" accept="image/*" name="file">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                       <input type="file" class="form-control" id="cargarImagen" placeholder="Select Content" accept="image/*" name="file">
-                                    </div> 
+                                 
+                                    
+                                    
                                 </li>
                                 <br>
                                 <li>
                                     <label for="usuario">Username:</label>
                                     <div class="form-group">
                                         <label for="usr">Name:</label>
-                                        <input type="text" value={{usuario.name|safe}} class="form-control" placeholder="User Name" readonly>
+                                        <input type="text" value={{usuario.name|safe}} class="form-control" placeholder="Name" name="name" readonly>
                                     </div>
                                     
                                 </li>
                                 <br>
                                 <li>
                                    <label for="userAbout">About you:</label>
-                                   
+                                   <div class="form-group" style="width:70%">
+										 
                                           <textarea name="about" id="userAbout" style="border-radius:3px; width:95%; height:auto;">{{usuario.description|safe}}</textarea>
-                                      
+                                   </div>
                                   
                                 </li>
 
                               </ul>
                               <div class="formFooterButtons">
-                              <button id="cancelarPerfil" class=" Button Module btn cancelButton hasText rounded" type="button">
-                                   <span class="buttonText">Cancel</span>
-                               </button>
-                               <button class="Button Module btn hasText primary rounded saveButton" style="background-color: black; color:white" type="button" onclick="guardarPerfil('{{usuario.name|safe}}')">
-                                   <span class="buttonText">Save Changes</span>  
-                               </button>
-                           </div>
+								  <button id="cancelarPerfil" class=" Button Module btn cancelButton hasText rounded" type="button">
+									   <span class="buttonText">Cancel</span>
+								   </button>
+									<button type="submit" class="btn btn-success btn" onclick="guardarPerfil('{{usuario.name|safe}}');">Confirm</button>
+									
+							  </div>
                            
 
                            </form>
@@ -148,14 +229,13 @@
       </div>
     <!--FIN HEADER-->
 
-
     <!--INFORMACION PERFIL-->
         <div class="row sombra" id="perfil" style= "margin-top:70px;">
 
           <div id = "contentInfo" >
             <div class = "row">
               <div class="col-sm-3 col-md-3 col-lg-3"> 
-                <img src="img/misael.jpg"  class="img-circle imgPerfil" alt="Cinque Terre" > 
+                <img src={{usuario.picdir|safe}}  class="img-circle imgPerfil" alt="Cinque Terre" > 
               </div>
               <div class="col-sm-7 col-md-7 col-lg-7"> 
                 <div class = "textoPerfil">
@@ -173,7 +253,7 @@
                   
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="#" id="editarPerfil">Profile</a></li>
-                    <li><a href="#">Security</a></li>
+                    <li><a href="#" onclick="cambiarPassword('{{usuario.name|safe}}')">Security</a></li>
                   </ul>
                 </div>  
               </div>

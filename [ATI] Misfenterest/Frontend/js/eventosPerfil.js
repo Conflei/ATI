@@ -1,5 +1,6 @@
 $(document).ready(function()
 {	
+	
 	generationUP();
 	$("#misGalerias").click(
 		function(){
@@ -45,10 +46,12 @@ $(document).ready(function()
 		}
 	);
 	$("#editarPerfil").click(function (){
+		#$("#myModalEditarPerfil").modal();
 		$("#editar").css("display","block");
 		$("#barra").addClass("opacar");
 		$("#perfil").addClass("opacar");
 		$("#columnas").addClass("opacar");
+		
 		
 	});
 
@@ -87,6 +90,9 @@ $(document).ready(function()
 		$(this).css("background-color", "white");
     }, function(){
 		
+	});
+	$("#verMiPerfil").click(function(){
+		$("#botonPerfilOpciones").slideToggle()
 	});
 	$("body").click(function(){
 		$(verMiPerfil).css("background-color", "#D8D8D8");
@@ -138,14 +144,10 @@ function guardarPerfil(name){
 	var cargarImagen = $("#cargarImagen").val();
 	var userAbout = $("#userAbout").val();
 	//alert(name+" "+nameusr+" "+userAbout+" "+cargarImagen);
-	if(cargarImagen==""){ //hay que crear un formulario
-		var inputTextArea = $('<input type="text" value="'+userAbout+'" class="form-control" name= "description">')
-		var name = $('<input type="text" value="'+name+'" class="form-control" name= "name">')
+	if(cargarImagen.length>0){ //hay que crear un formulario
 		var button = $('<button type="submit" id="subm"></button>');
 		$('#formEditarPerfil').attr("action","/editarPerfilForm")
-		('#formEditarPerfil').append(name);
 		$('#formEditarPerfil').append(button);
-		
 		$("#subm").click();
 	}
 	else{ //se hace con ajax
@@ -165,4 +167,9 @@ function guardarPerfil(name){
 	}
 	var cargarImagen = $("#cargarImagen").val("");
 
+}
+
+function cambiarPassword(name){
+	
+	$("#myModalEditar").modal();
 }
