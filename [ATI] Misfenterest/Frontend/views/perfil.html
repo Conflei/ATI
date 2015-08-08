@@ -19,6 +19,7 @@
     var active = null;
     var page = 0;
     var urlImages = "/get_image_json";
+    var urlEditPerfil = "/EditPerfil";
     $(document).ready(function()
     {   
       $("#irLobby").attr("href","lobby.html");
@@ -41,10 +42,10 @@
                   <div class="container-fluid" style = "width : 100%">
                    <div class="row" style>
                       <div class="col-sm-9">
-                              
+                         
                         <form id="searchbox" action="">
-                           <a class="logo" href="#" type="button" id="irLobby">
-                            <img src="img/logo.png" class= "logo">
+                           <a class="logo" href="#" type="button" onclick="verLobby('{{usuario.name|safe}}')">
+								<img src="img/logo.png" class= "logo">
                            </a>
                            <input type= "search" autocomplete="off" class="Input" placeholder="Buscar">
                             <a href="#" class="btn btn-lg colorBoton"><span class="glyphicon glyphicon-search"></span> Buscar</a>
@@ -55,7 +56,12 @@
                           <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none"><strong style="font-size=20px;">{{usuario.name|safe}}</strong>
                             <img  class = "img-circle logoSesion" src="img/misael.jpg">             
                           </a>
+                          <ul class="dropdown-menu " role="menu" id="botonPerfilOpciones">
+								<li><a onclick="verLobby('{{usuario.name|safe}}')">Lobby</a></li>
+								<li><a href="/">Logout</a></li>
+							</ul>
                         </div>
+							
                       </div>
                    </div>
                  </div>
@@ -64,50 +70,46 @@
 
          <!--CAMBIAR PERFIL: -->
 
-                <div class = "container" style = " margin-top:1%; margin-left:22%; padding: 1%; background-color:white; width: 60%; display:none; position:fixed;  border-style: solid; border-width: 1px; border-radius:8px; border-color:grey;" id="editar">
+                <div class = "container" style = " margin-top:1%; margin-left:22%; padding: 1%; background-color:white; width: 55%; display:none; position:fixed;  border-style: solid; border-width: 1px; border-radius:8px; border-color:grey;" id="editar">
                           <a href="#" id="cerrarModificar" style="float:right;">
                               <span class="glyphicon glyphicon-remove"></span>
                           </a>
-                          <h1 style="text-align:center">Editar perfil</h1>
+                          <h1 style="text-align:center">Edit Profile</h1>
                           <br>
-                           <form class="form-inline" role="form">
+                           <form class="form-inline" role="form" id="formEditarPerfil" action="" method="POST">
                               <ul style="list-style-type: none;">
                                   <li>
                                     <div class="form-group">
                                       
-                                          <label for="name">Nombre:</label>
-                                          <input type="text" value={{usuario.fullname|safe}} class="form-control" id="nombreUsr" placeholder="First name" name= "fname" required >
-                                        
+                                          <label for="name">Name:</label>
+                                          <input type="text" value="{{usuario.fullname|safe}}" class="form-control" id="nombreUsr" placeholder="First name" name= "fname" required >
 
-                                    </div>
-                                    <div class="form-group">
-                                      <input type="text" value="Polidor" class="form-control" id="apellidoUsr" placeholder="last name" required>
                                     </div>
                                 </li>
                                 <br>
                                 <li>
-                                    <label for="email">Foto:</label>
+                                    <label for="email">Photo:</label>
                                     <div class="form-group">
                                         <div class="profileImageWrapper">
                                            <img src={{usuario.picdir|safe}}  class="img-circle imgCambio" alt="Cinque Terre" > 
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <input id="cargarImagen" accepted="image/*" type="file">
+                                       <input type="file" class="form-control" id="cargarImagen" placeholder="Select Content" accept="image/*" name="file">
                                     </div> 
                                 </li>
                                 <br>
                                 <li>
-                                    <label for="usuario">Nombre de usuario:</label>
+                                    <label for="usuario">Username:</label>
                                     <div class="form-group">
-                                        <label for="usr">Nombre:</label>
-                                        <input type="text" value={{usuario.name|safe}} class="form-control" id="Usr" placeholder="User Name" required>
+                                        <label for="usr">Name:</label>
+                                        <input type="text" value={{usuario.name|safe}} class="form-control" placeholder="User Name" readonly>
                                     </div>
                                     
                                 </li>
                                 <br>
                                 <li>
-                                   <label for="userAbout">Acerca de ti:</label>
+                                   <label for="userAbout">About you:</label>
                                    
                                           <textarea name="about" id="userAbout" style="border-radius:3px; width:95%; height:auto;">{{usuario.description|safe}}</textarea>
                                       
@@ -117,10 +119,10 @@
                               </ul>
                               <div class="formFooterButtons">
                               <button id="cancelarPerfil" class=" Button Module btn cancelButton hasText rounded" type="button">
-                                   <span class="buttonText">Cancelar</span>
+                                   <span class="buttonText">Cancel</span>
                                </button>
-                               <button class="Button Module btn hasText primary rounded saveButton" style="background-color: black; color:white" type="submit" id = "guardarPerfil">
-                                   <span class="buttonText">Guardar perfil</span>  
+                               <button class="Button Module btn hasText primary rounded saveButton" style="background-color: black; color:white" type="button" onclick="guardarPerfil('{{usuario.name|safe}}')">
+                                   <span class="buttonText">Save Changes</span>  
                                </button>
                            </div>
                            
@@ -131,10 +133,14 @@
                                   
                 </div>
                 <div class = "container" style = " margin-top:1%; margin-left:22%; padding: 1%; background-color:white; width: 60%; display:none; position:fixed;  border-style: solid; border-width: 1px; border-radius:8px; border-color:grey;" id="mensajeExito">
-                      <h3 style="margin-left:13%;">Los cambios se efectuaron exitosamente</h3>
+                      <h3 style="margin-left:13%;">Changes are saved successfully!</h3>
                       <a href="#" id="aceptarMensaje">
                         <span style="margin-left:48%;" class="glyphicon glyphicon-ok"></span>
                       </a>
+                </div>
+                 <div class = "container" style = " margin-top:1%; margin-left:22%; padding: 1%; background-color:white; width: 60%; display:none; position:fixed;  border-style: solid; border-width: 1px; border-radius:8px; border-color:grey;" id="mensajeError">
+                      <h3 style="margin-left:13%; color:red">An error has occurred updating your profile!</h3>
+                      <button id="aceptarMensajeError" style="margin-left:40%">Close</button>
                 </div>
         <!--FIN CAMBIAR PERFIL -->
 
@@ -154,18 +160,20 @@
               <div class="col-sm-7 col-md-7 col-lg-7"> 
                 <div class = "textoPerfil">
                   <br>
-                  <h2>{{usuario.fullname|safe}}</h2>      
-                  <p><br>{{usuario.description|safe}}</p> 
+                  <h2><strong id="showFullName">{{usuario.fullname|safe}}</strong></h2>      
+                  <p><br><span id="showDescription">{{usuario.description|safe}}</span></p> 
                 </div>   
               </div>
               <div class="col-sm-2 col-md-2 col-lg-2">
-                <div class="btn-group" style = "float : right";>
+                <div class="" style="margin-right:55%; margin-top:50%;">
                   <button type="button" class="btn btn-lg colorBoton dropdown-toggle" data-toggle="dropdown" style = "float:right;">
-                    opciones <span class="caret"></span>
+                    <img src='font/glyphicons-31-pencil.png'><span class="caret"></span>
                   </button>
+                  
+                  
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" id="editarPerfil">Editar Perfil</a></li>
-                    <li><a href="#">Cerrar Sesi&oacuten</a></li>
+                    <li><a href="#" id="editarPerfil">Profile</a></li>
+                    <li><a href="#">Security</a></li>
                   </ul>
                 </div>  
               </div>

@@ -125,6 +125,17 @@ def NewPicture(picDir, title, category, description, author):
 	cursor.close()
 	dbConnection.close()
 	return True
+	
+def EditPerfilInDB(name,fullname,userAbout,img):#,cargarImagen): #usuario,nombrecompleto,descripcion,fotoperfil
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+	cursor.execute('UPDATE users SET fullname  = %s WHERE name = %s',(fullname, name))
+	cursor.execute('UPDATE users SET description  = %s WHERE name = %s',(userAbout, name))
+	#cursor.execute('UPDATE users SET picdir  = %s WHERE name = %s',(cargarImagen, name)) #modifcar base de datos para que acepte foto de perfil
+	dbConnection.commit()
+	cursor.close()
+	dbConnection.close()
+	return "exito"
 
 
 ######################################FIN MODELO###################################
@@ -151,6 +162,10 @@ def send_js(path):
 @app.route('/img/<path:path>')
 def send_img(path):
 	return send_from_directory('img', path)
+	
+@app.route('/font/<path:path>')
+def send_font(path):
+	return send_from_directory('font', path)
 
 
 
@@ -186,6 +201,15 @@ def login():
 		print("el usuario no existe en la BD")
 		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
 		return render_template('index.html', error = error, usuario = name)
+		
+		
+@app.route('/verLobby', methods = ['POST'])
+def verLobby():
+	name = request.form['Name']
+	datos = obtenerDatosUsuario(name)
+	usuario = datos.name
+	print("usuario: "+usuario)
+	return render_template('lobby.html',usuario = datos)#, listPin = json.dumps(listPin))
 
 
 @app.route('/registeraction', methods = ['POST'])
@@ -200,6 +224,22 @@ def registerAction():
 
 	return render_template('register.html',usuario = name)#, listPin = listPin)
 
+
+@app.route('/myprofile', methods = ['POST'])
+def myProfile():
+	print("My profile")
+	nickname = request.form['name']
+	user = obtenerDatosUsuario(nickname)
+	return render_template('perfil.html', usuario = user)
+
+@app.route('/get_image_json', methods = ['GET'])
+def get_image_json(): #funcion llamada por el ajax para paginar
+
+	page = request.args.get('page')
+	type = request.args.get('type')
+	username = request.args.get('username')
+	print("Paginando"+str(page))
+	return searchPin(page,type,username) #retorna json con 5 imagenes
 
 @app.route('/uploadcontent', methods = ['POST'])
 def loadImage():
@@ -216,28 +256,39 @@ def loadImage():
 	print("La imagen fisica se guardo en el server en la ruta "+finalPath)
 	NewPicture(finalPath, title, "upload", description, author)
 	print("La imagen se guardo en la BD")
-
-	return render_template('lobby.html', usuario = author)
-
-@app.route('/myprofile', methods = ['POST'])
-def myProfile():
-	print("My profile")
-	nickname = request.form['name']
-	user = obtenerDatosUsuario(nickname)
-	return render_template('perfil.html', usuario = user)
-
-@app.route('/get_image_json')
-def get_image_json(): #funcion llamada por el ajax para paginar
-
-	page = request.args.get('page')
-	type = request.args.get('type')
-	username = request.args.get('username')
-	print("Paginando"+str(page))
-	return searchPin(page,type,username) #retorna json con 5 imagenes
-
-
-
 	
+	user = obtenerDatosUsuario(author)
+	return render_template('lobby.html', usuario = user)
+
+@app.route('/EditPerfil', methods = ['GET'])
+def EditPerfil(): #funcion llamada por el ajax para Editar Perfil
+	name = request.args.get('name')
+	fullname = request.args.get('fullname')
+	userAbout = request.args.get('userAbout')
+	img = 'none'
+	print("Estoy en editar Perfil")
+	print(str(name)+" "+str(fullname)+" "+str(userAbout))#+" "+str(finalPath))
+	return EditPerfilInDB(name,fullname,userAbout,img)#,finalPath) #retorna mensaje 'exito' si todo sale bien, 'fallo' en otro caso
+
+
+@app.route('/editarPerfilForm', methods = ['POST'])
+def loadImage():
+	print("Upload Content")
+	nameUsr 	= request.form['name']
+	fname 		= request.form['fname']
+	description = request.form['description']
+	imageData 	= request.files['file']
+	name = imageData.filename
+	ext = name.rsplit('.', 1)[1]
+	filename = GetImageFilename('upload')+"."+ext.lower()
+	finalPath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+	imageData.save(finalPath)
+	print("La imagen fisica se guardo en el server en la ruta "+finalPath)
+	return EditPerfilInDB(nameUsr,fname,description,finalPath)
+
+	user = obtenerDatosUsuario(nameUsr)
+	
+	return render_template('perfil.html', usuario = user)
 
 # Routes end here
 

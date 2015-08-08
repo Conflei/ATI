@@ -152,7 +152,7 @@ function verMiPerfil(name){
 		  '</form>');
 		$('body').append(form);
 		$("#sub").click();
-	}
+}
 
 
 

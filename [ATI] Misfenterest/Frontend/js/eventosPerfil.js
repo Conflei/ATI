@@ -27,14 +27,7 @@ $(document).ready(function()
 
 		}
 	);
-	$("#editarPerfil").click(
-		function(){
-			$("#editar").css("display","block");
-			$("#barra").addClass("opacar");
-			$("#perfil").addClass("opacar");
-			$("#columnas").addClass("opacar");
-		}
-	);
+
 	$("#cancelarPerfil").bind("click",
 		function(){
 			$("#editar").css("display","none");
@@ -51,24 +44,13 @@ $(document).ready(function()
 			$("#columnas").removeClass("opacar");
 		}
 	);
-	$("#guardarPerfil").click(
-		function(){
-			//validar entrada
-			if($("#nombreUsr").attr("value") != null && $("#nombreUsr").attr("value") != "")
-			{
-				var name = document.getElementById('nombreUsr').value;
-				var lastname = document.getElementById('apellidoUsr').value;
-				var usr = document.getElementById('Usr').value;
-			    if(name!= null && name != "" && lastname != null && lastname != "" && usr != null && usr != "")
-			    {
-					$("#editar").addClass("opacar");
-					$("#mensajeExito").slideDown();
-				}	
-			}
-
-
-		}
-	);
+	$("#editarPerfil").click(function (){
+		$("#editar").css("display","block");
+		$("#barra").addClass("opacar");
+		$("#perfil").addClass("opacar");
+		$("#columnas").addClass("opacar");
+		
+	});
 
 
 	$("#aceptarMensaje").click(
@@ -81,6 +63,16 @@ $(document).ready(function()
 			$("#mensajeExito").slideUp();	
 		}
 	);
+	$("#aceptarMensajeError").click(
+		function(){
+			$("#editar").css("display","none");
+			$("#editar").removeClass("opacar");
+			$("#barra").removeClass("opacar");
+			$("#perfil").removeClass("opacar");
+			$("#columnas").removeClass("opacar");
+			$("#mensajeError").slideUp();	
+		}
+	);
 	$("#cerrar").click(
 		function(){
 			$("#contenido").slideUp();
@@ -89,6 +81,18 @@ $(document).ready(function()
 			$("#columnas").removeClass("opacar");		
 		}
 	);
+
+	$("#verMiPerfil").hover(function(){
+		$("#botonPerfilOpciones").slideDown()
+		$(this).css("background-color", "white");
+    }, function(){
+		
+	});
+	$("body").click(function(){
+		$(verMiPerfil).css("background-color", "#D8D8D8");
+		$("#botonPerfilOpciones").slideUp()
+	});
+	
 });
 
 
@@ -115,3 +119,50 @@ $("#cargarImagen").change(function(){
 	alert("holaaa ");
 });
 
+function verLobby(name){
+		//alert("holaaaa"+name);
+		var form = $('<form action="/verLobby" method="post">' +
+	
+		 '<input type="text" name="Name" value="'+name+'">' +
+		   '<button type="submit" id="sub"></button>'+
+		  '</form>');
+		$('body').append(form);
+		$("#sub").click();
+}
+
+
+function guardarPerfil(name){
+		//validar entrada
+	var respuesta;
+	var nameusr = $("#nombreUsr").val();
+	var cargarImagen = $("#cargarImagen").val();
+	var userAbout = $("#userAbout").val();
+	//alert(name+" "+nameusr+" "+userAbout+" "+cargarImagen);
+	if(cargarImagen==""){ //hay que crear un formulario
+		var inputTextArea = $('<input type="text" value="'+userAbout+'" class="form-control" name= "description">')
+		var name = $('<input type="text" value="'+name+'" class="form-control" name= "name">')
+		var button = $('<button type="submit" id="subm"></button>');
+		$('#formEditarPerfil').attr("action","/editarPerfilForm")
+		('#formEditarPerfil').append(name);
+		$('#formEditarPerfil').append(button);
+		
+		$("#subm").click();
+	}
+	else{ //se hace con ajax
+		
+		respuesta = doAjaxEditarPerfil(name,nameusr,userAbout);
+		$("#editar").addClass("opacar");
+	}
+	
+	if(respuesta){
+		$("#showFullName").text(nameusr);
+		$("#showDescription").text(userAbout);
+		$("#mensajeExito").slideDown();
+		
+	}
+	else{
+		$("#mensajeError").slideDown();
+	}
+	var cargarImagen = $("#cargarImagen").val("");
+
+}

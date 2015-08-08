@@ -64,10 +64,10 @@
 }
 
 .botonPerfil{
-	width: 80%;	
-	height: 100%;
-	padding: 5px;
-	margin-top: 10px;
+  width: 80%;	
+  height: 100%;
+  padding: 5px;
+  margin-top: 10px;
   margin-left: 2px;
   padding: 2px;
   background-color: #D8D8D8;
@@ -241,4 +241,10 @@ h4
 .pinSection a
 {
   float: right;
+}
+
+#botonPerfilOpciones{
+	margin-left:25%;
+	width: 60%;
+	cursor:pointer;
 }
