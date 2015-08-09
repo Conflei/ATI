@@ -6,7 +6,7 @@ import os
 class User:
 	def __init__(self, name, fullname, picDir, description, email):
 		self.name 		 = name
-		self.fullname = fullname
+		self.fullname    = fullname
 		self.picdir		 = picDir
 		self.description = description
 		self.email 		 = email
@@ -16,7 +16,6 @@ UPLOAD_FOLDER = "models/uploads"
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-pageP = 1;
 
 #####################################################################################################################
 #modeloo################################################
@@ -38,7 +37,7 @@ def existUser (name,password):
 	print("founded")
 	return True
 
-def  obtenerDatosUsuario (name):
+def obtenerDatosUsuario(name):
 
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
@@ -46,7 +45,7 @@ def  obtenerDatosUsuario (name):
 	datos = {}
 	cursor.execute('select * from users where name=%s',[name]) 
 	tmp = cursor.fetchone()
-	user = User(tmp[0], tmp[4], tmp[2], tmp[5], tmp[3])
+	user = User(tmp[0], tmp[3], tmp[5], tmp[4], tmp[2])
 	print("Obtenidos los datos de un usuario")
 	print("Nickname: "+user.name)
 	print("Fullname: "+user.fullname)
@@ -59,22 +58,41 @@ def  obtenerDatosUsuario (name):
 
 	return user
 
-def searchPin(pageP,name):
+def searchPin(page,type,username): #retorna 5 imagenes en formato json
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 	print("estoy en search pin")
-	cat ="upload"
-	listPin = []
-	cursor.execute('select * from pictures where category =%s', [cat])
+	if type == 'all':
+		cursor.execute('select * from pictures offset %s limit %s',(page,5))
+	else:
+		if type == 'upload':
+			cursor.execute('select * from pictures offset %s limit %s',(page,5)) #comentar cuando todo este bien
+			#cursor.execute('select * from pictures where author =%s offset %s limit %s',(name,page,5))
+		else:
+			if type == 'pin':
+				cursor.execute('select * from pictures offset %s limit %s',(page,5))
+				#llamar a base de datos pin where name = username
 	
-	dataPin = cursor.fetchall();
+	dataPin = cursor.fetchall()
+	dataJSON = ""
+	imgJSON = ""
+	i = 0
+	
 	for dPin in dataPin:
-		listPin.append(dPin)
-
+		print(dPin[0])
+		imgJSON = "{\"picdir\":\""+dPin[0]+"\",\"title\":\""+dPin[1]+"\",\"category\":\""+dPin[2]+"\",\"description\":\""+dPin[3]+"\",\"author\":\""+dPin[4]+"\"}"
+		if dataJSON == "":
+			dataJSON = "[" + imgJSON
+		else:
+			dataJSON = dataJSON + "," + imgJSON 
+	if dataJSON != "":
+		dataJSON = dataJSON + "]"
+	else:
+		dataJSON = "[]"
 	cursor.close()
 	dbConnection.close()
-	print("enviare pines: "+str(len(listPin)))
-	return listPin
+	print("enviare pines: "+dataJSON)
+	return dataJSON
 
 def crearCuenta (newName, newPassword, newEmail, newFullname, newDescription):
 	if(not existUser(newName, newPassword)):
@@ -83,7 +101,7 @@ def crearCuenta (newName, newPassword, newEmail, newFullname, newDescription):
 		cursor.execute('insert into users (name, password, email, fullname, description) values (%s, %s, %s, %s, %s)',
 			(newName, newPassword, newEmail, newFullname, newDescription))
 
-		dbConnection.commit();
+		dbConnection.commit()
 		cursor.close()
 		dbConnection.close()
 		return True
@@ -103,13 +121,25 @@ def NewPicture(picDir, title, category, description, author):
 	cursor.execute('insert into pictures (picdir, title, category, description, author) values (%s, %s, %s, %s, %s)',
 			(picDir, title, category, description, author))
 
-	dbConnection.commit();
+	dbConnection.commit()
 	cursor.close()
 	dbConnection.close()
 	return True
+	
+def EditPerfilInDB(name,fullname,userAbout,img):#,cargarImagen): #usuario,nombrecompleto,descripcion,fotoperfil
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+	cursor.execute('UPDATE users SET fullname  = %s WHERE name = %s',(fullname, name))
+	cursor.execute('UPDATE users SET description  = %s WHERE name = %s',(userAbout, name))
+	if img != 'none':
+		cursor.execute('UPDATE users SET picdir  = %s WHERE name = %s',(img, name))
+	dbConnection.commit()
+	cursor.close()
+	dbConnection.close()
+	return "exito"
 
 
-
+######################################FIN MODELO###################################
 # Routes goes here
 
 @app.route('/')
@@ -133,6 +163,12 @@ def send_js(path):
 @app.route('/img/<path:path>')
 def send_img(path):
 	return send_from_directory('img', path)
+	
+@app.route('/font/<path:path>')
+def send_font(path):
+	return send_from_directory('font', path)
+
+
 
 @app.route('/assets/<path:path>')
 def send_assets(path):
@@ -141,6 +177,10 @@ def send_assets(path):
 @app.route('/fonts/<path:path>')
 def send_fonts(path):
 	return send_from_directory('fonts', path)
+
+@app.route('/models/uploads/<path:path>')
+def send_up(path):
+	return send_from_directory('models/uploads', path)
 
 
 @app.route('/login', methods = ['POST'])
@@ -155,13 +195,22 @@ def login():
 		datos = obtenerDatosUsuario(name)
 		usuario = datos.name
 		print("usuario: "+usuario)
-		listPin = searchPin(pageP,name)
+		#listPin = searchPin(pageP,name,0)
 		print('Sending user '+usuario)
-		return render_template('lobby.html',error = error, usuario = datos, listPin = json.dumps(listPin))
+		return render_template('lobby.html',error = error, usuario = datos)#, listPin = json.dumps(listPin))
 	else:
 		print("el usuario no existe en la BD")
 		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
 		return render_template('index.html', error = error, usuario = name)
+		
+		
+@app.route('/verLobby', methods = ['POST'])
+def verLobby():
+	name = request.form['Name']
+	datos = obtenerDatosUsuario(name)
+	usuario = datos.name
+	print("usuario: "+usuario)
+	return render_template('lobby.html',usuario = datos)#, listPin = json.dumps(listPin))
 
 
 @app.route('/registeraction', methods = ['POST'])
@@ -175,8 +224,24 @@ def registerAction():
 		listPin = searchPin(pageP,name)
 		return render_template('lobby.html',usuario = name, listPin = listPin)
 
-	return render_template('register.html',usuario = name, listPin = listPin)
+	return render_template('register.html',usuario = name)#, listPin = listPin)
 
+
+@app.route('/myprofile', methods = ['POST'])
+def myProfile():
+	print("My profile")
+	nickname = request.form['name']
+	user = obtenerDatosUsuario(nickname)
+	return render_template('perfil.html', usuario = user)
+
+@app.route('/get_image_json', methods = ['GET'])
+def get_image_json(): #funcion llamada por el ajax para paginar
+
+	page = request.args.get('page')
+	type = request.args.get('type')
+	username = request.args.get('username')
+	print("Paginando"+str(page))
+	return searchPin(page,type,username) #retorna json con 5 imagenes
 
 @app.route('/uploadcontent', methods = ['POST'])
 def loadImage():
@@ -193,21 +258,40 @@ def loadImage():
 	print("La imagen fisica se guardo en el server en la ruta "+finalPath)
 	NewPicture(finalPath, title, "upload", description, author)
 	print("La imagen se guardo en la BD")
-
-	return render_template('lobby.html', usuario = author)
-
-@app.route('/myprofile', methods = ['POST'])
-def myProfile():
-	print("My profile")
-	nickname = request.form['name']
-	user = obtenerDatosUsuario(nickname)
-	return render_template('perfil.html', usuario = user)
-
-
-
-
-
 	
+	user = obtenerDatosUsuario(author)
+	return render_template('lobby.html', usuario = user)
+
+@app.route('/EditPerfil', methods = ['GET'])
+def EditPerfil(): #funcion llamada por el ajax para Editar Perfil
+	name = request.args.get('name')
+	fullname = request.args.get('fullname')
+	userAbout = request.args.get('userAbout')
+	img = 'none'
+	print("Estoy en editar Perfil")
+	print(str(name)+" "+str(fullname)+" "+str(userAbout))#+" "+str(finalPath))
+	return EditPerfilInDB(name,fullname,userAbout,img)#,finalPath) #retorna mensaje 'exito' si todo sale bien, 'fallo' en otro caso
+
+
+@app.route('/editarPerfilForm', methods = ['POST'])
+def editarPerfilForm():
+	
+	nameUsr 	= request.form['name']
+	fname 		= request.form['fname']
+	description = request.form['about']
+	imageData 	= request.files['file']
+	
+	name = imageData.filename
+	ext = name.rsplit('.', 1)[1]
+	filename = GetImageFilename('upload')+"."+ext.lower()
+	finalPath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+	imageData.save(finalPath)
+	print("Ya guarde la imagen estos son los datos %s %s %s",nameUsr, fname,description,finalPath)
+	EditPerfilInDB(nameUsr,fname,description,finalPath)
+
+	user = obtenerDatosUsuario(nameUsr)
+	
+	return render_template('perfil.html', usuario = user)
 
 # Routes end here
 

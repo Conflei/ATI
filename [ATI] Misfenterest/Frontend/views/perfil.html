@@ -4,26 +4,115 @@
   <title>Pinterest | Perfil</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+	<meta http-equiv="Cache-control" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
+  <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script src="js/jquery-2.1.4.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <link rel="stylesheet" type="text/css" media="screen" href="css/perfil.css"/>
   <link rel="shortcut icon" href="img/pinterest.ico">
+  <script src="js/ajax.js"></script>
   <script src="js/cargarDatos.js"></script>
   <script src="js/datos.js"></script>
   <script src="js/eventosPerfil.js"></script>
   <script>
+	var j = 1;
     var cant = 0;
     var active = null;
+    var page = 0;
+    var urlImages = "/get_image_json";
+    var urlEditPerfil = "/EditPerfil";
     $(document).ready(function()
     {   
       $("#irLobby").attr("href","lobby.html");
+      $(".nav-tabs a").click(function(){
+        $(this).tab('show');
+	  });
     });
   </script>
 </head>
 
 <body>
+<!--Contendio Principal --> 
+<!--modal edit-->
+
+<div class="modal fade" id="myModalEditarPerfil" role="dialog">
+				<div class="modal-dialog">
+    
+			  <!-- Modal content-->
+				  <div class="modal-content">
+					<div style="padding:35px 50px; background-color:black">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 style="background-color:black; color:white;">Editar Pastie</h4>
+					</div>
+					<div class="modal-body" style="padding:40px 50px;">
+					 
+						<div class="form-group">
+						  <label for="usrname">Titulo:</label>
+						  <input type="text" class="form-control" id="titlePastie" placeholder="Enter title">
+						</div>
+						<div class="form-group">
+						  <label for="psw">Propietario:</label>
+						  <input type="text" class="form-control" id="ownerPastie" placeholder="Enter owner">
+						</div>
+						<div class="form-group">
+						  <label for="male">Privado</label>
+							<input type="radio" name="privacy" id="privatePastie" value="private">
+							<label for="female">P&uacute;blico</label>
+							<input type="radio" name="privacy" id="publicPastie" value="public"><br>
+						</div>
+						<div class="form-group">
+							<textarea rows="8" cols="60" id="contenidoPastie"></textarea>
+						</div>
+						
+						  <button type="submit" class="btn btn-success btn" onclick= "Modificar()";>Editar</button>
+						  <button type="submit" class="btn btn-danger btn-default pull" data-dismiss="modal">Cancel</button>
+					 
+					</div>
+
+				  </div>
+				  
+				</div>
+			  </div> 
+
+<!--end modal edit-->
+<!--modal pass-->
+		<div class="modal fade" id="myModalEditar" role="dialog">
+				<div class="modal-dialog">
+    
+			  <!-- Modal content-->
+				  <div class="modal-content">
+					<div style="padding:35px 50px; background-color:black">
+					  <button type="button" class="close" data-dismiss="modal">&times;</button>
+					  <h4 style="background-color:black; color:white;">Change Password</h4>
+					</div>
+					<div class="modal-body" style="padding:40px 50px;">
+						<div class="form-group">
+						  <label for="usrname">Enter your Password:</label>
+						  <input type="password" class="form-control" id="titlePastie">
+						</div>
+						<div class="form-group">
+						  <label for="usrname">New Password:</label>
+						  <input type="password" class="form-control" id="titlePastie">
+						</div>
+						<div class="form-group">
+						  <label for="psw">Repeat New Password:</label>
+						  <input type="password" class="form-control" id="ownerPastie">
+						</div>
+						 <button type="submit" class="btn btn-success btn" onclick= "Modificar()";>Confirm</button>
+						 <button type="submit" class="btn btn-danger btn-default pull" data-dismiss="modal">Cancel</button>
+					 
+					</div>
+
+				  </div>
+				  
+				</div>
+			  </div> 
+<!--fin modal-->
  <div class="container-fluid" >
+		
       <!--HEADER-->
       <div class="row sombra" id="header">
         <!-- barra de buscqueda -->
@@ -33,10 +122,10 @@
                   <div class="container-fluid" style = "width : 100%">
                    <div class="row" style>
                       <div class="col-sm-9">
-                              
+                         
                         <form id="searchbox" action="">
-                           <a class="logo" href="#" type="button" id="irLobby">
-                            <img src="img/logo.png" class= "logo">
+                           <a class="logo" href="#" type="button" onclick="verLobby('{{usuario.name|safe}}')">
+								<img src="img/logo.png" class= "logo">
                            </a>
                            <input type= "search" autocomplete="off" class="Input" placeholder="Buscar">
                             <a href="#" class="btn btn-lg colorBoton"><span class="glyphicon glyphicon-search"></span> Buscar</a>
@@ -44,10 +133,20 @@
                           </div>
                       <div class="col-sm-3">
                         <div  class = "infoSesion" >
+<<<<<<< HEAD
                           <a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">Opciones</strong>
                             <img  class = "img-circle logoSesion" src="img/misael.jpg">             
+=======
+                          <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none"><strong style="font-size=20px;">{{usuario.name|safe}}</strong>
+                            <img  class = "img-circle logoSesion" src={{usuario.picdir|safe}}>             
+>>>>>>> 122fedbb4582fd539eeb09ae1cf21a644eb25aca
                           </a>
+                          <ul class="dropdown-menu " role="menu" id="botonPerfilOpciones">
+								<li><a onclick="verLobby('{{usuario.name|safe}}')">Lobby</a></li>
+								<li><a href="/">Logout</a></li>
+							</ul>
                         </div>
+							
                       </div>
                    </div>
                  </div>
@@ -56,65 +155,62 @@
 
          <!--CAMBIAR PERFIL: -->
 
-                <div class = "container" style = " margin-top:1%; margin-left:22%; padding: 1%; background-color:white; width: 60%; display:none; position:fixed;  border-style: solid; border-width: 1px; border-radius:8px; border-color:grey;" id="editar">
+                <div class = "container" style = " margin-top:1%; margin-left:22%; padding: 1%; background-color:white; width: 55%; display:none; position:fixed;  border-style: solid; border-width: 1px; border-radius:8px; border-color:grey;" id="editar">
                           <a href="#" id="cerrarModificar" style="float:right;">
                               <span class="glyphicon glyphicon-remove"></span>
                           </a>
-                          <h1 style="text-align:center">Editar perfil</h1>
+                          <h1 style="text-align:center">Edit Profile</h1>
                           <br>
-                           <form class="form-inline" role="form">
+                           <form enctype="multipart/form-data" class="form-inline" role="form" id="formEditarPerfil" action="" method="POST">
                               <ul style="list-style-type: none;">
-                                  <li>
+                                <li>
                                     <div class="form-group">
                                       
-                                          <label for="name">Nombre:</label>
-                                          <input type="text" value="Misael" class="form-control" id="nombreUsr" placeholder="First name" name= "fname" required >
-                                        
+                                          <label for="name">Name:</label>
+                                          <input type="text" value="{{usuario.fullname|safe}}" class="form-control" id="nombreUsr" placeholder="First name" name= "fname" required >
 
                                     </div>
-                                    <div class="form-group">
-                                      <input type="text" value="Polidor" class="form-control" id="apellidoUsr" placeholder="last name" required>
-                                    </div>
                                 </li>
                                 <br>
                                 <li>
-                                    <label for="email">Foto:</label>
+                                    <label for="email">Photo:</label>
                                     <div class="form-group">
                                         <div class="profileImageWrapper">
-                                           <img src="img/misael.jpg"  class="img-circle imgCambio" alt="Cinque Terre" > 
+                                           <img src={{usuario.picdir|safe}}  class="img-circle imgCambio" alt="Cinque Terre" > 
+											 <input type="file" class="form-control" id="cargarImagen" placeholder="Select Content" accept="image/*" name="file">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <input id="cargarImagen" accepted="image/*" type="file">
-                                    </div> 
+                                 
+                                    
+                                    
                                 </li>
                                 <br>
                                 <li>
-                                    <label for="usuario">Nombre de usuario:</label>
+                                    <label for="usuario">Username:</label>
                                     <div class="form-group">
-                                        <label for="usr">Nombre:</label>
-                                        <input type="text" value="Misael2729" class="form-control" id="Usr" placeholder="User Name" required>
+                                        <label for="usr">Name:</label>
+                                        <input type="text" value={{usuario.name|safe}} class="form-control" placeholder="Name" name="name" readonly>
                                     </div>
                                     
                                 </li>
                                 <br>
                                 <li>
-                                   <label for="userAbout">Acerca de ti:</label>
-                                   
-                                          <textarea name="about" id="userAbout" style="border-radius:3px; width:95%; height:auto;">Optimista y perseverante cuando se trata de lograr mis meta.Trato de ser siempre cordial y honesto con la gente que me rodea. Me gusta ir al gym a ejercitarme. =) </textarea>
-                                      
+                                   <label for="userAbout">About you:</label>
+                                   <div class="form-group" style="width:70%">
+										 
+                                          <textarea name="about" id="userAbout" style="border-radius:3px; width:95%; height:auto;">{{usuario.description|safe}}</textarea>
+                                   </div>
                                   
                                 </li>
 
                               </ul>
                               <div class="formFooterButtons">
-                              <button id="cancelarPerfil" class=" Button Module btn cancelButton hasText rounded" type="button">
-                                   <span class="buttonText">Cancelar</span>
-                               </button>
-                               <button class="Button Module btn hasText primary rounded saveButton" style="background-color: black; color:white" type="submit" id = "guardarPerfil">
-                                   <span class="buttonText">Guardar perfil</span>  
-                               </button>
-                           </div>
+								  <button id="cancelarPerfil" class=" Button Module btn cancelButton hasText rounded" type="button">
+									   <span class="buttonText">Cancel</span>
+								   </button>
+									<button type="submit" class="btn btn-success btn" onclick="guardarPerfil('{{usuario.name|safe}}');">Confirm</button>
+									
+							  </div>
                            
 
                            </form>
@@ -123,10 +219,14 @@
                                   
                 </div>
                 <div class = "container" style = " margin-top:1%; margin-left:22%; padding: 1%; background-color:white; width: 60%; display:none; position:fixed;  border-style: solid; border-width: 1px; border-radius:8px; border-color:grey;" id="mensajeExito">
-                      <h3 style="margin-left:13%;">Los cambios se efectuaron exitosamente</h3>
+                      <h3 style="margin-left:13%;">Changes are saved successfully!</h3>
                       <a href="#" id="aceptarMensaje">
                         <span style="margin-left:48%;" class="glyphicon glyphicon-ok"></span>
                       </a>
+                </div>
+                 <div class = "container" style = " margin-top:1%; margin-left:22%; padding: 1%; background-color:white; width: 60%; display:none; position:fixed;  border-style: solid; border-width: 1px; border-radius:8px; border-color:grey;" id="mensajeError">
+                      <h3 style="margin-left:13%; color:red">An error has occurred updating your profile!</h3>
+                      <button id="aceptarMensajeError" style="margin-left:40%">Close</button>
                 </div>
         <!--FIN CAMBIAR PERFIL -->
 
@@ -134,30 +234,36 @@
       </div>
     <!--FIN HEADER-->
 
-
     <!--INFORMACION PERFIL-->
         <div class="row sombra" id="perfil" style= "margin-top:70px;">
 
           <div id = "contentInfo" >
             <div class = "row">
               <div class="col-sm-3 col-md-3 col-lg-3"> 
-                <img src="img/misael.jpg"  class="img-circle imgPerfil" alt="Cinque Terre" > 
+                <img src={{usuario.picdir|safe}}  class="img-circle imgPerfil" alt="Cinque Terre" > 
               </div>
               <div class="col-sm-7 col-md-7 col-lg-7"> 
                 <div class = "textoPerfil">
                   <br>
+<<<<<<< HEAD
                   <h2>{{usuario.name}} ({{usuario.fullname}})</h2>      
                   <p><br>{{usuario.description}}</p> 
+=======
+                  <h2><strong id="showFullName">{{usuario.fullname|safe}}</strong></h2>      
+                  <p><br><span id="showDescription">{{usuario.description|safe}}</span></p> 
+>>>>>>> 122fedbb4582fd539eeb09ae1cf21a644eb25aca
                 </div>   
               </div>
               <div class="col-sm-2 col-md-2 col-lg-2">
-                <div class="btn-group" style = "float : right";>
+                <div class="" style="margin-right:55%; margin-top:50%;">
                   <button type="button" class="btn btn-lg colorBoton dropdown-toggle" data-toggle="dropdown" style = "float:right;">
-                    opciones <span class="caret"></span>
+                    <img src='font/glyphicons-31-pencil.png'><span class="caret"></span>
                   </button>
+                  
+                  
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" id="editarPerfil">Editar Perfil</a></li>
-                    <li><a href="#">Cerrar Sesi&oacuten</a></li>
+                    <li><a href="#" id="editarPerfil">Profile</a></li>
+                    <li><a href="#" onclick="cambiarPassword('{{usuario.name|safe}}')">Security</a></li>
                   </ul>
                 </div>  
               </div>
@@ -169,41 +275,71 @@
     <!--FIN INFORMACION PERFIL-->
 
      <!--CONTENIDO: IMAGENES CUATRO COLUMNAS-->
-    <div class="row" id="columnas">
+     
+<div class="container" id="columnas">
+  <ul class="nav nav-tabs" >
+    <li class="active"><a href="#home">Uploads</a></li>
+    <li><a href="#menu1">Pin</a></li>
+  </ul>
 
-      <ul class="nav nav-tabs" style = "margin-left:10%;border-color:white;">
-        <li id="misGalerias"><a href="#" style="color:#FE2E2E;">Mis Galerias</a></li>
-        <li id="meGusta" ><a href="#" style="color:#FE2E2E;">Pin</a></li>
-      </ul>
-      <div class="container " id = "general" style = "background-color : #D8D8D8; width:98%; display:none; border-radius:6px;">
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+		
+      <div class="container " id = "general" style = "background-color : #D8D8D8; width:98%; display:block; border-radius:6px; margin-top:2%;">
          <div class="" style = "width: auto">
             <!--PRIMERA COLUMNA: IMAGENES-->
             <div class="col-sm-3 col-md-3 col-lg-3" id = "content1">
-              
+
             </div>
             <!--SEGUNDA COLUMNA: IMAGENES-->
             <div class="col-sm-3 col-md-3 col-lg-3" id = "content2">
-              
+
                   
             </div>
             <!--TERCERA COLUMNA: IMAGENES-->
             <div class="col-sm-3 col-md-3 col-lg-3" id = "content3">
-              
+
                   
             </div>
             <!--CUARTA COLUMNA: IMAGENES-->
             <div class="col-sm-3 col-md-3 col-lg-3" id = "content4">
-              
+
                 
             </div>
         </div>
-
       </div>
     </div>
+    <div id="menu1" class="tab-pane fade">
+		 <div class="container " id = "pin" style = "background-color : #D8D8D8; width:98%; display:block; border-radius:6px; margin-top:2%;">
+			 <div class="" style = "width: auto">
+				<!--PRIMERA COLUMNA: IMAGENES-->
+				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin1">
+				  
+				</div>
+				<!--SEGUNDA COLUMNA: IMAGENES-->
+				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin2">
+				  
+					  
+				</div>
+				<!--TERCERA COLUMNA: IMAGENES-->
+				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin3">
+				  
+					  
+				</div>
+				<!--CUARTA COLUMNA: IMAGENES-->
+				<div class="col-sm-3 col-md-3 col-lg-3" id = "pin4">
+				 
+					
+				</div>
+			</div>
+		  </div>
+    </div>
+  </div>
+</div>
     <!--FIN CONTENIDO: IMAGENES CUATRO COLUMNAS-->
 
-  </div>
-
+</div>
+<!--Fin Principal-->
 
     <!-- Mostrando imagen selecionada-->
 
