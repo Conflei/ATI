@@ -9,7 +9,7 @@ $(document).ready(function()
 			}
 			else{
 				$("#general").slideDown();
-			}
+			} 
 			$(this).addClass("active");
 			active = $(this).attr("id");
 
@@ -46,7 +46,7 @@ $(document).ready(function()
 		}
 	);
 	$("#editarPerfil").click(function (){
-		#$("#myModalEditarPerfil").modal();
+		//$("#myModalEditarPerfil").modal();
 		$("#editar").css("display","block");
 		$("#barra").addClass("opacar");
 		$("#perfil").addClass("opacar");
@@ -98,6 +98,11 @@ $(document).ready(function()
 		$(verMiPerfil).css("background-color", "#D8D8D8");
 		$("#botonPerfilOpciones").slideUp()
 	});
+	$(".tipo").click(function(){
+		general = !general;
+		generationUP();
+	});
+
 	
 });
 
@@ -109,21 +114,36 @@ $(window).scroll(function(){
 });
 
 
-function mostrarImagen(id){
-	$("h4").text(title(id));
-	$("#parContent").text(description(id));
-	$("#imgContent").attr("src",urlImg(id));
-	
-	$("#barra").addClass("opacar");
-	$("#perfil").addClass("opacar");
-	$("#columnas").addClass("opacar");
-	
-	$("#contenido").slideDown();
+function mostrarImagen(index){
+	//alert("holaaaa");
+	if(isPin[index])
+			$("#opPin").text("Despinear!");
+	else
+		$("#opPin").text("Pinear!");
+	if(general){
+		$("h4").text(images[index]["author"]);
+		$("#parContent").text(images[index]["description"]);
+		$("#imgContent").attr("src",images[index]["picdir"]);
+		
+		$("#barra").addClass("opacar");
+		$("#perfil").addClass("opacar");
+		$("#columnas").addClass("opacar");
+		
+		$("#contenido").slideDown();
+	}
+	else{
+		$("h4").text(imagesPin[index]["author"]);
+		$("#parContent").text(imagesPin[index]["description"]);
+		$("#imgContent").attr("src",imagesPin[index]["picdir"]);
+		
+		$("#barra").addClass("opacar");
+		$("#perfil").addClass("opacar");
+		$("#columnas").addClass("opacar");
+		$("#opPin").text("Despinear!");
+		$("#contenido").slideDown();
+	}
 }
 
-$("#cargarImagen").change(function(){
-	alert("holaaa ");
-});
 
 function verLobby(name){
 		//alert("holaaaa"+name);
@@ -172,4 +192,22 @@ function guardarPerfil(name){
 function cambiarPassword(name){
 	
 	$("#myModalEditar").modal();
+	
 }
+
+function doPin(name){
+	var picdir = $('#imgContent').attr("src");
+	var namebutton = "Despinear!";
+	//alert(name+" Hizo Pin a "+picdir);
+	if($("#opPin").text() == "Pinear!"){
+		doAjaxPin(name,picdir,"pin");
+	}
+	else{
+		doAjaxPin(name,picdir,"despin");
+		namebutton = "Pinear!";
+	}
+	$('#cerrar').click();	
+	$('#opPin').text(namebutton);
+}
+
+

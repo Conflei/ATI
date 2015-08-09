@@ -61,6 +61,7 @@ def obtenerDatosUsuario(name):
 def searchPin(page,type,username): #retorna 5 imagenes en formato json
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
+	cursor2 = dbConnection.cursor()
 	print("estoy en search pin")
 	if type == 'all':
 		cursor.execute('select * from pictures offset %s limit %s',(page,5))
@@ -70,17 +71,33 @@ def searchPin(page,type,username): #retorna 5 imagenes en formato json
 			#cursor.execute('select * from pictures where author =%s offset %s limit %s',(name,page,5))
 		else:
 			if type == 'pin':
-				cursor.execute('select * from pictures offset %s limit %s',(page,5))
-				#llamar a base de datos pin where name = username
+				cursor.execute('select p.* from pictures p, pin pi where p.picdir = pi.picdir offset %s limit %s',(page,5))
 	
 	dataPin = cursor.fetchall()
+	
+	print("user namee "+str(username))
+	
+	cursor2.execute('select * from pin where name=%s',(username,))
+	dataPin2 = cursor2.fetchall()
+	print(dataPin2)
+	
 	dataJSON = ""
 	imgJSON = ""
 	i = 0
+	pin = "False"
 	
 	for dPin in dataPin:
-		print(dPin[0])
-		imgJSON = "{\"picdir\":\""+dPin[0]+"\",\"title\":\""+dPin[1]+"\",\"category\":\""+dPin[2]+"\",\"description\":\""+dPin[3]+"\",\"author\":\""+dPin[4]+"\"}"
+		print("Soy Pin 1 "+dPin[0]) #imagen en pictures
+		if type != 'pin': 
+			for dPin2 in dataPin2:
+				print("Soy Pin 2 "+dPin2[1]) #imagen pineada
+				if dPin[0] == dPin2[1]:
+					pin = "True"
+					break
+		else:
+			pin = "False";
+		imgJSON = "{\"picdir\":\""+dPin[0]+"\",\"title\":\""+dPin[1]+"\",\"category\":\""+dPin[2]+"\",\"description\":\""+dPin[3]+"\",\"author\":\""+dPin[4]+"\",\"isPin\":\""+pin+"\"}"
+		pin = "False"
 		if dataJSON == "":
 			dataJSON = "[" + imgJSON
 		else:
@@ -89,17 +106,20 @@ def searchPin(page,type,username): #retorna 5 imagenes en formato json
 		dataJSON = dataJSON + "]"
 	else:
 		dataJSON = "[]"
+		
+	dbConnection.commit()
 	cursor.close()
+	cursor2.close()
 	dbConnection.close()
 	print("enviare pines: "+dataJSON)
 	return dataJSON
 
-def crearCuenta (newName, newPassword, newEmail, newFullname, newDescription):
+def crearCuenta (newName, newPassword, newEmail, newFullname):
 	if(not existUser(newName, newPassword)):
 		dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 		cursor = dbConnection.cursor()
-		cursor.execute('insert into users (name, password, email, fullname, description) values (%s, %s, %s, %s, %s)',
-			(newName, newPassword, newEmail, newFullname, newDescription))
+		cursor.execute('insert into users (name, password, email, fullname) values (%s, %s, %s, %s)',
+			(newName, newPassword, newEmail, newFullname))
 
 		dbConnection.commit()
 		cursor.close()
@@ -137,6 +157,18 @@ def EditPerfilInDB(name,fullname,userAbout,img):#,cargarImagen): #usuario,nombre
 	cursor.close()
 	dbConnection.close()
 	return "exito"
+	
+def pinInDB(name,picdir,tipo):
+	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
+	cursor = dbConnection.cursor()
+	if tipo == 'pin':
+		cursor.execute('insert into pin (name, picdir) values (%s, %s)',(name, picdir))
+	else:
+		cursor.execute('delete from pin where name = %s and picdir = %s',(name, picdir))
+	dbConnection.commit()
+	cursor.close()
+	dbConnection.close()
+	return "exito"
 
 
 ######################################FIN MODELO###################################
@@ -154,7 +186,7 @@ def registrar():
 
 @app.route('/css/<path:path>')
 def send_css(path):
-	return send_from_directory('css', path)
+	return send_from_directory('css', path) 
 
 @app.route('/js/<path:path>')
 def send_js(path):
@@ -219,10 +251,9 @@ def registerAction():
 	password = request.form['password']
 	email	 = request.form['email']
 	fullname = request.form['fullname']
-	description = request.form['description']
-	if(crearCuenta(name, password, email, fullname, description)):
-		listPin = searchPin(pageP,name)
-		return render_template('lobby.html',usuario = name, listPin = listPin)
+	if(crearCuenta(name, password, email, fullname)):
+		#listPin = searchPin(pageP,name,0)
+		return render_template('lobby.html',usuario = name)#, listPin = listPin)
 
 	return render_template('register.html',usuario = name)#, listPin = listPin)
 
@@ -292,6 +323,15 @@ def editarPerfilForm():
 	user = obtenerDatosUsuario(nameUsr)
 	
 	return render_template('perfil.html', usuario = user)
+
+
+@app.route('/pin', methods = ['GET']) #HACE PIN A UNA FOTO, O QUITA PIN A UNA FOTO
+def pin():
+	name = request.args.get('name')
+	picdir = request.args.get('picdir')
+	tipo = request.args.get('tipo')
+	print("holaaaaaaaa"+str(name)+" hace "+str(tipo)+" a la imagen: "+str(picdir))
+	return pinInDB(name,picdir,tipo)
 
 # Routes end here
 

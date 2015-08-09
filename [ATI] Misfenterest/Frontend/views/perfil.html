@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Pinterest | Perfil</title>
+  <title>Pinterest | Perfil</title> 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -24,9 +24,17 @@
     var page = 0;
     var urlImages = "/get_image_json";
     var urlEditPerfil = "/EditPerfil";
+    var urlPin = "/pin";
+    var isPin = [];
+    var images = [];
+    var general = true;
+    
+    var cantPin = 0;
+	var	pagePin = 0;
+	var	imagesPin = [];
+	
     $(document).ready(function()
     {   
-      $("#irLobby").attr("href","lobby.html");
       $(".nav-tabs a").click(function(){
         $(this).tab('show');
 	  });
@@ -127,15 +135,14 @@
                            <a class="logo" href="#" type="button" onclick="verLobby('{{usuario.name|safe}}')">
 								<img src="img/logo.png" class= "logo">
                            </a>
-                           <input type= "search" autocomplete="off" class="Input" placeholder="Buscar">
-                            <a href="#" class="btn btn-lg colorBoton"><span class="glyphicon glyphicon-search"></span> Buscar</a>
+                           <input type= "search" autocomplete="off" class="Input" placeholder="Search">
+                            <a href="#" class="btn btn-lg colorBoton"><span class="glyphicon glyphicon-search"></span>Search</a>
                         </form>
                           </div>
                       <div class="col-sm-3">
                         <div  class = "infoSesion" >
-                        <a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">Opciones</strong>
+                          <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none"><strong style="font-size=20px;">{{usuario.name|safe}}</strong>
                             <img  class = "img-circle logoSesion" src={{usuario.picdir|safe}}>             
-                                       
                           </a>
                           <ul class="dropdown-menu " role="menu" id="botonPerfilOpciones">
 								<li><a onclick="verLobby('{{usuario.name|safe}}')">Lobby</a></li>
@@ -241,13 +248,8 @@
               <div class="col-sm-7 col-md-7 col-lg-7"> 
                 <div class = "textoPerfil">
                   <br>
-<<<<<<< HEAD
-                  <h2>{{usuario.name}} ({{usuario.fullname}})</h2>      
-                  <p><br>{{usuario.description}}</p> 
-=======
                   <h2><strong id="showFullName">{{usuario.fullname|safe}}</strong></h2>      
                   <p><br><span id="showDescription">{{usuario.description|safe}}</span></p> 
->>>>>>> 122fedbb4582fd539eeb09ae1cf21a644eb25aca
                 </div>   
               </div>
               <div class="col-sm-2 col-md-2 col-lg-2">
@@ -274,8 +276,8 @@
      
 <div class="container" id="columnas">
   <ul class="nav nav-tabs" >
-    <li class="active"><a href="#home">Uploads</a></li>
-    <li><a href="#menu1">Pin</a></li>
+    <li class="active"><a class="tipo" href="#home">Uploads</a></li>
+    <li><a class="tipo" href="#menu1">Pin</a></li>
   </ul>
 
   <div class="tab-content">
@@ -354,7 +356,7 @@
                   </p>
                   <hr>
                   <div class="PinButton">
-                    <a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">Pinear!</strong>
+                    <a href="#" class="botonPerfil " role="button" id = "opPin" onclick="doPin('{{usuario.name|safe}}')"><strong>Pinear!</strong>
                                   <img  class = "img-circle logoSesion" src="img/logo.png">             
                                 </a>
                   </div>
@@ -374,6 +376,6 @@
           
     </footer>
   <!--END PIE DE PAGINA-->
-
+	<div id="nombreUsuario" style="display:none">{{usuario.name|safe}}</div>
 </body>
 </html>

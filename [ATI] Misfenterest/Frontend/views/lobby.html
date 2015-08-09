@@ -13,8 +13,13 @@
 	<script src="js/ajax.js"></script>
 	<script src="js/lobbyController.js"></script>
 	<script>
+		var cant = 0;
 		var page = 0;
+		var misObjetos = [];
+		var isPin = [];
 		var urlImages = "/get_image_json";
+		var urlPin = "/pin";
+		var general = true;
 	</script>
   
 
@@ -32,14 +37,14 @@
 
                   <div class="container-fluid" style = "width : 100%">
                    <div class="row" style>
-                      <div class="col-sm-9">
+                      <div class="col-sm-9"> 
                               
                         <form id="searchbox" action="">
                            <a class="logo" href="#" type="button">
                             <img src="img/logo.png" class= "logo">
                            </a>
-                           <input type= "search" autocomplete="off" class="Input" placeholder="Buscar">
-                            <a href="#" class="btn btn-lg colorBoton"><span class="glyphicon glyphicon-search"></span> Buscar</a>
+                           <input type= "search" autocomplete="off" class="Input" placeholder="Search">
+                            <a href="#" class="btn btn-lg colorBoton"><span class="glyphicon glyphicon-search"></span>Search</a>
                         </form>
                      </div>
 					<div class="col-sm-3">
@@ -77,7 +82,7 @@
 						</p>
 						<hr>
 						<div class="PinButton">
-							<a href="#" class="botonPerfil " role="button" id = "verMiPerfil"><strong style="font-size=20px;">Pinear!</strong>
+							<a href="#" class="botonPerfil " role="button" onclick="doPin('{{usuario.name|safe}}')"><strong style="font-size=20px;" id="opPin">Pinear!</strong>
                             <img  class = "img-circle logoSesion" src="img/logo.png">             
                           </a>
 						</div>
@@ -124,6 +129,6 @@
       
     </div>
   </div> 
-
+  <div id="nombreUsuario" style="display:none">{{usuario.name|safe}}</div>
 </body>
 </html>

@@ -77,16 +77,6 @@ function UploadContent(){
 	$("#myModal").modal();
 }
 
-function showImage(index)
-{
-			$('.contenidoSelecto').slideDown('fast');
-			$('.allContent').css("opacity", "0.4");
-			$('#imgContent').attr("src", misObjetos[index]["picdir"]);
-			$('h4').html(misObjetos[index]["author"]);
-			$('#parContent').html(misObjetos[index]["description"]);
-			showingIMG = true;
-};
-
 function hideSeleccion(){
 		$('.contenidoSelecto').slideUp('slow');
 		$('.allContent').attr("onclick", "showImage()");
@@ -97,29 +87,38 @@ function hideSeleccion(){
 
 function fill()
 {
-		misObjetos = doAjaxPage("all");
-		//alert(misObjetos);
-		if(misObjetos && misObjetos != "fallo"){
-			for(i = 0; i<misObjetos.length; i++)
+		var username = $("#nombreUsuario").text();
+		//alert(username);
+		var Objetos = doAjaxPage("all",username);
+		//alert(Objetos);
+		if(Objetos && Objetos != "fallo"){
+			for(i = 0; i<Objetos.length; i++)
 			{
-				//alert(misObjetos[i]["picdir"] + misObjetos[i]["title"] + misObjetos[i]["description"] + misObjetos[i]["author"]);
+				//alert(Objetos[i]["picdir"] + " "+ Objetos[i]["title"] + " "+ Objetos[i]["description"] + " "+ Objetos[i]["author"] + " "+ Objetos[i]["isPin"]);
+				if(Objetos[i]["isPin"]=="True"){
+					isPin[cant] = true;
+				}
+				else{
+					isPin[cant] = false;
+				}
 				var gridElement = $("<div>");
-				var rand = Math.floor(Math.random()*10) % 3;
-				if(rand==0) gridElement.attr("class", "grid-item grid-item--height3");
+				var rand = (Math.floor(Math.random()*10) % 2)+1;
+				
+				//if(rand==0) gridElement.attr("class", "grid-item grid-item--height3");
 				if(rand==1) gridElement.attr("class", "grid-item grid-item--height2");
 				if(rand==2) gridElement.attr("class", "grid-item");
-				if(rand==3) gridElement.attr("class", "grid-item grid-item--height1");
+				//if(rand==3) gridElement.attr("class", "grid-item grid-item--height1");
 
 				var elemento = $("<div>");
 				elemento.attr("class", "miElemento");
 
 				var imagen = $("<img>");
-				imagen.attr("src",misObjetos[i]["picdir"]);
-				imagen.attr("onclick", "showImage("+i+")");
+				imagen.attr("src",Objetos[i]["picdir"]);
+				imagen.attr("onclick", "showImage("+cant+")");
 				elemento.append(imagen);
 				elemento.append("<hr>");
-				elemento.append("<p>"+misObjetos[i]["title"]);
-				elemento.append("<p>"+misObjetos[i]["description"]);
+				elemento.append("<p>"+Objetos[i]["title"]);
+				elemento.append("<p>"+Objetos[i]["description"]);
 				elemento.append("<hr>");
 
 				var imagenPerfil = $("<img>");
@@ -132,12 +131,14 @@ function fill()
 				link.attr("href", "#;");
 				link.attr("class", "userName");
 				link.attr("id", "profileName");
-				link.append(misObjetos[i]["author"]);
+				link.append(Objetos[i]["author"]);
 				elemento.append(link);
 
 				gridElement.append(elemento);
-				$isoGrid.append(gridElement).isotope('appended', gridElement);			
+				$isoGrid.append(gridElement).isotope('appended', gridElement);
+				cant = cant + 1; //cantidad de imagenes			
 			}
+			misObjetos = misObjetos.concat(Objetos);
 		}
 		
 		
@@ -154,8 +155,35 @@ function verMiPerfil(name){
 		$("#sub").click();
 }
 
+function doPin(name){
+	var picdir = $('#imgContent').attr("src");
+	var namebutton = "Despinear!";
+	//alert(name+" Hizo Pin a "+picdir);
+	if($("#opPin").text() == "Pinear!"){
+		doAjaxPin(name,picdir,"pin");
+	}
+	else{
+		doAjaxPin(name,picdir,"despin");
+		namebutton = "Pinear!";
+	}
+	$('#cerrar').click();	
+	$('#opPin').text(namebutton);
+} 
 
-
+function showImage(index)
+{
+			if(isPin[index])
+				$("#opPin").text("Despinear!");
+			else
+				$("#opPin").text("Pinear!");
+			$('.contenidoSelecto').slideDown('fast');
+			$('.allContent').css("opacity", "0.4");
+			$('h4').text(misObjetos[index]["author"]);
+			$('#parContent').text(misObjetos[index]["description"]);
+			$('#imgContent').attr("src", misObjetos[index]["picdir"]);
+			
+			showingIMG = true;
+};
 
 
 
