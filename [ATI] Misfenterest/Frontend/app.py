@@ -1,4 +1,5 @@
 from flask import *
+from flask.ext.bcrypt import Bcrypt 
 import modelo
 import psycopg2
 import os
@@ -14,6 +15,7 @@ class User:
 UPLOAD_FOLDER = "models/uploads"
 
 app = Flask (__name__, template_folder = 'views', static_folder = 'statics')
+bcrypt = Bcrypt(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -24,9 +26,12 @@ def existUser (name,password):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
 
-	cursor.execute('select name from users where name=%s and password=%s',(name,password))
+	cursor.execute('select password from users where name=%s',[name])
+	(dbPassword,) = cursor.fetchone()
+	check = bcrypt.check_password_hash(dbPassword, password)
+
 	print("executed")
-	if cursor.rowcount == 0:
+	if not check:
 		cursor.close()
 		dbConnection.close()
 		print("not founded")
@@ -115,11 +120,12 @@ def searchPin(page,type,username): #retorna 5 imagenes en formato json
 	return dataJSON
 
 def crearCuenta (newName, newPassword, newEmail, newFullname):
-	if(not existUser(newName, newPassword)):
+	pw_hash = bcryt.generate_password_hash(newPassword)
+	if(not existUser(newName, pw_hash)):
 		dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 		cursor = dbConnection.cursor()
 		cursor.execute('insert into users (name, password, email, fullname) values (%s, %s, %s, %s)',
-			(newName, newPassword, newEmail, newFullname))
+			(newName, pw_hash, newEmail, newFullname))
 
 		dbConnection.commit()
 		cursor.close()
