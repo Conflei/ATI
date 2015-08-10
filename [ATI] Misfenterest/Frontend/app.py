@@ -60,7 +60,7 @@ def obtenerDatosUsuario(name):
 	print("Obtenidos los datos de un usuario")
 	print("Nickname: "+user.name)
 	print("Fullname: "+user.fullname)
-	print("picDir: "+user.picdir)
+	print("picDir: "+user.profilepic)
 	print("Description: "+str(user.description))
 	print("Email: "+user.email)
 
@@ -107,12 +107,14 @@ def searchPin(page,type,username): #retorna 5 imagenes en formato json
 					break
 		else:
 			pin = "False";
+		print("holaaaaa11111")
 		imgJSON = "{\"picdir\":\""+dPin[0]+"\",\"title\":\""+dPin[1]+"\",\"category\":\""+dPin[2]+"\",\"description\":\""+dPin[3]+"\",\"author\":\""+dPin[4]+"\",\"isPin\":\""+pin+"\"}"
+		print("holaaaaa22222")
 		pin = "False"
 		if dataJSON == "":
 			dataJSON = "[" + imgJSON
 		else:
-			dataJSON = dataJSON + "," + imgJSON 
+			dataJSON = dataJSON + "," + imgJSON
 	if dataJSON != "":
 		dataJSON = dataJSON + "]"
 	else:
