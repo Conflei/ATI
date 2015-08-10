@@ -14,7 +14,7 @@ $(document).ready(function(){
 	$('#cerrar').bind('click', function(){
 		hideSeleccion();
 	});
-	//fill();
+	//	fill();
 
 });
 
@@ -22,7 +22,7 @@ $(window).scroll(function(){
 	if($(window).scrollTop() + $(window).height() == getDocHeight())
 	{
 		//alert("holaa "+page);
-		fill();
+		//fill();
 	}
 })
 
