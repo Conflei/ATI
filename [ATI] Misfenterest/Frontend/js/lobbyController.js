@@ -14,7 +14,7 @@ $(document).ready(function(){
 	$('#cerrar').bind('click', function(){
 		hideSeleccion();
 	});
-	fill();
+	//fill();
 
 });
 
