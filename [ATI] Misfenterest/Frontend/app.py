@@ -125,10 +125,10 @@ def searchPin(page,type,username): #retorna 5 imagenes en formato json
 	return dataJSON
 
 def crearCuenta (newName, newPassword, newEmail, newFullname):
-	pw_hash = bcryt.generate_password_hash(newPassword)
-	if(not existUser(newName, pw_hash)):
+	if(not existUser(newName, newPassword)):
 		dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 		cursor = dbConnection.cursor()
+		pw_hash = bcrypt.generate_password_hash(newPassword)
 		cursor.execute('insert into users (name, password, email, fullname) values (%s, %s, %s, %s)',
 			(newName, pw_hash, newEmail, newFullname))
 
