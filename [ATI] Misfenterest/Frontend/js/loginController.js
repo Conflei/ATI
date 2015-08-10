@@ -32,7 +32,7 @@ $(document).ready(function(){
 
 	};
 
-  var statusChangeCallback = function (response) {
+  var statusChangeCallback = function (response, callback) {
     console.log(response);
 
     if (response.status === 'connected') {
