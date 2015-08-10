@@ -27,20 +27,25 @@ def existUser (name,password):
 	cursor = dbConnection.cursor()
 
 	cursor.execute('select password from users where name=%s',[name])
-	(dbPassword,) = cursor.fetchone()
-	check = bcrypt.check_password_hash(dbPassword, password)
 
 	print("executed")
-	if not check:
+	if cursor.rowcount == 0:
 		cursor.close()
 		dbConnection.close()
-		print("not founded")
+		print("not founded user with this nickname")
 		return False
+	else:
+		(dbPassword,) = cursor.fetchone()
+		check = bcrypt.check_password_hash(dbPassword, password)
+		cursor.close()
+		dbConnection.close()
 
-	cursor.close()
-	dbConnection.close()
-	print("founded")
-	return True
+	if check:
+		print("ACCEPTED")
+		return True
+	else:
+		print("WRONG PASSWORD")
+	return False
 
 def obtenerDatosUsuario(name):
 
@@ -120,7 +125,7 @@ def searchPin(page,type,username): #retorna 5 imagenes en formato json
 	return dataJSON
 
 def crearCuenta (newName, newPassword, newEmail, newFullname):
-	pw_hash = bcrypt.generate_password_hash(newPassword)
+	pw_hash = bcryt.generate_password_hash(newPassword)
 	if(not existUser(newName, pw_hash)):
 		dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 		cursor = dbConnection.cursor()
