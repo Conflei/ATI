@@ -3,7 +3,7 @@ $(document).ready(function(){
 
 	console.log("init");
 	var app_id = '688571277942632';
-	var scopes = 'email, user_friends, user_online_presence';
+	var scopes = 'email, user_friends, public_profile';
 
 	var btn_login = '<a id="fbLogin" href="lobby.html"><img src = "img/Facebook.png" width="5%"; height="5%;"></a>';
 
