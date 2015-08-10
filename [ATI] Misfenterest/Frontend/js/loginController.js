@@ -52,9 +52,9 @@ $(document).ready(function(){
 
   var getFacebookData = function(){
   	FB.api('/me', function(response){
-  		$('#login').after(div_session);
-  		$('#login').remove();
-  		$('#facebook-session strong').text("Bienvenido "+response.name);
+  		console.log(response);
+  		$('#logname').text(response.name);
+  		$('#logpass').text("facebook");
   	})
   }
 
