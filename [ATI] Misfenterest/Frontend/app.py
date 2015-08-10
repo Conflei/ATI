@@ -108,7 +108,7 @@ def searchPin(page,type,username): #retorna 5 imagenes en formato json
 		else:
 			pin = "False";
 		print("holaaaaa11111")
-		imgJSON = "{\"picdir\":\""+dPin[0]+"\",\"title\":\""+dPin[1]+"\",\"category\":\""+dPin[2]+"\",\"description\":\""+dPin[3]+"\",\"author\":\""+dPin[4]+"\",\"isPin\":\""+pin+"\"}"
+		imgJSON = "{\"picdir\":\""+str(dPin[0])+"\",\"title\":\""+str(dPin[1])+"\",\"category\":\""+str(dPin[2])+"\",\"description\":\""+str(dPin[3])+"\",\"author\":\""+str(dPin[4])+"\",\"isPin\":\""+pin+"\"}"
 		print("holaaaaa22222")
 		pin = "False"
 		if dataJSON == "":
