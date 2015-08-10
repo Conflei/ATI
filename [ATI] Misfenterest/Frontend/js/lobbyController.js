@@ -14,7 +14,7 @@ $(document).ready(function(){
 	$('#cerrar').bind('click', function(){
 		hideSeleccion();
 	});
-	//	fill();
+	fill();
 
 });
 
@@ -22,7 +22,7 @@ $(window).scroll(function(){
 	if($(window).scrollTop() + $(window).height() == getDocHeight())
 	{
 		//alert("holaa "+page);
-		//fill();
+		fill();
 	}
 })
 
@@ -89,8 +89,8 @@ function fill()
 {
 		var username = $("#nombreUsuario").text();
 		//alert(username);
-		//var Objetos = doAjaxPage("all",username);
-		var Objetos = "fallo";
+		var Objetos = doAjaxPage("all",username);
+		//var Objetos = "fallo";
 		//alert(Objetos);
 		if(Objetos && Objetos != "fallo"){
 			for(i = 0; i<Objetos.length; i++)
