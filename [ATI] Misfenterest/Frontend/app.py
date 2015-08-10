@@ -55,7 +55,8 @@ def obtenerDatosUsuario(name):
 	datos = {}
 	cursor.execute('select * from users where name=%s',[name]) 
 	tmp = cursor.fetchone()
-	user = User(tmp[0], tmp[3], tmp[5], tmp[4], tmp[2])
+
+	user = User(tmp[0], tmp[4], tmp[2], tmp[5], tmp[3])
 	print("Obtenidos los datos de un usuario")
 	print("Nickname: "+user.name)
 	print("Fullname: "+user.fullname)
