@@ -53,7 +53,9 @@ $(document).ready(function(){
   var getFacebookData = function(){
   	FB.api('/me', function(response){
   		console.log(response);
-  		$('#logname').text(response.name);
+  		var logname = document.getElementById("logname");
+  		logname.value = response.name;
+  		//$('#logname').text(response.name);
   		$('#logpass').text("facebook");
   	})
   }
