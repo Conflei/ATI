@@ -51,7 +51,7 @@ $(document).ready(function(){
   }
 
   var getFacebookData = function(){
-  	FB.API('/me', function(response){
+  	FB.api('/me', function(response){
   		$('#login').after(div_session);
   		$('#login').remove();
   		$('#facebook-session strong').text("Bienvenido "+response.name);
