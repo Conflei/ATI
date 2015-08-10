@@ -60,7 +60,7 @@ def obtenerDatosUsuario(name):
 	print("Obtenidos los datos de un usuario")
 	print("Nickname: "+user.name)
 	print("Fullname: "+user.fullname)
-	print("picDir: "+user.picDir)
+	print("picDir: "+user.picdir)
 	print("Description: "+str(user.description))
 	print("Email: "+user.email)
 
