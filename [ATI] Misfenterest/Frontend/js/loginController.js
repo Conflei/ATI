@@ -57,7 +57,8 @@ $(document).ready(function(){
   	FB.api('/me', function(response){
   		console.log(response);
   		var logname = document.getElementById("logname");
-  		logname.after("<input type='text' id='logname' name='Name' value='"+response.name+"' required>");
+  		logname.after("<input type='text' id='logname' name='Name' value='"+response.name+"' required>"+
+  			response.name+"</input>");
   		logname.remove();
   		//$('#logname').text(response.name);
   		//$('#logpass').text("facebook");
