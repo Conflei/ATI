@@ -50,6 +50,7 @@ $(document).ready(function(){
   }
 
   var getFacebookData = function(){
+  	//UPDATE THIS SHIEEEEET
   	FB.api('/me', function(response){
   		console.log(response);
   		var logname = document.getElementById("logname");
