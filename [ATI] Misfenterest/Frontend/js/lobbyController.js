@@ -89,7 +89,8 @@ function fill()
 {
 		var username = $("#nombreUsuario").text();
 		//alert(username);
-		var Objetos = doAjaxPage("all",username);
+		//var Objetos = doAjaxPage("all",username);
+		var Objetos = "fallo";
 		//alert(Objetos);
 		if(Objetos && Objetos != "fallo"){
 			for(i = 0; i<Objetos.length; i++)
