@@ -11,6 +11,9 @@ $(document).ready(function(){
 	'<a id="fbLogout" href="lobby.html"><img src = "img/Facebook.png" width="5%"; height="5%;"></a>'+
 	"</div>";
 
+	var lognamestr = "<input type='text' id='logname' name='Name' required>";
+	var logpassstr = "<input type='text' id='logpass' name='Name' required>";
+
 
 	 window.fbAsyncInit = function() {
 		 	console.log('fbAsyncInit');
@@ -54,9 +57,10 @@ $(document).ready(function(){
   	FB.api('/me', function(response){
   		console.log(response);
   		var logname = document.getElementById("logname");
-  		logname.value = response.name;
+  		logname.after("<input type='text' id='logname' name='Name' value='"+response.name+"' required>");
+  		logname.remove();
   		//$('#logname').text(response.name);
-  		$('#logpass').text("facebook");
+  		//$('#logpass').text("facebook");
   	})
   }
 
