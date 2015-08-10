@@ -44,7 +44,9 @@ $(document).ready(function(){
 
   var checkLoginState = function() {
     FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
+      statusChangeCallback(response, function(data){
+      		callback(data);
+		  	  });
     });
   }
 
