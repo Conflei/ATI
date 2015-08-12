@@ -235,6 +235,7 @@ def FacebookLogin():
 	password = request.form['password']
 	error = ""
 	exists = existUser(username,password)
+	print("El usuario existe en la BD? "+str(exists))
 	if exists:
 		print("el usuario existe en la BD")
 		datos = obtenerDatosUsuario(name)
