@@ -231,7 +231,7 @@ def send_up(path):
 @app.route('/FacebookLogin', methods = ['GET'])
 def FacebookLogin():
 	print("asddd")
-	return render_template('lobby.html')
+	#return render_template('lobby.html')
 	username = request.args.get('name')
 	password = request.args.get('password')
 	error = ""
