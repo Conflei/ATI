@@ -232,7 +232,6 @@ def send_up(path):
 def FacebookLogin():
 	print("asddd")
 	return render_template('lobby.html')
-	print("Alguien se logeo con FACEBOOK y su nombre es "+ request.args.get('name')
 	username = request.args.get('name')
 	password = request.args.get('password')
 	error = ""
