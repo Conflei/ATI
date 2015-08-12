@@ -238,7 +238,7 @@ def FacebookLogin():
 	print("El usuario existe en la BD? "+str(exists))
 	if exists:
 		print("el usuario existe en la BD")
-		datos = obtenerDatosUsuario(name)
+		datos = obtenerDatosUsuario(username)
 		usuario = datos.name
 		print("usuario: "+usuario)
 		#listPin = searchPin(pageP,name,0)
@@ -249,9 +249,9 @@ def FacebookLogin():
 		email	 = 'emailfromfacebook@email.com'
 		fullname = request.form['name']
 		if(crearCuenta(username, password, email, fullname)):
-			return render_template('lobby.html',usuario = name)#, listPin = listPin)
+			return render_template('lobby.html',usuario = username)#, listPin = listPin)
 
-	return render_template('register.html',usuario = name)
+	return render_template('register.html',usuario = username)
 
 
 
