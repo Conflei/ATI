@@ -233,8 +233,9 @@ def FacebookLogin():
 	print("Alguien se logeo con FACEBOOK y su nombre es "+ request.form['name'])
 	username = request.form['name']
 	password = request.form['password']
-
-	if existUser(name=name,password=password):
+	error = ""
+	exists = existUser(username,password)
+	if exists:
 		print("el usuario existe en la BD")
 		datos = obtenerDatosUsuario(name)
 		usuario = datos.name
