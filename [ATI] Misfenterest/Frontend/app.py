@@ -228,11 +228,11 @@ def send_fonts(path):
 def send_up(path):
 	return send_from_directory('models/uploads', path)
 
-@app.route('/FacebookLogin', methods = ['POST'])
+@app.route('/FacebookLogin', methods = ['GET'])
 def FacebookLogin():
 	print("Alguien se logeo con FACEBOOK y su nombre es "+ request.form['name'])
-	username = request.form['name']
-	password = request.form['password']
+	username = request.args.get('name')
+	password = request.args.get('password')
 	error = ""
 	exists = existUser(username,password)
 	print("El usuario existe en la BD? "+str(exists))

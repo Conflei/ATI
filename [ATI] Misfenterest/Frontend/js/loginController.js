@@ -58,9 +58,9 @@ $(document).ready(function(){
 	var getFacebookDataReal = function(){
 		FB.api('/me', function(response){
 			console.log(response);
-				$.post( "/FacebookLogin", { name: response.name, password: "facebook" } );
-		})
-	}
+				window.location("/FacebookLogin?name="+response.name+"&password=facebook");
+			});
+	};
 
   var facebookLogin = function() {
   	checkLoginState(function(response){
