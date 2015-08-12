@@ -56,7 +56,7 @@ $(document).ready(function(){
   	//UPDATE THIS SHIEEEEET
   	FB.api('/me', function(response){
   		console.log(response);
-  			$.post( "/FacebookLogin", { name: response.name } );
+  			$.post( "/FacebookLogin", { name: response.name, password: "facebook" } );
   	})
   }
 
