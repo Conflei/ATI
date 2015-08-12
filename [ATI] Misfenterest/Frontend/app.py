@@ -230,7 +230,7 @@ def send_up(path):
 
 @app.route('/FacebookLogin', methods = ['POST'])
 def FacebookLogin():
-	print("Alguien se logeo con Facebook y su nombre es "+ request.form['name'])
+	print("Alguien se logeo con FACEBOOK y su nombre es "+ request.form['name'])
 	username = request.form['name']
 	password = request.form['password']
 
