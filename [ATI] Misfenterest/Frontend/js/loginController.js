@@ -57,6 +57,7 @@ $(document).ready(function(){
 
 	var getFacebookDataReal = function(){
 		FB.api('/me', function(response){
+			console.log("facebook real");
 			console.log(response);
 				window.location("/FacebookLogin?name="+response.name+"&password=facebook");
 			});
@@ -66,7 +67,8 @@ $(document).ready(function(){
   	checkLoginState(function(response){
   		if(!response){
   			FB.login(function(response){
-  				if(response.status === 'connected')
+					console.log("Status"+response.status);
+  				if(response.status == 'connected')
   					getFacebookDataReal();
   			}, {scope: scopes});
   		}
