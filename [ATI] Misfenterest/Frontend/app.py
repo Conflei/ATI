@@ -1,5 +1,5 @@
 from flask import *
-from flask.ext.bcrypt import Bcrypt 
+from flask.ext.bcrypt import Bcrypt
 import modelo
 import psycopg2
 import os
@@ -53,7 +53,7 @@ def obtenerDatosUsuario(name):
 	cursor = dbConnection.cursor()
 
 	datos = {}
-	cursor.execute('select * from users where name=%s',[name]) 
+	cursor.execute('select * from users where name=%s',[name])
 	tmp = cursor.fetchone()
 
 	user = User(tmp[0], tmp[4], tmp[2], tmp[5], tmp[3])
@@ -83,23 +83,23 @@ def searchPin(page,type,username): #retorna 5 imagenes en formato json
 		else:
 			if type == 'pin':
 				cursor.execute('select p.* from pictures p, pin pi where p.picdir = pi.picdir offset %s limit %s',(page,5))
-	
+
 	dataPin = cursor.fetchall()
-	
+
 	print("user namee "+str(username))
-	
+
 	cursor2.execute('select * from pin where name=%s',(username,))
 	dataPin2 = cursor2.fetchall()
 	print(dataPin2)
-	
+
 	dataJSON = ""
 	imgJSON = ""
 	i = 0
 	pin = "False"
-	
+
 	for dPin in dataPin:
 		print("Soy Pin 1 "+dPin[0]) #imagen en pictures
-		if type != 'pin': 
+		if type != 'pin':
 			for dPin2 in dataPin2:
 				print("Soy Pin 2 "+dPin2[1]) #imagen pineada
 				if dPin[0] == dPin2[1]:
@@ -119,7 +119,7 @@ def searchPin(page,type,username): #retorna 5 imagenes en formato json
 		dataJSON = dataJSON + "]"
 	else:
 		dataJSON = "[]"
-		
+
 	dbConnection.commit()
 	cursor.close()
 	cursor2.close()
@@ -159,7 +159,7 @@ def NewPicture(picDir, title, category, description, author):
 	cursor.close()
 	dbConnection.close()
 	return True
-	
+
 def EditPerfilInDB(name,fullname,userAbout,img):#,cargarImagen): #usuario,nombrecompleto,descripcion,fotoperfil
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
@@ -171,7 +171,7 @@ def EditPerfilInDB(name,fullname,userAbout,img):#,cargarImagen): #usuario,nombre
 	cursor.close()
 	dbConnection.close()
 	return "exito"
-	
+
 def pinInDB(name,picdir,tipo):
 	dbConnection = psycopg2.connect('dbname=atidatabase user=postgres password=123 host=localhost')
 	cursor = dbConnection.cursor()
@@ -190,7 +190,7 @@ def pinInDB(name,picdir,tipo):
 
 @app.route('/')
 def index():
-	print('funciona')                                                                                                                        
+	print('funciona')
 	return render_template('index.html')
 
 @app.route('/register')
@@ -200,7 +200,7 @@ def registrar():
 
 @app.route('/css/<path:path>')
 def send_css(path):
-	return send_from_directory('css', path) 
+	return send_from_directory('css', path)
 
 @app.route('/js/<path:path>')
 def send_js(path):
@@ -209,7 +209,7 @@ def send_js(path):
 @app.route('/img/<path:path>')
 def send_img(path):
 	return send_from_directory('img', path)
-	
+
 @app.route('/font/<path:path>')
 def send_font(path):
 	return send_from_directory('font', path)
@@ -228,6 +228,9 @@ def send_fonts(path):
 def send_up(path):
 	return send_from_directory('models/uploads', path)
 
+@app.route('/FacebookLogin', methods = ['POST'])
+def FacebookLogin():
+	print("Alguien se logeo con Facebook y su nombre es "+ request.form['name'])
 
 @app.route('/login', methods = ['POST'])
 def login():
@@ -248,8 +251,8 @@ def login():
 		print("el usuario no existe en la BD")
 		error = 'ERROR: Correo electronico o Contrasena son invalidos.'
 		return render_template('index.html', error = error, usuario = name)
-		
-		
+
+
 @app.route('/verLobby', methods = ['POST'])
 def verLobby():
 	name = request.form['Name']
@@ -303,7 +306,7 @@ def loadImage():
 	print("La imagen fisica se guardo en el server en la ruta "+finalPath)
 	NewPicture(finalPath, title, "upload", description, author)
 	print("La imagen se guardo en la BD")
-	
+
 	user = obtenerDatosUsuario(author)
 	return render_template('lobby.html', usuario = user)
 
@@ -320,12 +323,12 @@ def EditPerfil(): #funcion llamada por el ajax para Editar Perfil
 
 @app.route('/editarPerfilForm', methods = ['POST'])
 def editarPerfilForm():
-	
+
 	nameUsr 	= request.form['name']
 	fname 		= request.form['fname']
 	description = request.form['about']
 	imageData 	= request.files['file']
-	
+
 	name = imageData.filename
 	ext = name.rsplit('.', 1)[1]
 	filename = GetImageFilename('upload')+"."+ext.lower()
@@ -335,7 +338,7 @@ def editarPerfilForm():
 	EditPerfilInDB(nameUsr,fname,description,finalPath)
 
 	user = obtenerDatosUsuario(nameUsr)
-	
+
 	return render_template('perfil.html', usuario = user)
 
 
@@ -352,4 +355,3 @@ def pin():
 if __name__ == '__main__':
   app.debug = True
   app.run( host = '0.0.0.0', port = 5000 )
-

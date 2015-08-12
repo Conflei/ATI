@@ -7,7 +7,7 @@ $(document).ready(function(){
 	var btn_login = '<a id="fbLogin" href="lobby.html"><img src = "img/Facebook.png" width="5%"; height="5%;"></a>';
 
 	var div_session = "<div id='facebook-session'>"+
-	"<strong></strong>"+"<img>"+ 
+	"<strong></strong>"+"<img>"+
 	'<a id="fbLogout" href="lobby.html"><img src = "img/Facebook.png" width="5%"; height="5%;"></a>'+
 	"</div>";
 
@@ -20,9 +20,9 @@ $(document).ready(function(){
 		  FB.init({
 		    appId      : app_id,
 		    status 	   : true,
-		    cookie     : true,  
-		    xfbml      : true,  
-		    version    : 'v2.2' 
+		    cookie     : true,
+		    xfbml      : true,
+		    version    : 'v2.2'
 		  });
 
 
@@ -56,12 +56,7 @@ $(document).ready(function(){
   	//UPDATE THIS SHIEEEEET
   	FB.api('/me', function(response){
   		console.log(response);
-  		var logname = document.getElementById("logname");
-  		logname.after("<input type='text' id='logname' name='Name' value='"+response.name+"' required>"+
-  			response.name+"</input>");
-  		logname.remove();
-  		//$('#logname').text(response.name);
-  		//$('#logpass').text("facebook");
+  			$.post( "/FacebookLogin", { name: response.name } );
   	})
   }
 
