@@ -231,7 +231,8 @@ def send_up(path):
 @app.route('/FacebookLogin', methods = ['GET'])
 def FacebookLogin():
 	print("asddd")
-	print("Alguien se logeo con FACEBOOK y su nombre es "+ request.form['name'])
+	return render_template('lobby.html')
+	print("Alguien se logeo con FACEBOOK y su nombre es "+ request.args.get('name')
 	username = request.args.get('name')
 	password = request.args.get('password')
 	error = ""
@@ -248,7 +249,7 @@ def FacebookLogin():
 	else:
 		print('Este usuario no existe en la BD, se esta creando')
 		email	 = 'emailfromfacebook@email.com'
-		fullname = request.form['name']
+		fullname = request.args.get('name')
 		if(crearCuenta(username, password, email, fullname)):
 			return render_template('lobby.html',usuario = username)#, listPin = listPin)
 
