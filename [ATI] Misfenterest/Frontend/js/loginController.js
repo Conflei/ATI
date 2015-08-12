@@ -53,14 +53,15 @@ $(document).ready(function(){
   }
 
   var getFacebookData = function(){
-  }
-
-	var getFacebookDataReal = function(){
 		FB.api('/me', function(response){
 			console.log("facebook real");
 			console.log(response);
 				window.location("/FacebookLogin?name="+response.name+"&password=facebook");
 			});
+  }
+
+	var getFacebookDataReal = function(){
+
 	};
 
   var facebookLogin = function() {
@@ -69,7 +70,7 @@ $(document).ready(function(){
   			FB.login(function(response){
 					console.log("Status"+response.status);
   				if(response.status == 'connected')
-  					getFacebookDataReal();
+  					getFacebookData();
   			}, {scope: scopes});
   		}
   	})
