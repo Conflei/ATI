@@ -53,19 +53,21 @@ $(document).ready(function(){
   }
 
   var getFacebookData = function(){
-  	//UPDATE THIS SHIEEEEET
-  	FB.api('/me', function(response){
-  		console.log(response);
-  			$.post( "/FacebookLogin", { name: response.name, password: "facebook" } );
-  	})
   }
+
+	var getFacebookDataReal = function(){
+		FB.api('/me', function(response){
+			console.log(response);
+				$.post( "/FacebookLogin", { name: response.name, password: "facebook" } );
+		})
+	}
 
   var facebookLogin = function() {
   	checkLoginState(function(response){
   		if(!response){
   			FB.login(function(response){
   				if(response.status === 'connected')
-  					getFacebookData();
+  					getFacebookDataReal();
   			}, {scope: scopes});
   		}
   	})
