@@ -1,4 +1,3 @@
-from flask import *
 from flask.ext.bcrypt import Bcrypt
 import modelo
 import psycopg2
