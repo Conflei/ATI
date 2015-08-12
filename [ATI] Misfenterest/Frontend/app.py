@@ -231,7 +231,6 @@ def send_up(path):
 @app.route('/FacebookLogin', methods = ['GET'])
 def FacebookLogin():
 	print("asddd")
-	#return render_template('lobby.html')
 	username = request.args.get('name')
 	password = request.args.get('password')
 	error = ""
@@ -242,7 +241,6 @@ def FacebookLogin():
 		datos = obtenerDatosUsuario(username)
 		usuario = datos.name
 		print("usuario: "+usuario)
-		#listPin = searchPin(pageP,name,0)
 		print('Sending user '+usuario)
 		return render_template('lobby.html',error = error, usuario = datos)
 	else:
@@ -250,7 +248,8 @@ def FacebookLogin():
 		email	 = 'emailfromfacebook@email.com'
 		fullname = request.args.get('name')
 		if(crearCuenta(username, password, email, fullname)):
-			return render_template('lobby.html',usuario = username)#, listPin = listPin)
+			datos = obtenerDatosUsuario(username)
+			return render_template('lobby.html',usuario = datos)
 
 	return render_template('register.html',usuario = username)
 
@@ -358,7 +357,6 @@ def editarPerfilForm():
 	filename = GetImageFilename('upload')+"."+ext.lower()
 	finalPath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 	imageData.save(finalPath)
-	print("Ya guarde la imagen estos son los datos %s %s %s",nameUsr, fname,description,finalPath)
 	EditPerfilInDB(nameUsr,fname,description,finalPath)
 
 	user = obtenerDatosUsuario(nameUsr)
@@ -371,7 +369,6 @@ def pin():
 	name = request.args.get('name')
 	picdir = request.args.get('picdir')
 	tipo = request.args.get('tipo')
-	print("holaaaaaaaa"+str(name)+" hace "+str(tipo)+" a la imagen: "+str(picdir))
 	return pinInDB(name,picdir,tipo)
 
 # Routes end here
