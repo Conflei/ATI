@@ -56,7 +56,7 @@ $(document).ready(function(){
 		FB.api('/me', function(response){
 			console.log("facebook real");
 			console.log(response);
-				window.location("/FacebookLogin?name="+response.name+"&password=facebook");
+				$(window).location("/FacebookLogin?name="+response.name+"&password=facebook");
 			});
   }
 
