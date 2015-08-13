@@ -4,16 +4,6 @@ $(document).ready(function(){
 	var app_id = '688571277942632';
 	var scopes = 'email, user_friends, public_profile';
 
-	var btn_login = '<a id="fbLogin" href="lobby.html"><img src = "img/Facebook.png" width="5%"; height="5%;"></a>';
-
-	var div_session = "<div id='facebook-session'>"+
-	"<strong></strong>"+"<img>"+
-	'<a id="fbLogout" href="lobby.html"><img src = "img/Facebook.png" width="5%"; height="5%;"></a>'+
-	"</div>";
-
-	var lognamestr = "<input type='text' id='logname' name='Name' required>";
-	var logpassstr = "<input type='text' id='logpass' name='Name' required>";
-
 
 	 window.fbAsyncInit = function() {
 		 	console.log('fbAsyncInit');
@@ -28,7 +18,9 @@ $(document).ready(function(){
 
 		  FB.getLoginStatus(function(response) {
 		    statusChangeCallback(response, function(){
-
+					FB.logout(function(response) {
+        		//	 Person is now logged out
+    					});
 		  	  });
 	  	});
 
@@ -38,7 +30,7 @@ $(document).ready(function(){
     console.log(response);
 
     if (response.status === 'connected') {
-    	getFacebookData();
+    	//getFacebookData();
     } else {
     	callback(false);
     }

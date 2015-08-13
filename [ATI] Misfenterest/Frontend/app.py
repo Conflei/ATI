@@ -239,9 +239,6 @@ def FacebookLogin():
 	if exists:
 		print("el usuario existe en la BD")
 		datos = obtenerDatosUsuario(username)
-		usuario = datos.name
-		print("usuario: "+usuario)
-		print('Sending user '+usuario)
 		return render_template('lobby.html',error = error, usuario = datos)
 	else:
 		print('Este usuario no existe en la BD, se esta creando')

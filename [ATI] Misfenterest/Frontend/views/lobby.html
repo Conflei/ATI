@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>	</title>
 	<script src="js/jquery-2.1.4.min.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -21,10 +21,10 @@
 		var urlPin = "/pin";
 		var general = true;
 	</script>
-  
 
-	
-	
+
+
+
 </head>
 <body>
 
@@ -37,8 +37,8 @@
 
                   <div class="container-fluid" style = "width : 100%">
                    <div class="row" style>
-                      <div class="col-sm-9"> 
-                              
+                      <div class="col-sm-9">
+
                         <form id="searchbox" action="">
                            <a class="logo" href="#" type="button">
                             <img src="img/logo.png" class= "logo">
@@ -49,8 +49,8 @@
                      </div>
 					<div class="col-sm-3">
                        <div  class = "infoSesion" >
-                         <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none" onclick="verMiPerfil('{{usuario.name|safe}}')"><strong style="font-size=20px;">My profile</strong>
-                            <img  class = "img-circle logoSesion" src= {{usuario.picdir|safe}}>          
+                         <a href="#" class="botonPerfil " role="button" id = "verMiPerfil" style="text-decoration:none" onclick="verMiPerfil('{{usuario.name|safe}}')"><strong style="font-size=20px;">{{usuario.name|safe}}</strong>
+                            <img  class = "img-circle logoSesion" src= {{usuario.picdir|safe}}>
                          </a>
                        </div>
                    </div>
@@ -58,32 +58,32 @@
                 </div>
               </div>
          	</nav>
-         </div>		
+         </div>
 	</div>
 
-		<img class = "Uploader" src="assets/up.png" onClick="javascript:UploadContent()">  
+		<img class = "Uploader" src="assets/up.png" onClick="javascript:UploadContent()">
 
 		<div class="contenidoSelecto" id="contenido">
 			<div class="row">
 				<div class="col-sm-6">
-					<div class="imageShower"><img src="assets/img0.png" alt="" id="imgContent"></div>	j	
+					<div class="imageShower"><img src="assets/img0.png" alt="" id="imgContent"></div>	j
 				</div>
 				<div class="col-sm-6">
 					<div class="pinSection">
 							<img src="assets/profile.jpg" alt="" width="20px" height="20px">
 							<h4>Felix Izarra</h4>
-							<a href="#" id="cerrar"><span class="glyphicon glyphicon-remove"></span></a>	
-						<hr>	
+							<a href="#" id="cerrar"><span class="glyphicon glyphicon-remove"></span></a>
+						<hr>
 						<p id="parContent">	Esta es la descripcion de esta foto esta es la descripcion de la foto esta es
-						la descripcion de la foto esta es la descripcion de la foto esta es 
-						la descripcion de la foto esta es la descripcion de la foto esta es 
+						la descripcion de la foto esta es la descripcion de la foto esta es
+						la descripcion de la foto esta es la descripcion de la foto esta es
 						la descripcion de la foto esta es la descripcion de l
-						la descripcion de la foto esta es la 
+						la descripcion de la foto esta es la
 						</p>
 						<hr>
 						<div class="PinButton">
 							<a href="#" class="botonPerfil " role="button" onclick="doPin('{{usuario.name|safe}}')"><strong style="font-size=20px;" id="opPin">Pinear!</strong>
-                            <img  class = "img-circle logoSesion" src="img/logo.png">             
+                            <img  class = "img-circle logoSesion" src="img/logo.png">
                           </a>
 						</div>
 					</div>
@@ -94,7 +94,7 @@
  <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
-    
+
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header" style="padding:35px 50px;">
@@ -102,7 +102,7 @@
           <h3><span class="glyphicon glyphicon-upload"></span> Upload your Pin</h3>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-          <form action="/uploadcontent" role="form" 
+          <form action="/uploadcontent" role="form"
           enctype="multipart/form-data" method="POST">
             <div class="form-group">
               <label for="usrname"><span class="glyphicon glyphicon-tint"></span> Title</label>
@@ -126,9 +126,9 @@
           <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
         </div>
       </div>
-      
+
     </div>
-  </div> 
+  </div>
   <div id="nombreUsuario" style="display:none">{{usuario.name|safe}}</div>
 </body>
 </html>
